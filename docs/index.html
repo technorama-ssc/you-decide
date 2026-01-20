@@ -5,15 +5,16 @@
     <title>Du entscheidest / Opensource Website</title>
 
     <!-- CSS einbinden -->
-    <link rel="stylesheet" href="style.css"> </head> <body>
+    <link rel="stylesheet" href="style.css"> 
+</head> 
+<body>
 
     <!-- Großer Titel -->
     <h1 class="accordion">YOU DECIDE</h1>
     <div class="panel">
         <p>
             An exhibition on decisions and how to safe the World. 
-            <br>
-            <br> 
+            <br><br> 
             This is the new open-source platform for the “You Decide” exhibition.
             <br>
             All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.
@@ -27,7 +28,10 @@
         var acc = document.getElementsByClassName("accordion");
         for (var i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
+                // Toggle aktive Klasse für Styling
+                this.classList.toggle("active"); 
+                
+                // Panel ein-/ausblenden
                 var panel = this.nextElementSibling;
                 if (panel.style.display === "block") {
                     panel.style.display = "none";
@@ -40,4 +44,3 @@
 
 </body>
 </html>
-
