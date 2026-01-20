@@ -23,7 +23,7 @@
 
 /* ------------------ ACCORDION / TITEL ------------------ */ .accordion {
     font-family: 'Pixel2', sans-serif; /* Pixel2 Schrift für Titel */
-    font-size: 80px;
+    font-size: 60px;
     text-transform: uppercase;
     cursor: pointer;
     background-color: #ffffff;
@@ -40,7 +40,7 @@
 /* ------------------ PANEL / INHALT ------------------ */ .panel {
     padding: 0 10px;
     display: none; /* versteckt bis der Titel geklickt wird */
-    background-color: #fafafa;
+    background-color: #ffe700;
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
