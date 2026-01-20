@@ -1,2 +1,2 @@
 # you-decide
-Exhibition on decisions and how to save the world
+Here you find information and materials for the single exhibits.
