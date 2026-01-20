@@ -13,21 +13,21 @@
     <!-- YOU DECIDE -->
     <div class="accordion-wrapper">
         <h1 class="accordion">YOU DECIDE</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition/README.md">
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition" data-images='["du-entscheidest.gif"]'>
         </div>
     </div>
 
     <!-- SYSTEM -->
     <div class="accordion-wrapper">
         <h1 class="accordion">SYSTEM</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/README.md">
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system" data-images='["system1.jpg","system2.png"]'>
         </div>
     </div>
 
     <!-- EXHIBITS -->
     <div class="accordion-wrapper">
         <h1 class="accordion">EXHIBITS</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/README.md">
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits" data-images='["exhibit1.jpg","exhibit2.gif"]'>
         </div>
     </div>
 
@@ -36,32 +36,42 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 
-// Funktion: Markdown laden und Panel füllen, erste Zeile als Titel nutzen
-async function loadReadme(panel, titleElement) {
-    if (panel.dataset.loaded) return; // nur einmal laden
-    const url = panel.dataset.readmeUrl;
-    try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("Fehler beim Laden der README");
-        let markdown = await response.text();
+// README + Bilder laden
+async function loadPanel(panel, titleElement) {
+    if (panel.dataset.loaded) return;
 
-        // Erste Zeile prüfen (# TITEL)
+    const folderUrl = panel.dataset.readmeUrl;
+    const imageFiles = JSON.parse(panel.dataset.images);
+
+    try {
+        // README.md laden
+        const readmeResponse = await fetch(`${folderUrl}/README.md`);
+        let markdown = await readmeResponse.text();
+
+        // Erste Zeile als Akkordeon-Titel
         const lines = markdown.split("\n");
-        if (lines[0].startsWith("# ")) {
-            titleElement.textContent = lines[0].replace("# ", "").toUpperCase();
-            lines.shift(); // erste Zeile entfernen → nicht im Panel
+        if(lines[0].startsWith("# ")) {
+            titleElement.textContent = lines[0].replace("# ","").toUpperCase();
+            lines.shift(); // erste Zeile entfernen
         }
 
-        markdown = lines.join("\n");
-        panel.innerHTML = marked.parse(markdown);
+        panel.innerHTML = marked.parse(lines.join("\n"));
+
+        // Bilder einfügen
+        imageFiles.forEach(file => {
+            const img = document.createElement("img");
+            img.src = `${folderUrl}/${file}`;
+            panel.appendChild(img);
+        });
+
         panel.dataset.loaded = "true";
-    } catch (err) {
-        panel.innerHTML = "<p style='color:red;'>Fehler beim Laden des Inhalts</p>";
+    } catch(err) {
+        panel.innerHTML = "<p style='color:red;'>Fehler beim Laden</p>";
         console.error(err);
     }
 }
 
-// Akkordeon-Logik
+// Akkordeon-Funktion
 for (var i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", async function() {
         var wrapper = this.parentElement;
@@ -91,8 +101,8 @@ for (var i = 0; i < acc.length; i++) {
             this.style.color = "#000000";
             panel.style.color = "#000000";
 
-            // README laden und Titel setzen
-            await loadReadme(panel, this);
+            // README + Bilder laden
+            await loadPanel(panel, this);
         }
     });
 }
