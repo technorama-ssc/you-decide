@@ -23,7 +23,7 @@ html, body {
 /* ------------------ Titel ------------------ */
 .accordion {
     font-family: 'Pixel2', sans-serif;
-    font-size: 80px;
+    font-size: 10vw; /* responsive Größe */
     text-transform: uppercase;
     cursor: pointer;
     background: none;
@@ -42,12 +42,12 @@ html, body {
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
-    font-size: 16px;
-    line-height: 1.4; /* kompakter */
+    font-size: 2vw; /* responsive Lauftext */
+    line-height: 1.4;
     max-width: 800px;
     color: #000000;
     margin: 10px 0 0 0;
-    padding: 20px 0 20px 0; /* kompakt */
+    padding: 20px 0 20px 0;
     text-align: left;
     -webkit-text-size-adjust: 100%; /* iOS */
 }
@@ -55,7 +55,7 @@ html, body {
 /* Alle Panel-Kinder einheitlich */
 .panel * {
     font-family: 'RobotoMono', monospace !important;
-    font-size: 16px !important;
+    font-size: 2vw !important;
     line-height: 1.4 !important;
 }
 
@@ -78,13 +78,13 @@ html, body {
     color: #333333;
 }
 
-/* ------------------ Responsive für Smartphones ------------------ */
-@media screen and (max-width: 768px) {
+/* ------------------ Responsive für sehr kleine Geräte */
+@media screen and (max-width: 500px) {
     .accordion {
-        font-size: 40px; /* Titel 50% kleiner */
+        font-size: 30px; /* Titel Mindestgröße */
     }
     .panel, .panel * {
-        font-size: 8px !important; /* Lauftext 50% kleiner */
+        font-size: 12px !important; /* Lauftext Mindestgröße */
         line-height: 1.2 !important;
     }
 }
