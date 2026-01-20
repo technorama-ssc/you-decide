@@ -17,7 +17,7 @@
     color: #ffffff; /* Standardfarbe weiß */
     font-family: 'RobotoMono', monospace; /* Standard-Lauftext */
     text-align: left; /* alles linksbündig */
-    padding: 50px;
+    padding: 0px;
 }
 
 /* ------------------ TITEL ------------------ */ .accordion {
@@ -29,7 +29,7 @@
     border: none;
     color: #ffffff; /* Standardfarbe weiß */
     transition: color 0.3s;
-    margin: 0px 0 10px 0;
+    margin: 0px 0 0px 0;
 }
 
 .accordion:hover {
