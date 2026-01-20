@@ -6,12 +6,13 @@ html, body {
 }
 
 .content-wrapper {
-    position: relative;          /* für die volle Breite und absolute Positionierung */
+    position: relative;
     width: 100%;
     background-color: transparent;
     transition: background-color 0.3s;
-    padding: 40px 62px 80px 62px; /* Textabstand: oben 40px, links/rechts 62px, unten 80px */
+    padding: 40px 62px 80px 62px; /* oben 40px, links/rechts 62px, unten 80px */
     box-sizing: border-box;
+    overflow: hidden; /* verhindert schwarzen Balken oben */
 }
 
 .accordion {
@@ -23,7 +24,7 @@ html, body {
     border: none;
     color: #666666; /* 40% Grau */
     transition: color 0.3s;
-    margin: 0; /* kein Margin */
+    margin: 0;
     padding: 0;
 }
 
