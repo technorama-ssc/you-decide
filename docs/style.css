@@ -25,7 +25,8 @@ html, body {
     background-color: transparent;
     width: 100%;  
     transition: background-color 0.3s;
-    padding-bottom: 80px; /* Abstand unterhalb des Panels */
+    padding: 40px 62px 80px 62px; /* oben 40px, links/rechts 62px, unten 80px */
+    box-sizing: border-box; /* wichtig, damit padding innerhalb des Wrappers bleibt */
 }
 
 /* ------------------ TITEL ------------------ */ 
@@ -38,8 +39,8 @@ html, body {
     border: none;
     color: #666666; /* 40% Grau */
     transition: color 0.3s;
-    margin: 40px 62px 0 62px; /* Oben 40px, links/rechts 62px */
-    padding: 0;
+    margin: 0; /* Kein Margin mehr oben */
+    padding: 0; /* Padding innerhalb Wrapper */
 }
 
 .accordion:hover {
@@ -53,6 +54,6 @@ html, body {
     font-size: 14px;
     line-height: 1.5;
     color: #ffffff;
-    margin: 10px 62px 0 62px; /* Oben 10px zum Titel, links/rechts 62px */
-    padding: 0;
+    margin: 10px 0 0 0; /* kleiner Abstand über dem Text */
+    padding: 0; /* Padding innerhalb Wrapper */
 }
