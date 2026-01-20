@@ -1,4 +1,4 @@
-# YOU DECIDE
+# STIMT ES WIRKLICH?
 
 An exhibition on decisions and how to save the World.
 
