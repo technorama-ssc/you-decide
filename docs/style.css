@@ -23,9 +23,9 @@ html, body {
 /* ------------------ WRAPPER ------------------ */
 .content-wrapper {
     background-color: transparent; /* Standard durchsichtig */
-    margin: 0;
-    padding: 0px 0 80px 0; /* oben 0, links/rechts 0, unten 80px */
+    width: 100%;  /* Bis an die Seitenränder */
     transition: background-color 0.3s;
+    padding-bottom: 80px; /* Abstand unterhalb des Panels */
 }
 
 /* ------------------ TITEL ------------------ */ 
@@ -39,7 +39,8 @@ html, body {
     color: #666666; /* 40% Grau */
     transition: color 0.3s;
     margin: 0;
-    padding: 10px 40px; /* Padding links/rechts für Abstand */
+    /* Schrift im Wrapper positionieren */
+    padding: 80px 125px 0 125px; /* oben 80px, links/rechts 125px */
 }
 
 .accordion:hover {
@@ -54,5 +55,5 @@ html, body {
     line-height: 1.5;
     color: #ffffff;
     margin: 0;
-    padding: 10px 40px; /* Padding links/rechts passend zum Titel */
+    padding: 10px 125px 0 125px; /* Text links/rechts ausrichten wie Titel */
 }
