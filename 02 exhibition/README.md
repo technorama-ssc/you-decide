@@ -1,2 +1,2 @@
 # Exhibition
-Here you find genearl information and materials on the exhibition.
+Here you find general information and materials on the exhibition "You Decide"
