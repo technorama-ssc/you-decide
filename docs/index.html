@@ -51,7 +51,7 @@ async function loadPanel(panel, titleElement) {
 
         // Erste Zeile als Akkordeon-Titel
         const lines = markdown.split("\n");
-        if(lines[0].startsWith("# ")) {
+        if (lines[0].startsWith("# ")) {
             titleElement.textContent = lines[0].replace("# ","").toUpperCase();
             lines.shift(); // erste Zeile entfernen
         }
@@ -99,7 +99,7 @@ for (var i = 0; i < acc.length; i++) {
             panel.style.color = "#ffffff";
         } else {
             panel.style.display = "block";
-            wrapper.style.backgroundColor = "#eaff00";
+            wrapper.style.backgroundColor = "#eaff00"; // gesamte Fläche gelb
             this.style.color = "#000000";
             panel.style.color = "#000000";
 
