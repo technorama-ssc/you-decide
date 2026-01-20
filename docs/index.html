@@ -8,23 +8,28 @@
 </head> 
 <body>
 
-    <!-- Großer Titel -->
-    <h1 class="accordion">YOU DECIDE</h1>
-    <div class="panel">
-        <p>
-            An exhibition on decisions and how to safe the World. 
-            <br><br> 
-            This is the new open-source platform for the “You Decide” exhibition.
-            <br>
-            All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.
-            <br>
-            The exhibition — and this website — will keep changing with you and us.
-        </p>
+    <!-- Wrapper für gelbe Fläche -->
+    <div class="content-wrapper">
+        <!-- Großer Titel -->
+        <h1 class="accordion">YOU DECIDE</h1>
+        <div class="panel">
+            <p>
+                An exhibition on decisions and how to safe the World. 
+                <br><br> 
+                This is the new open-source platform for the “You Decide” exhibition.
+                <br>
+                All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.
+                <br>
+                The exhibition — and this website — will keep changing with you and us.
+            </p>
+        </div>
     </div>
 
     <!-- JavaScript für Klick-Funktion -->
     <script>
         var acc = document.getElementsByClassName("accordion");
+        var wrapper = document.querySelector(".content-wrapper");
+
         for (var i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function() {
                 this.classList.toggle("active");
@@ -33,13 +38,13 @@
                 if (panel.style.display === "block") {
                     // Panel schließen → alles zurücksetzen
                     panel.style.display = "none";
-                    document.body.style.backgroundColor = "#000000"; // Hintergrund schwarz
+                    wrapper.style.backgroundColor = "transparent"; // Wrapper wieder durchsichtig
                     this.style.color = "#666666"; // Titel 40% Grau
                     panel.style.color = "#ffffff"; // Text weiß
                 } else {
-                    // Panel öffnen → Hintergrund Neongelb
+                    // Panel öffnen → Wrapper gelb
                     panel.style.display = "block";
-                    document.body.style.backgroundColor = "#eaff00"; // Hintergrund Neongelb
+                    wrapper.style.backgroundColor = "#eaff00"; // Gelb
                     this.style.color = "#000000"; // Titel schwarz
                     panel.style.color = "#000000"; // Text schwarz
                 }
