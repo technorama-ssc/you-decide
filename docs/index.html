@@ -3,33 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Du entscheidest / Opensource Website</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
     <!-- Marked.js für Markdown → HTML -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head> 
+</head>
 <body>
 
 <div class="content-wrapper">
 
     <!-- YOU DECIDE -->
-    <div class="accordion-wrapper">
-        <h1 class="accordion">YOU DECIDE</h1>
+    <div class="accordion-wrapper" data-folder="02 exhibition">
+        <h1 class="accordion"></h1>
         <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition/README.md">
             <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
     <!-- SYSTEM -->
-    <div class="accordion-wrapper">
-        <h1 class="accordion">SYSTEM</h1>
+    <div class="accordion-wrapper" data-folder="01 system">
+        <h1 class="accordion"></h1>
         <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/README.md">
             <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
     <!-- EXHIBITS -->
-    <div class="accordion-wrapper">
-        <h1 class="accordion">EXHIBITS</h1>
+    <div class="accordion-wrapper" data-folder="03 exhibits">
+        <h1 class="accordion"></h1>
         <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/README.md">
             <!-- Inhalt wird dynamisch geladen -->
         </div>
@@ -40,6 +40,13 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 
+// Setze Akkordeon-Titel aus Ordnernamen
+for (let i = 0; i < acc.length; i++) {
+    let wrapper = acc[i].parentElement;
+    let folderName = wrapper.dataset.folder;
+    acc[i].textContent = folderName.toUpperCase();
+}
+
 // Funktion: Markdown von GitHub laden und ins Panel einfügen
 async function loadReadme(panel) {
     if (panel.dataset.loaded) return; // Nur einmal laden
@@ -47,7 +54,11 @@ async function loadReadme(panel) {
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Fehler beim Laden der README");
-        const markdown = await response.text();
+        let markdown = await response.text();
+
+        // Entferne erste H1-Überschrift, weil Titel vom Ordner kommt
+        markdown = markdown.replace(/^# .*\n/, '');
+
         panel.innerHTML = marked.parse(markdown);
         panel.dataset.loaded = "true"; // markieren, dass geladen
     } catch (err) {
@@ -56,6 +67,7 @@ async function loadReadme(panel) {
     }
 }
 
+// Akkordeon-Funktion
 for (var i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", async function() {
         var wrapper = this.parentElement;
