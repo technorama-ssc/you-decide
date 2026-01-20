@@ -1,75 +1,32 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>Du entscheidest / Opensource Website</title>
+/* ------------------ GRUNDEINSTELLUNG ------------------ */ html, body {
+    height: 100%;
+    margin: 0;
+    background-color: #000000; /* schwarzer Hintergrund */
+    color: #ffffff; /* Standardfarbe weiß für alle Texte */
+    font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
+    text-align: center;
+}
 
-    <!-- CSS einbinden -->
-    <link rel="stylesheet" href="style.css">
+/* ------------------ TITEL / ACCORDION ------------------ */ .accordion {
+    font-size: 60px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none; /* kein Hintergrund */
+    border: none; /* kein Rahmen */
+    color: #ffffff; /* Standardfarbe weiß */
+    transition: color 0.3s; /* sanfter Farbwechsel bei Hover */
+    margin: 50px 0 20px 0;
+}
 
-    <style>
-        /* ------------------ GRUNDEINSTELLUNG ------------------ */
-        html, body {
-            height: 100%;
-            margin: 0;
-            background-color: #000000; /* kompletter schwarzer Hintergrund */
-            color: #ffffff; /* Standardfarbe weiß für alle Texte */
-            font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift für Titel */
-            text-align: center;
-        }
+.accordion:hover {
+    color: #eaff00; /* Neongelb bei Mouseover */ }
 
-        /* ------------------ TITEL / ACCORDION ------------------ */
-        .accordion {
-            font-size: 60px;
-            text-transform: uppercase;
-            cursor: pointer;
-            background: none; /* kein Hintergrund */
-            border: none; /* kein Rahmen */
-            color: #ffffff; /* Standardfarbe weiß */
-            transition: color 0.3s; /* sanfter Farbwechsel */
-            margin: 50px 0 20px 0;
-        }
-
-        .accordion:hover {
-            color: #eaff00; /* Neongelb bei Mouseover */
-        }
-
-        /* ------------------ PANEL / LAUFTEXT ------------------ */
-        .panel {
-            display: none; /* anfänglich versteckt */
-            color: #ffffff; /* Textfarbe weiß */
-            background: none; /* kein Hintergrund */
-            border: none; /* kein Rahmen */
-            font-size: 24px;
-            line-height: 1.5;
-            margin-bottom: 50px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Großer Titel -->
-    <h1 class="accordion">YOU DECIDE</h1>
-    <div class="panel">
-        <p>An Exhibition on decisions and how to save the world.</p>
-    </div>
-
-    <!-- JavaScript für Klick-Funktion -->
-    <script>
-        var acc = document.getElementsByClassName("accordion");
-        for (var i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.display === "block") {
-                    panel.style.display = "none";
-                } else {
-                    panel.style.display = "block";
-                }
-            });
-        }
-    </script>
-
-</body>
-</html>
-
+/* ------------------ PANEL / LAUFTEXT ------------------ */ .panel {
+    display: none; /* anfänglich versteckt */
+    color: #ffffff; /* Textfarbe weiß */
+    background: none; /* kein Hintergrund */
+    border: none; /* kein Rahmen */
+    font-size: 24px;
+    line-height: 1.5;
+    margin-bottom: 50px;
+}
