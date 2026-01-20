@@ -13,22 +13,19 @@
     <!-- YOU DECIDE -->
     <div class="accordion-wrapper">
         <h1 class="accordion">YOU DECIDE</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition" data-images='["du-entscheidest.gif"]'>
-        </div>
+        <div class="panel" data-folder="02%20exhibition"></div>
     </div>
 
     <!-- SYSTEM -->
     <div class="accordion-wrapper">
         <h1 class="accordion">SYSTEM</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system" data-images='["system1.jpg","system2.png"]'>
-        </div>
+        <div class="panel" data-folder="01%20system"></div>
     </div>
 
     <!-- EXHIBITS -->
     <div class="accordion-wrapper">
         <h1 class="accordion">EXHIBITS</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits" data-images='["exhibit1.jpg","exhibit2.gif"]'>
-        </div>
+        <div class="panel" data-folder="03%20exhibits"></div>
     </div>
 
 </div>
@@ -36,54 +33,71 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 
-// README + Bilder laden
+/* ------------------------------------------
+   1. README + Auto-Bilder aus Ordner laden
+------------------------------------------- */
 async function loadPanel(panel, titleElement) {
-    if (panel.dataset.loaded) return;
+    if (panel.dataset.loaded === "true") return;
 
-    const folderUrl = panel.dataset.readmeUrl;
-    const imageFiles = JSON.parse(panel.dataset.images || "[]");
+    const folder = panel.dataset.folder;
 
+    const baseRaw = `https://raw.githubusercontent.com/technorama-ssc/you-decide/main/${folder}`;
+    const baseHtml = `https://github.com/technorama-ssc/you-decide/tree/main/${folder}`;
+
+    /* ---- README laden ---- */
     try {
-        // README.md laden
-        const readmeResponse = await fetch(`${folderUrl}/README.md`);
+        const readmeResponse = await fetch(`${baseRaw}/README.md`);
         let markdown = await readmeResponse.text();
 
-        // Erste Zeile als Akkordeon-Titel
-        const lines = markdown.split("\n");
-        if(lines[0].startsWith("# ")) {
+        let lines = markdown.split("\n");
+        if (lines[0].startsWith("# ")) {
             titleElement.textContent = lines[0].replace("# ","").toUpperCase();
-            lines.shift(); // erste Zeile entfernen
+            lines.shift();
         }
 
         panel.innerHTML = marked.parse(lines.join("\n"));
 
-        // Bilder einfügen, nur wenn vorhanden
-        if (imageFiles.length > 0) {
-            imageFiles.forEach(file => {
-                const img = document.createElement("img");
-                img.src = `${folderUrl}/${file}`;
-                img.onerror = () => img.remove(); // entfernt Broken Images
-                panel.appendChild(img);
-            });
-        }
-
-        panel.dataset.loaded = "true";
-    } catch(err) {
-        panel.innerHTML = "<p style='color:red;'>Fehler beim Laden</p>";
-        console.error(err);
+    } catch (e) {
+        panel.innerHTML = "<p style='color:red;'>README konnte nicht geladen werden.</p>";
     }
+
+    /* ---- Bilddateien automatisch finden ---- */
+    try {
+        const htmlIndex = await fetch(baseHtml);
+        const htmlText = await htmlIndex.text();
+
+        const imageRegex = /href="([^"]+\.(png|jpg|jpeg|gif))"/gi;
+        let match;
+
+        while ((match = imageRegex.exec(htmlText)) !== null) {
+            const filename = match[1].split("/").pop();
+            const url = `${baseRaw}/${filename}`;
+
+            const img = document.createElement("img");
+            img.src = url;
+            img.onerror = () => img.remove(); // nie broken image
+            panel.appendChild(img);
+        }
+    } catch (e) {
+        console.error("Fehler beim Bilderfinden:", e);
+    }
+
+    panel.dataset.loaded = "true";
 }
 
-// Akkordeon-Logik
-for (var i = 0; i < acc.length; i++) {
+/* ------------------------------------------
+   2. Akkordeon-Logik
+------------------------------------------- */
+for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", async function() {
-        var wrapper = this.parentElement;
-        var panel = this.nextElementSibling;
+        const wrapper = this.parentElement;
+        const panel = this.nextElementSibling;
 
-        // Alle anderen Panels schließen
-        for (var j = 0; j < acc.length; j++) {
-            var otherWrapper = acc[j].parentElement;
-            var otherPanel = acc[j].nextElementSibling;
+        // andere schließen
+        for (let j = 0; j < acc.length; j++) {
+            const otherWrapper = acc[j].parentElement;
+            const otherPanel = acc[j].nextElementSibling;
+
             if (otherWrapper !== wrapper) {
                 otherPanel.style.display = "none";
                 otherWrapper.style.backgroundColor = "transparent";
@@ -92,7 +106,7 @@ for (var i = 0; i < acc.length; i++) {
             }
         }
 
-        // Aktuelles Panel öffnen oder schließen
+        // aktuelles öffnen/schließen
         if (panel.style.display === "block") {
             panel.style.display = "none";
             wrapper.style.backgroundColor = "transparent";
@@ -103,8 +117,6 @@ for (var i = 0; i < acc.length; i++) {
             wrapper.style.backgroundColor = "#eaff00";
             this.style.color = "#000000";
             panel.style.color = "#000000";
-
-            // README + Bilder laden
             await loadPanel(panel, this);
         }
     });
