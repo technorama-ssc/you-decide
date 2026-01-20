@@ -7,7 +7,7 @@ html, body {
 
 .content-wrapper {
     width: 100%;
-    padding: 40px 62px 80px 62px;
+    padding: 0; /* Abstände werden in Wrappern geregelt */
     box-sizing: border-box;
 }
 
@@ -16,11 +16,12 @@ html, body {
     height: 80px;
 }
 
-/* Jeder Titel + Panel in eigenem Wrapper */
+/* Wrapper für jeden Akkordeon-Titel + Panel */
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
-    padding: 0;
+    padding: 60px 62px; /* oben/unten 60px, links/rechts 62px */
+    box-sizing: border-box;
 }
 
 /* Titel */
@@ -49,5 +50,5 @@ html, body {
     line-height: 1.5;
     color: #ffffff;
     margin: 10px 0 0 0;
-    padding: 40px 62px 40px 62px; /* Text innerhalb des gelben Feldes */
+    padding: 0; /* Text innerhalb des gelben Feldes durch Wrapper-Padding */
 }
