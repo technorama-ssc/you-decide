@@ -3,32 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Du entscheidest / Opensource Website</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
+    <!-- Marked.js für Markdown → HTML -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head> 
+</head>
 <body>
 
 <div class="content-wrapper">
 
     <!-- YOU DECIDE -->
     <div class="accordion-wrapper">
-        <h1 class="accordion">YOU DECIDE</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition" data-images='["du-entscheidest.gif"]'>
+        <h1 class="accordion"></h1>
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition/README.md">
+            <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
     <!-- SYSTEM -->
     <div class="accordion-wrapper">
-        <h1 class="accordion">SYSTEM</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system" data-images='["system1.jpg","system2.png"]'>
+        <h1 class="accordion"></h1>
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/README.md">
+            <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
     <!-- EXHIBITS -->
     <div class="accordion-wrapper">
-        <h1 class="accordion">EXHIBITS</h1>
-        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits" data-images='["exhibit1.jpg","exhibit2.gif"]'>
+        <h1 class="accordion"></h1>
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/README.md">
+            <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
@@ -37,38 +40,27 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 
-// README + Bilder laden
-async function loadPanel(panel, titleElement) {
-    if (panel.dataset.loaded) return;
-
-    const folderUrl = panel.dataset.readmeUrl;
-    const imageFiles = JSON.parse(panel.dataset.images);
-
+// Funktion: Markdown von GitHub laden und ins Panel einfügen
+async function loadReadme(panel, titleElement) {
+    if (panel.dataset.loaded) return; // nur einmal laden
+    const url = panel.dataset.readmeUrl;
     try {
-        // README.md laden
-        const readmeResponse = await fetch(`${folderUrl}/README.md`);
-        let markdown = await readmeResponse.text();
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Fehler beim Laden der README");
+        let markdown = await response.text();
 
-        // Erste Zeile als Akkordeon-Titel
+        // Erste Überschrift als Titel nutzen
         const lines = markdown.split("\n");
-        if (lines[0].startsWith("# ")) {
-            titleElement.textContent = lines[0].replace("# ","").toUpperCase();
+        if(lines[0].startsWith("# ")) {
+            titleElement.textContent = lines[0].replace("# ", "").toUpperCase();
             lines.shift(); // erste Zeile entfernen
         }
 
-        panel.innerHTML = marked.parse(lines.join("\n"));
-
-        // Bilder einfügen
-        imageFiles.forEach(file => {
-            const img = document.createElement("img");
-            img.src = `${folderUrl}/${file}`;
-            img.onerror = () => img.remove(); // Broken images vermeiden
-            panel.appendChild(img);
-        });
-
+        markdown = lines.join("\n");
+        panel.innerHTML = marked.parse(markdown);
         panel.dataset.loaded = "true";
-    } catch(err) {
-        panel.innerHTML = "<p style='color:red;'>Fehler beim Laden</p>";
+    } catch (err) {
+        panel.innerHTML = "<p style='color:red;'>Fehler beim Laden des Inhalts</p>";
         console.error(err);
     }
 }
@@ -99,12 +91,12 @@ for (var i = 0; i < acc.length; i++) {
             panel.style.color = "#ffffff";
         } else {
             panel.style.display = "block";
-            wrapper.style.backgroundColor = "#eaff00"; // gesamte Fläche gelb
+            wrapper.style.backgroundColor = "#eaff00";
             this.style.color = "#000000";
             panel.style.color = "#000000";
 
-            // README + Bilder laden
-            await loadPanel(panel, this);
+            // README laden und Titel setzen
+            await loadReadme(panel, this);
         }
     });
 }
