@@ -43,28 +43,29 @@ html, body {
     display: none;
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.4; /* kompakter */
     max-width: 800px;
     color: #000000;
     margin: 10px 0 0 0;
-    padding: 0;
+    padding: 20px 0 20px 0; /* kompakt */
     text-align: left;
-    -webkit-text-size-adjust: 100%; /* verhindert iOS Schrift-Skalierung */
+    -webkit-text-size-adjust: 100%; /* iOS */
 }
 
 /* Alle Panel-Kinder einheitlich */
 .panel * {
     font-family: 'RobotoMono', monospace !important;
     font-size: 16px !important;
-    line-height: 1.5 !important;
+    line-height: 1.4 !important;
 }
 
 /* ------------------ Bilder ------------------ */
 .panel img {
     max-width: 600px;
+    width: 100%;
     height: auto;
     display: block; /* linksbündig */
-    margin: 40px 0 0 0;
+    margin: 20px 0 0 0;
 }
 
 /* ------------------ Links ------------------ */
