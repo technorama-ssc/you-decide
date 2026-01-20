@@ -42,19 +42,25 @@ html, body {
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
     color: #ffffff;
     margin: 10px 0 0 0;
     padding: 0;
+    max-width: 800px; /* maximale Lauftextbreite */
     text-align: left; /* linksbündig für Text + Bilder */
+}
+
+/* Panel-Kinder inherit */
+.panel p, .panel li, .panel a, .panel h2, .panel h3 {
+    color: inherit;
 }
 
 /* ------------------ Bilder in Panels ------------------ */
 .panel img {
-    max-width: 600px; /* maximale Breite */
+    max-width: 600px; /* maximale Breite für Bilder */
     height: auto;      /* proportional */
-    display: block;    /* block-level → linksbündig */
+    display: block;    /* linksbündig */
     margin: 40px 0 0 0; /* Abstand oberhalb 40px */
 }
 
