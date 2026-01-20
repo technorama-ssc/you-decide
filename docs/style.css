@@ -1,26 +1,22 @@
-/* ------------------ Grundlegendes ------------------ */
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000000;
+    background: #000;
     font-family: 'RobotoMono', monospace;
 }
 
 .content-wrapper {
     width: 100%;
     padding: 0;
-    box-sizing: border-box;
 }
 
-/* ------------------ Wrapper ------------------ */
+/* Wrapper */
 .accordion-wrapper {
-    width: 100%;
     padding: 60px 62px;
     transition: background-color 0.3s;
-    box-sizing: border-box;
 }
 
-/* ------------------ Titel ------------------ */
+/* Titel */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -28,48 +24,34 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666;
+    color: #666;
     margin: 0;
-    padding: 0;
     transition: color 0.3s;
 }
 
 .accordion:hover {
-    color: #ffffff;
+    color: #fff;
 }
 
-/* ------------------ Panel ------------------ */
+/* Panel */
 .panel {
     display: none;
-    font-size: 14px;
-    line-height: 1.5;
     margin-top: 10px;
-    color: #ffffff;
+    color: #fff;
 }
 
-.panel p,
-.panel li,
-.panel a,
-.panel h2,
-.panel h3 {
-    font-size: 14px;
-    margin: 0 0 10px 0;
+/* Einheitliche Lauftextgröße für ALLES */
+.panel * {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
     color: inherit;
+    margin-bottom: 10px;
 }
 
-/* ------------------ Bilder ------------------ */
+/* Bilder */
 .panel img {
     max-width: 600px;
     height: auto;
     display: block;
     margin: 40px 0 0 0;
-}
-
-/* ------------------ Links ------------------ */
-.panel a {
-    text-decoration: underline;
-}
-
-.panel a:hover {
-    color: #222222;
 }
