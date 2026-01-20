@@ -7,19 +7,45 @@
 </head> 
 <body>
 
-    <!-- Wrapper für gelbe Fläche -->
     <div class="content-wrapper">
-        <!-- Großer Titel -->
+        <!-- Haupttitel -->
         <h1 class="accordion">YOU DECIDE</h1>
         <div class="panel">
             <p>
-                An exhibition on decisions and how to safe the World. 
+                An exhibition on decisions and how to save the World. 
                 <br><br> 
                 This is the new open-source platform for the “You Decide” exhibition.
                 <br>
                 All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.
                 <br>
                 The exhibition — and this website — will keep changing with you and us.
+            </p>
+        </div>
+
+        <!-- System -->
+        <h1 class="accordion">SYSTEM</h1>
+        <div class="panel">
+            <p>
+                Inhalt von System.  
+                Hier kannst du Informationen über die Systemstruktur und Funktionalitäten darstellen.
+            </p>
+        </div>
+
+        <!-- Exhibition -->
+        <h1 class="accordion">EXHIBITION</h1>
+        <div class="panel">
+            <p>
+                Inhalt von Exhibition.  
+                Hier kannst du Details zur Ausstellung, Termine oder allgemeine Infos zeigen.
+            </p>
+        </div>
+
+        <!-- Exhibits -->
+        <h1 class="accordion">EXHIBITS</h1>
+        <div class="panel">
+            <p>
+                Inhalt von Exhibits.  
+                Zeigt alle Exponate, die heruntergeladen oder betrachtet werden können.
             </p>
         </div>
     </div>
@@ -34,13 +60,15 @@
                 var panel = this.nextElementSibling;
 
                 if (panel.style.display === "block") {
+                    // Panel schließen → alles zurücksetzen
                     panel.style.display = "none";
                     wrapper.style.backgroundColor = "transparent";
                     this.style.color = "#666666"; // Titel 40% Grau
                     panel.style.color = "#ffffff"; // Text weiß
                 } else {
+                    // Panel öffnen → Wrapper gelb
                     panel.style.display = "block";
-                    wrapper.style.backgroundColor = "#eaff00"; // Hintergrund Gelb
+                    wrapper.style.backgroundColor = "#eaff00";
                     this.style.color = "#000000"; // Titel schwarz
                     panel.style.color = "#000000"; // Text schwarz
                 }
