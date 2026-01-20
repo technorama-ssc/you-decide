@@ -7,13 +7,8 @@ html, body {
 
 .content-wrapper {
     width: 100%;
-    padding: 0; /* Abstände werden in Wrappern geregelt */
+    padding: 0; /* Abstand in Wrappern */
     box-sizing: border-box;
-}
-
-/* Abstand zwischen Titeln */
-.spacer {
-    height: 80px;
 }
 
 /* Wrapper für jeden Akkordeon-Titel + Panel */
@@ -49,6 +44,6 @@ html, body {
     font-size: 14px;
     line-height: 1.5;
     color: #ffffff;
-    margin: 10px 0 0 0;
-    padding: 0; /* Text innerhalb des gelben Feldes durch Wrapper-Padding */
+    margin: 10px 0 0 0; /* kleiner Abstand oben zwischen Titel und Text */
+    padding: 0; /* Text bleibt innerhalb des gelben Feldes durch Wrapper-Padding */
 }
