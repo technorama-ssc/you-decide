@@ -2,17 +2,16 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #000000;
-    color: #ffffff;
     font-family: 'RobotoMono', monospace;
 }
 
 .content-wrapper {
-    background-color: transparent;
+    position: relative;          /* für die volle Breite und absolute Positionierung */
     width: 100%;
+    background-color: transparent;
     transition: background-color 0.3s;
-    padding: 40px 62px 80px 62px; /* oben 40px, links/rechts 62px, unten 80px */
+    padding: 40px 62px 80px 62px; /* Textabstand: oben 40px, links/rechts 62px, unten 80px */
     box-sizing: border-box;
-    overflow: hidden; /* wichtig gegen Margin-Collapsing */
 }
 
 .accordion {
@@ -24,7 +23,7 @@ html, body {
     border: none;
     color: #666666; /* 40% Grau */
     transition: color 0.3s;
-    margin: 0; /* kein Margin oben */
+    margin: 0; /* kein Margin */
     padding: 0;
 }
 
