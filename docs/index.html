@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>Du entscheidest / Opensource Website</title>
     <link rel="stylesheet" href="style.css"> 
-    <!-- Marked.js für Markdown → HTML -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head> 
 <body>
@@ -15,7 +14,6 @@
     <div class="accordion-wrapper">
         <h1 class="accordion">YOU DECIDE</h1>
         <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition/README.md">
-            <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
@@ -23,7 +21,6 @@
     <div class="accordion-wrapper">
         <h1 class="accordion">SYSTEM</h1>
         <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/README.md">
-            <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
@@ -31,7 +28,6 @@
     <div class="accordion-wrapper">
         <h1 class="accordion">EXHIBITS</h1>
         <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/README.md">
-            <!-- Inhalt wird dynamisch geladen -->
         </div>
     </div>
 
@@ -40,28 +36,38 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 
-// Funktion: Markdown von GitHub laden und ins Panel einfügen
-async function loadReadme(panel) {
-    if (panel.dataset.loaded) return; // Nur einmal laden
+// Funktion: Markdown laden und Panel füllen, erste Zeile als Titel nutzen
+async function loadReadme(panel, titleElement) {
+    if (panel.dataset.loaded) return; // nur einmal laden
     const url = panel.dataset.readmeUrl;
     try {
         const response = await fetch(url);
         if (!response.ok) throw new Error("Fehler beim Laden der README");
-        const markdown = await response.text();
+        let markdown = await response.text();
+
+        // Erste Zeile prüfen (# TITEL)
+        const lines = markdown.split("\n");
+        if (lines[0].startsWith("# ")) {
+            titleElement.textContent = lines[0].replace("# ", "").toUpperCase();
+            lines.shift(); // erste Zeile entfernen → nicht im Panel
+        }
+
+        markdown = lines.join("\n");
         panel.innerHTML = marked.parse(markdown);
-        panel.dataset.loaded = "true"; // markieren, dass geladen
+        panel.dataset.loaded = "true";
     } catch (err) {
         panel.innerHTML = "<p style='color:red;'>Fehler beim Laden des Inhalts</p>";
         console.error(err);
     }
 }
 
+// Akkordeon-Logik
 for (var i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", async function() {
         var wrapper = this.parentElement;
         var panel = this.nextElementSibling;
 
-        // Alle Panels schließen
+        // Alle anderen Panels schließen
         for (var j = 0; j < acc.length; j++) {
             var otherWrapper = acc[j].parentElement;
             var otherPanel = acc[j].nextElementSibling;
@@ -85,8 +91,8 @@ for (var i = 0; i < acc.length; i++) {
             this.style.color = "#000000";
             panel.style.color = "#000000";
 
-            // README dynamisch laden
-            await loadReadme(panel);
+            // README laden und Titel setzen
+            await loadReadme(panel, this);
         }
     });
 }
