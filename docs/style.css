@@ -17,7 +17,7 @@
     color: #ffffff; /* Standardfarbe weiß */
     font-family: 'RobotoMono', monospace; /* Standard-Lauftext */
     text-align: left; /* alles linksbündig */
-    padding:  38px 125px 80px 125px;
+    padding: 50px;
 }
 
 /* ------------------ TITEL ------------------ */ .accordion {
