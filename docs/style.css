@@ -38,7 +38,7 @@
 /* ------------------ PANEL / LAUFTEXT ------------------ */ .panel {
     display: none; /* anfänglich versteckt */
     font-family: 'RobotoMono', monospace; /* Roboto Mono für Lauftext */
-    font-size: 10px;
+    font-size: 14px;
     line-height: 1.5;
     color: #ffffff; /* Lauftext weiß */
     background: none;
