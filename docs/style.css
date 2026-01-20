@@ -1,47 +1,74 @@
-/* ------------------ SCHRIFTEN ------------------ */
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Meine Website</title>
 
-/* Roboto Mono für Fließtext */
-@font-face {
-    font-family: 'RobotoMono';
-    src: url('assets/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
-    font-weight: normal;
-}
+    <!-- CSS einbinden -->
+    <link rel="stylesheet" href="style.css">
 
-/* Pixel-2 für große Titel */
-@font-face {
-    font-family: 'Pixel2';
-    src: url('assets/fonts/pixel-2.ttf') format('truetype');
-    font-weight: normal;
-}
+    <style>
+        /* ------------------ GRUNDEINSTELLUNG ------------------ */
+        body {
+            background-color: #000000; /* schwarzer Hintergrund */
+            color: #ffffff; /* weiße Schrift */
+            font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift für Titel */
+            margin: 0;
+            padding: 50px;
+            text-align: center;
+        }
 
-/* ------------------ ALLGEMEIN ------------------ */ body {
-    font-family: 'RobotoMono', monospace; /* Standardtext */
-    background-color: #ffffff;
-    color: #000000;
-    padding: 20px;
-}
+        /* ------------------ TITEL / ACCORDION ------------------ */
+        .accordion {
+            font-size: 60px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: none; /* kein Hintergrund */
+            border: none; /* kein Rahmen */
+            color: #ffffff; /* Standardfarbe weiß */
+            transition: color 0.3s; /* sanfter Farbwechsel */
+            margin: 20px 0;
+        }
 
-/* ------------------ ACCORDION / TITEL ------------------ */ .accordion {
-    font-family: 'Pixel2', sans-serif; /* Pixel2 Schrift für Titel */
-    font-size: 40px;
-    text-transform: uppercase;
-    cursor: pointer;
-    background-color: #ffffff;
-    padding: 10px;
-    border: 0px solid #ccc;
-    margin-top: 5px;
-    transition: background-color 0.3s;
-}
+        .accordion:hover {
+            color: #eaff00; /* Neongelb bei Mouseover */
+        }
 
-.accordion:hover {
-    background-color: #ffe700;
-}
+        /* ------------------ PANEL / LAUFTEXT ------------------ */
+        .panel {
+            display: none; /* anfänglich versteckt */
+            color: #ffffff; /* Lauftext in weiß */
+            background: none; /* kein Hintergrund */
+            border: none; /* kein Rahmen */
+            padding: 10px 0; /* etwas Abstand oben/unten */
+            font-size: 20px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
 
-/* ------------------ PANEL / INHALT ------------------ */ .panel {
-    padding: 0 10px;
-    display: none; /* versteckt bis der Titel geklickt wird */
-    background-color: #ffe700;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-}
+    <!-- Großer Titel -->
+    <h1 class="accordion">YOU DECIDE</h1>
+    <div class="panel">
+        <p>Hier kannst du später Inhalte einfügen.</p>
+    </div>
+
+    <!-- JavaScript für Klick-Funktion -->
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
