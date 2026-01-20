@@ -1,4 +1,5 @@
-/* ------------------ SCHRIFTEN ------------------ */ @font-face {
+/* ------------------ SCHRIFTEN ------------------ */ 
+@font-face {
     font-family: 'Pixel2';
     src: url('../assets/fonts/pixel-2.ttf') format('truetype');
     font-weight: normal;
@@ -10,38 +11,56 @@
     font-weight: normal;
 }
 
-/* ------------------ GRUNDEINSTELLUNG ------------------ */ html, body {
+/* ------------------ GRUNDEINSTELLUNG ------------------ */ 
+html, body {
     height: 100%;
     margin: 0;
     background-color: #000000; /* schwarzer Hintergrund */
     color: #ffffff; /* Standardfarbe weiß */
     font-family: 'RobotoMono', monospace; /* Standard-Lauftext */
-    text-align: left; /* alles linksbündig */
+    text-align: left;
     padding: 40px;
 }
 
-/* ------------------ TITEL ------------------ */ .accordion {
+/* ------------------ TITEL ------------------ */ 
+.accordion {
     font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
     font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
     background: none;
     border: none;
-    color: #ffffff; /* Standardfarbe weiß */
-    transition: color 0.3s;
+    color: #808080; /* Standard 50% Grau */
+    transition: color 0.3s, background-color 0.3s;
     margin: 0px 0px 0px 0px;
+    padding: 10px;
 }
 
 .accordion:hover {
-    color: #eaff00; /* Neongelb bei Mouseover */ }
+    color: #ffffff; /* Weiß bei Mouseover */
+}
 
-/* ------------------ PANEL / LAUFTEXT ------------------ */ .panel {
+/* Aktiv-Zustand nach Klick */
+.accordion.active {
+    background-color: #eaff00; /* Neongelb */
+    color: #000000; /* Titel schwarz */
+}
+
+/* ------------------ PANEL / LAUFTEXT ------------------ */ 
+.panel {
     display: none; /* anfänglich versteckt */
-    font-family: 'RobotoMono', monospace; /* Roboto Mono für Lauftext */
+    font-family: 'RobotoMono', monospace;
     font-size: 14px;
     line-height: 1.5;
-    color: #ffffff; /* Lauftext weiß */
+    color: #ffffff; /* Standard Text weiß */
     background: none;
     border: none;
     margin-bottom: 30px;
+    padding: 10px;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+/* Panel-Text schwarz, wenn der Titel aktiv ist */
+.accordion.active + .panel {
+    color: #000000; 
 }
