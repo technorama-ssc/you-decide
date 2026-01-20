@@ -24,7 +24,7 @@ html, body {
 
 /* ------------------ TITEL ------------------ */ 
 .accordion {
-    font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
+    font-family: 'Pixel2', monospace; /* Pixel-2 Schrift */
     font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
