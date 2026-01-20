@@ -78,8 +78,8 @@ for (var i = 0; i < acc.length; i++) {
             if (otherWrapper !== wrapper) {
                 otherPanel.style.display = "none";
                 otherWrapper.style.backgroundColor = "transparent";
-                acc[j].style.color = "#666666";
-                otherPanel.style.color = "#ffffff";
+                acc[j].style.color = "#666666"; // Titel grau
+                otherPanel.style.color = "#ffffff"; // Text weiß
             }
         }
 
@@ -87,13 +87,13 @@ for (var i = 0; i < acc.length; i++) {
         if (panel.style.display === "block") {
             panel.style.display = "none";
             wrapper.style.backgroundColor = "transparent";
-            this.style.color = "#666666";
-            panel.style.color = "#ffffff";
+            this.style.color = "#666666"; // Titel grau
+            panel.style.color = "#ffffff"; // Text weiß
         } else {
             panel.style.display = "block";
-            wrapper.style.backgroundColor = "#eaff00";
-            this.style.color = "#000000";
-            panel.style.color = "#000000";
+            wrapper.style.backgroundColor = "#eaff00"; // gelber Hintergrund
+            this.style.color = "#000000"; // Titel schwarz
+            panel.style.color = "#000000"; // Text schwarz
 
             // README laden und Titel setzen
             await loadReadme(panel, this);
