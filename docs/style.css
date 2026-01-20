@@ -16,7 +16,7 @@ html, body {
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
-    padding: 60px 62px;
+    padding: 60px 62px; /* oben/unten 60px, links/rechts 62px */
     box-sizing: border-box;
 }
 
@@ -28,14 +28,14 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666;
+    color: #666666; /* Standard grau */
     transition: color 0.3s;
     margin: 0;
     padding: 0;
 }
 
 .accordion:hover {
-    color: #ffffff;
+    color: #ffffff; /* Mouseover Weiß */
 }
 
 /* ------------------ Panel / Text ------------------ */
@@ -47,22 +47,23 @@ html, body {
     color: #ffffff;
     margin: 10px 0 0 0;
     padding: 0;
-    text-align: left;
+    text-align: left; /* linksbündig für Text + Bilder */
 }
 
+/* Markdown-Elemente übernehmen Panel-Farbe */
 .panel p, .panel li, .panel a, .panel h2, .panel h3 {
     color: inherit;
 }
 
-/* ------------------ Bilder ------------------ */
+/* ------------------ Bilder in Panels ------------------ */
 .panel img {
     max-width: 600px;
     height: auto;
-    display: block; /* linksbündig */
+    display: block;
     margin: 40px 0 0 0;
 }
 
-/* ------------------ Links ------------------ */
+/* ------------------ Links in Panels ------------------ */
 .panel a {
     color: inherit;
     text-decoration: underline;
