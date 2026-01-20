@@ -8,61 +8,68 @@
 <body>
 
     <div class="content-wrapper">
-        <!-- Haupttitel -->
-        <h1 class="accordion">YOU DECIDE</h1>
-        <div class="panel">
-            <p>
-                An exhibition on decisions and how to save the World. 
-                <br><br> 
-                This is the new open-source platform for the “You Decide” exhibition.
-                <br>
-                All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.
-                <br>
-                The exhibition — and this website — will keep changing with you and us.
-            </p>
+
+        <!-- YOU DECIDE -->
+        <div class="accordion-wrapper">
+            <h1 class="accordion">YOU DECIDE</h1>
+            <div class="panel">
+                <p>
+                    An exhibition on decisions and how to save the World. 
+                    <br><br> 
+                    This is the new open-source platform for the “You Decide” exhibition.
+                    <br>
+                    All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.
+                    <br>
+                    The exhibition — and this website — will keep changing with you and us.
+                </p>
+            </div>
         </div>
 
-        <!-- Abstand zwischen YOU DECIDE und den anderen Titeln -->
+        <!-- Spacer zwischen Titeln -->
         <div class="spacer"></div>
 
-        <!-- System -->
-        <h1 class="accordion">SYSTEM</h1>
-        <div class="panel">
-            <p>
-                Inhalt von SYSTEM.  
-                <a href="01-system/">Zur SYSTEM-Seite</a>
-            </p>
+        <!-- SYSTEM -->
+        <div class="accordion-wrapper">
+            <h1 class="accordion">SYSTEM</h1>
+            <div class="panel">
+                <p>
+                    Inhalt von SYSTEM.  
+                </p>
+            </div>
         </div>
 
-        <!-- Exhibits -->
-        <h1 class="accordion">EXHIBITS</h1>
-        <div class="panel">
-            <p>
-                Inhalt von EXHIBITS.  
-                <a href="03-exhibits/">Zur EXHIBITS-Seite</a>
-            </p>
+        <div class="spacer"></div>
+
+        <!-- EXHIBITS -->
+        <div class="accordion-wrapper">
+            <h1 class="accordion">EXHIBITS</h1>
+            <div class="panel">
+                <p>
+                    Inhalt von EXHIBITS.  
+                </p>
+            </div>
         </div>
+
     </div>
 
     <script>
         var acc = document.getElementsByClassName("accordion");
-        var wrapper = document.querySelector(".content-wrapper");
 
         for (var i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
+                var wrapper = this.parentElement; // nur der aktuelle wrapper
                 var panel = this.nextElementSibling;
 
                 if (panel.style.display === "block") {
-                    // Panel schließen → alles zurücksetzen
+                    // Panel schließen
                     panel.style.display = "none";
                     wrapper.style.backgroundColor = "transparent";
-                    this.style.color = "#666666"; // Titel 40% Grau
+                    this.style.color = "#666666"; // Titel grau
                     panel.style.color = "#ffffff"; // Text weiß
                 } else {
-                    // Panel öffnen → Wrapper gelb
+                    // Panel öffnen
                     panel.style.display = "block";
-                    wrapper.style.backgroundColor = "#eaff00"; 
+                    wrapper.style.backgroundColor = "#eaff00"; // nur aktueller Wrapper gelb
                     this.style.color = "#000000"; // Titel schwarz
                     panel.style.color = "#000000"; // Text schwarz
                 }
