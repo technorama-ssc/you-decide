@@ -44,10 +44,15 @@ html, body {
     font-family: 'RobotoMono', monospace;
     font-size: 14px;
     line-height: 1.5;
-    color: #ffffff;
+    color: #ffffff !important; /* Text standardmäßig weiß */
     margin: 10px 0 0 0;
     padding: 0;
-    text-align: left; /* linksbündig für Text + Bilder */
+    text-align: left; /* linksbündig */
+}
+
+/* Markdown-Elemente übernehmen die Panel-Farbe */
+.panel p, .panel li, .panel a, .panel h2, .panel h3 {
+    color: inherit;
 }
 
 /* ------------------ Bilder in Panels ------------------ */
@@ -60,7 +65,7 @@ html, body {
 
 /* ------------------ Links in Panels ------------------ */
 .panel a {
-    color: #000000; /* aktive Panel-Links schwarz auf gelbem Hintergrund */
+    color: inherit; /* Textfarbe entsprechend Panel */
     text-decoration: underline;
 }
 
