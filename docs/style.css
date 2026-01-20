@@ -38,20 +38,25 @@ html, body {
     color: #ffffff;
 }
 
-/* ------------------ Panel / Text ------------------ */
+/* ------------------ Panel / Lauftext ------------------ */
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.5;
-    color: #ffffff;
+    max-width: 800px;
+    color: #000000;
     margin: 10px 0 0 0;
     padding: 0;
     text-align: left;
+    -webkit-text-size-adjust: 100%; /* verhindert iOS Schrift-Skalierung */
 }
 
-.panel p, .panel li, .panel a, .panel h2, .panel h3 {
-    color: inherit;
+/* Alle Panel-Kinder einheitlich */
+.panel * {
+    font-family: 'RobotoMono', monospace !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
 }
 
 /* ------------------ Bilder ------------------ */
