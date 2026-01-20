@@ -23,12 +23,12 @@
 
 /* ------------------ ACCORDION / TITEL ------------------ */ .accordion {
     font-family: 'Pixel2', sans-serif; /* Pixel2 Schrift für Titel */
-    font-size: 60px;
+    font-size: 40px;
     text-transform: uppercase;
     cursor: pointer;
     background-color: #ffffff;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 0px solid #ccc;
     margin-top: 5px;
     transition: background-color 0.3s;
 }
