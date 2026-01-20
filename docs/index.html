@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Du entscheidest / Opensource Website</title>
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head> 
+</head>
 <body>
 
 <div class="content-wrapper">
 
+    <!-- YOU DECIDE -->
     <div class="accordion-wrapper">
         <h1 class="accordion">YOU DECIDE</h1>
         <div class="panel" data-folder="02%20exhibition"></div>
     </div>
 
+    <!-- SYSTEM -->
     <div class="accordion-wrapper">
         <h1 class="accordion">SYSTEM</h1>
         <div class="panel" data-folder="01%20system"></div>
     </div>
 
+    <!-- EXHIBITS -->
     <div class="accordion-wrapper">
         <h1 class="accordion">EXHIBITS</h1>
         <div class="panel" data-folder="03%20exhibits"></div>
@@ -30,16 +33,15 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 
-// README + Autobilder
+// README + Bilder laden
 async function loadPanel(panel, titleElement) {
     if (panel.dataset.loaded === "true") return;
 
     const folder = panel.dataset.folder;
-
     const rawBase = `https://raw.githubusercontent.com/technorama-ssc/you-decide/main/${folder}`;
     const treeUrl = `https://github.com/technorama-ssc/you-decide/tree/main/${folder}`;
 
-    /* README laden */
+    // README laden
     try {
         const resp = await fetch(`${rawBase}/README.md`);
         let md = await resp.text();
@@ -55,57 +57,60 @@ async function loadPanel(panel, titleElement) {
         panel.innerHTML = "<p style='color:red;'>README konnte nicht geladen werden.</p>";
     }
 
-    /* Bilder automatisch laden */
+    // Bilder automatisch laden
     try {
         const htmlResp = await fetch(treeUrl);
         const html = await htmlResp.text();
 
+        // Alle png/jpg/jpeg/gif im Ordner erkennen
         const imageRegex = /\/main\/[^"]+\.(png|jpg|jpeg|gif)/gi;
         const matches = html.match(imageRegex) || [];
 
         matches.forEach(path => {
             const cleanPath = path.split("/main/")[1];
             const imgUrl = `${rawBase}/${cleanPath}`;
-
             const img = document.createElement("img");
             img.src = imgUrl;
-            img.onerror = () => img.remove();
+            img.onerror = () => img.remove(); // Broken images vermeiden
             panel.appendChild(img);
         });
 
     } catch (e) {
-        console.error("Bildfehler:", e);
+        console.error("Fehler beim Laden der Bilder:", e);
     }
 
     panel.dataset.loaded = "true";
 }
 
-// Akkordeon
+// Akkordeon-Logik: nur ein Panel offen
 for (let i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", async function() {
         const wrapper = this.parentElement;
         const panel = this.nextElementSibling;
 
+        // andere Panels schließen
         for (let j = 0; j < acc.length; j++) {
             const otherWrapper = acc[j].parentElement;
             const otherPanel = acc[j].nextElementSibling;
             if (otherWrapper !== wrapper) {
                 otherPanel.style.display = "none";
                 otherWrapper.style.backgroundColor = "transparent";
-                acc[j].style.color = "#666";
-                otherPanel.style.color = "#fff";
+                acc[j].style.color = "#666666";
+                otherPanel.style.color = "#ffffff";
             }
         }
 
+        // aktuelles Panel öffnen/schließen
         if (panel.style.display === "block") {
             panel.style.display = "none";
             wrapper.style.backgroundColor = "transparent";
-            this.style.color = "#666";
+            this.style.color = "#666666";
+            panel.style.color = "#ffffff";
         } else {
             panel.style.display = "block";
             wrapper.style.backgroundColor = "#eaff00";
-            this.style.color = "#000";
-            panel.style.color = "#000";
+            this.style.color = "#000000";
+            panel.style.color = "#000000";
             await loadPanel(panel, this);
         }
     });
