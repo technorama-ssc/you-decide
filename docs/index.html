@@ -25,7 +25,7 @@
                     <a href="https://github.com/technorama-ssc/you-decide/tree/main/02%20exhibition" target="_blank">General information and materials on the exhibition</a>
                 </p>
 
-                <!-- GIF direkt ins Panel -->
+                <!-- GIF direkt ins Panel, linksbündig -->
                 <img src="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition/du-entscheidest.gif" alt="Du Entscheidest GIF" />
             </div>
         </div>
@@ -61,10 +61,10 @@
 
         for (var i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function() {
-                var wrapper = this.parentElement; // aktueller Wrapper
+                var wrapper = this.parentElement;
                 var panel = this.nextElementSibling;
 
-                // Zuerst alle Panels schließen
+                // Alle Panels schließen
                 for (var j = 0; j < acc.length; j++) {
                     var otherWrapper = acc[j].parentElement;
                     var otherPanel = acc[j].nextElementSibling;
@@ -72,12 +72,12 @@
                     if (otherWrapper !== wrapper) {
                         otherPanel.style.display = "none";
                         otherWrapper.style.backgroundColor = "transparent";
-                        acc[j].style.color = "#666666"; // Titel grau
-                        otherPanel.style.color = "#ffffff"; // Text weiß
+                        acc[j].style.color = "#666666";
+                        otherPanel.style.color = "#ffffff";
                     }
                 }
 
-                // Dann das angeklickte Panel öffnen oder schließen
+                // Aktuelles Panel öffnen oder schließen
                 if (panel.style.display === "block") {
                     panel.style.display = "none";
                     wrapper.style.backgroundColor = "transparent";
