@@ -41,7 +41,7 @@ async function loadPanel(panel, titleElement) {
     if (panel.dataset.loaded) return;
 
     const folderUrl = panel.dataset.readmeUrl;
-    const imageFiles = JSON.parse(panel.dataset.images);
+    const imageFiles = JSON.parse(panel.dataset.images || "[]");
 
     try {
         // README.md laden
@@ -57,12 +57,15 @@ async function loadPanel(panel, titleElement) {
 
         panel.innerHTML = marked.parse(lines.join("\n"));
 
-        // Bilder einfügen
-        imageFiles.forEach(file => {
-            const img = document.createElement("img");
-            img.src = `${folderUrl}/${file}`;
-            panel.appendChild(img);
-        });
+        // Bilder einfügen, nur wenn vorhanden
+        if (imageFiles.length > 0) {
+            imageFiles.forEach(file => {
+                const img = document.createElement("img");
+                img.src = `${folderUrl}/${file}`;
+                img.onerror = () => img.remove(); // entfernt Broken Images
+                panel.appendChild(img);
+            });
+        }
 
         panel.dataset.loaded = "true";
     } catch(err) {
@@ -71,7 +74,7 @@ async function loadPanel(panel, titleElement) {
     }
 }
 
-// Akkordeon-Funktion
+// Akkordeon-Logik
 for (var i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", async function() {
         var wrapper = this.parentElement;
