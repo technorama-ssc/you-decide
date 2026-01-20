@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Du entscheidest / Opensource Website</title>
-    <!-- CSS einbinden -->
     <link rel="stylesheet" href="style.css"> 
 </head> 
 <body>
@@ -25,7 +24,6 @@
         </div>
     </div>
 
-    <!-- JavaScript für Klick-Funktion -->
     <script>
         var acc = document.getElementsByClassName("accordion");
         var wrapper = document.querySelector(".content-wrapper");
@@ -38,4 +36,19 @@
                 if (panel.style.display === "block") {
                     // Panel schließen → alles zurücksetzen
                     panel.style.display = "none";
-                    wrapper.style.backgroundColor = "transparent"; // Wrapper durchsichtig
+                    wrapper.style.backgroundColor = "transparent"; 
+                    this.style.color = "#666666"; // Titel 40% Grau
+                    panel.style.color = "#ffffff"; // Text weiß
+                } else {
+                    // Panel öffnen → Wrapper gelb
+                    panel.style.display = "block";
+                    wrapper.style.backgroundColor = "#eaff00"; 
+                    this.style.color = "#000000"; // Titel schwarz
+                    panel.style.color = "#000000"; // Text schwarz
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
