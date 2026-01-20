@@ -64,7 +64,6 @@ html, body {
     text-decoration: underline;
 }
 
-/* Optional: hover für Links */
 .panel a:hover {
     color: #333333;
 }
