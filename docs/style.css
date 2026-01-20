@@ -77,3 +77,14 @@ html, body {
 .panel a:hover {
     color: #333333;
 }
+
+/* ------------------ Responsive für Smartphones ------------------ */
+@media screen and (max-width: 768px) {
+    .accordion {
+        font-size: 40px; /* Titel 50% kleiner */
+    }
+    .panel, .panel * {
+        font-size: 8px !important; /* Lauftext 50% kleiner */
+        line-height: 1.2 !important;
+    }
+}
