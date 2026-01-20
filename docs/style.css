@@ -50,21 +50,25 @@ html, body {
     text-align: left; /* linksbündig für Text + Bilder */
 }
 
+/* Markdown-Elemente übernehmen Panel-Farbe */
+.panel p, .panel li, .panel a, .panel h2, .panel h3 {
+    color: inherit;
+}
+
 /* ------------------ Bilder in Panels ------------------ */
 .panel img {
-    max-width: 600px; /* maximale Breite */
-    height: auto;      /* proportional */
-    display: block;    /* block-level → linksbündig */
-    margin: 40px 0 0 0; /* Abstand oberhalb 40px */
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 40px 0 0 0;
 }
 
 /* ------------------ Links in Panels ------------------ */
 .panel a {
-    color: #000000; /* aktive Panel-Links schwarz auf gelbem Hintergrund */
+    color: inherit;
     text-decoration: underline;
 }
 
-/* Optional: hover für Links */
 .panel a:hover {
     color: #333333;
 }
