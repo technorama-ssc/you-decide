@@ -16,17 +16,6 @@ html, body {
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
-    padding: 0; /* Padding jetzt in Panel/Titel */
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center; /* Text zentrieren */
-}
-
-/* Titel + Panel max-width */
-.accordion-wrapper > .accordion,
-.accordion-wrapper > .panel {
-    max-width: 800px;
-    width: 100%;
     padding: 60px 62px;
     box-sizing: border-box;
 }
@@ -57,7 +46,7 @@ html, body {
     line-height: 1.4;
     max-width: 800px;
     color: #000000;
-    margin: 0;
+    margin: 10px 0 0 0;
     padding: 20px 0 20px 0;
     text-align: left;
     -webkit-text-size-adjust: 100%;
