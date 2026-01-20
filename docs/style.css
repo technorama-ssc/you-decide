@@ -42,7 +42,7 @@ html, body {
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
-    font-size: 14px;
+    font-size: 14px; /* Einheitlich für alle Panels */
     line-height: 1.5;
     color: #ffffff;
     margin: 10px 0 0 0;
@@ -50,8 +50,12 @@ html, body {
     text-align: left;
 }
 
+/* Einheitliche Markdown-Tags */
 .panel p, .panel li, .panel a, .panel h2, .panel h3 {
+    font-size: 14px;
+    line-height: 1.5;
     color: inherit;
+    margin: 0 0 10px 0;
 }
 
 /* ------------------ Bilder ------------------ */
