@@ -13,50 +13,46 @@
 
 /* ------------------ GRUNDEINSTELLUNG ------------------ */ 
 html, body {
-    height: 100%;
     margin: 0;
-    background-color: #000000; /* schwarzer Hintergrund */
-    color: #ffffff; /* Standardfarbe weiß */
-    font-family: 'RobotoMono', monospace; /* Standard-Lauftext */
-    text-align: left;
-    padding: 0; /* Wir steuern Padding über Wrapper */
+    padding: 0;
+    background-color: #000000; /* Schwarzer Hintergrund */
+    color: #ffffff;
+    font-family: 'RobotoMono', monospace;
 }
 
 /* ------------------ WRAPPER ------------------ */
 .content-wrapper {
     background-color: transparent; /* Standard durchsichtig */
+    margin: 0;
     padding: 0 0 80px 0; /* oben 0, links/rechts 0, unten 80px */
-    transition: background-color 0.3s; /* sanftes Überblenden */
-    margin: 0; /* keine Ränder */
+    transition: background-color 0.3s;
 }
 
 /* ------------------ TITEL ------------------ */ 
 .accordion {
-    font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
+    font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666; /* Standard 40% Grau */
+    color: #666666; /* 40% Grau */
     transition: color 0.3s;
     margin: 0;
-    padding: 10px;
+    padding: 10px 40px; /* Padding links/rechts für Abstand */
 }
 
 .accordion:hover {
-    color: #ffffff; /* Weiß bei Mouseover */
+    color: #ffffff;
 }
 
 /* ------------------ PANEL / LAUFTEXT ------------------ */ 
 .panel {
-    display: none; /* anfänglich versteckt */
+    display: none;
     font-family: 'RobotoMono', monospace;
     font-size: 14px;
     line-height: 1.5;
-    color: #ffffff; /* Standard Text weiß */
-    background: none;
-    border: none;
-    margin: 0 0 0 0;
-    padding: 10px;
+    color: #ffffff;
+    margin: 0;
+    padding: 10px 40px; /* Padding links/rechts passend zum Titel */
 }
