@@ -2,19 +2,19 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Du entscheidest / Opensource Website</title>
+    <title>Meine Website</title>
 
     <!-- CSS einbinden -->
     <link rel="stylesheet" href="style.css">
 
     <style>
         /* ------------------ GRUNDEINSTELLUNG ------------------ */
-        body {
-            background-color: #000000; /* schwarzer Hintergrund */
-            color: #ffffff; /* weiße Schrift */
-            font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift für Titel */
+        html, body {
+            height: 100%;
             margin: 0;
-            padding: 50px;
+            background-color: #000000; /* kompletter schwarzer Hintergrund */
+            color: #ffffff; /* Standardfarbe weiß für alle Texte */
+            font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift für Titel */
             text-align: center;
         }
 
@@ -27,7 +27,7 @@
             border: none; /* kein Rahmen */
             color: #ffffff; /* Standardfarbe weiß */
             transition: color 0.3s; /* sanfter Farbwechsel */
-            margin: 20px 0;
+            margin: 50px 0 20px 0;
         }
 
         .accordion:hover {
@@ -37,12 +37,12 @@
         /* ------------------ PANEL / LAUFTEXT ------------------ */
         .panel {
             display: none; /* anfänglich versteckt */
-            color: #ffffff; /* Lauftext in weiß */
+            color: #ffffff; /* Textfarbe weiß */
             background: none; /* kein Hintergrund */
             border: none; /* kein Rahmen */
-            padding: 10px 0; /* etwas Abstand oben/unten */
-            font-size: 20px;
+            font-size: 24px;
             line-height: 1.5;
+            margin-bottom: 50px;
         }
     </style>
 </head>
@@ -72,3 +72,4 @@
 
 </body>
 </html>
+
