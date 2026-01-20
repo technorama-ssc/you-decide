@@ -1,54 +1,58 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>Du entscheidest / Opensource Website</title>
-    <link rel="stylesheet" href="style.css"> 
-</head> 
-<body>
+/* ------------------ SCHRIFTEN ------------------ */ 
+@font-face {
+    font-family: 'Pixel2';
+    src: url('../assets/fonts/pixel-2.ttf') format('truetype');
+    font-weight: normal;
+}
 
-    <!-- Wrapper für gelbe Fläche -->
-    <div class="content-wrapper">
-        <!-- Großer Titel -->
-        <h1 class="accordion">YOU DECIDE</h1>
-        <div class="panel">
-            <p>
-                An exhibition on decisions and how to safe the World. 
-                <br><br> 
-                This is the new open-source platform for the “You Decide” exhibition.
-                <br>
-                All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.
-                <br>
-                The exhibition — and this website — will keep changing with you and us.
-            </p>
-        </div>
-    </div>
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('../assets/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+}
 
-    <script>
-        var acc = document.getElementsByClassName("accordion");
-        var wrapper = document.querySelector(".content-wrapper");
+/* ------------------ GRUNDEINSTELLUNG ------------------ */ 
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000; /* Schwarzer Hintergrund */
+    color: #ffffff;
+    font-family: 'RobotoMono', monospace;
+}
 
-        for (var i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
+/* ------------------ WRAPPER ------------------ */
+.content-wrapper {
+    background-color: transparent; /* Standard durchsichtig */
+    margin: 0;
+    padding: 0 0 80px 0; /* oben 0, links/rechts 0, unten 80px */
+    transition: background-color 0.3s;
+}
 
-                if (panel.style.display === "block") {
-                    // Panel schließen → alles zurücksetzen
-                    panel.style.display = "none";
-                    wrapper.style.backgroundColor = "transparent"; 
-                    this.style.color = "#666666"; // Titel 40% Grau
-                    panel.style.color = "#ffffff"; // Text weiß
-                } else {
-                    // Panel öffnen → Wrapper gelb
-                    panel.style.display = "block";
-                    wrapper.style.backgroundColor = "#eaff00"; 
-                    this.style.color = "#000000"; // Titel schwarz
-                    panel.style.color = "#000000"; // Text schwarz
-                }
-            });
-        }
-    </script>
+/* ------------------ TITEL ------------------ */ 
+.accordion {
+    font-family: 'Pixel2', sans-serif;
+    font-size: 80px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #666666; /* 40% Grau */
+    transition: color 0.3s;
+    margin: 0;
+    padding: 10px 40px; /* Padding links/rechts für Abstand */
+}
 
-</body>
-</html>
+.accordion:hover {
+    color: #ffffff;
+}
+
+/* ------------------ PANEL / LAUFTEXT ------------------ */ 
+.panel {
+    display: none;
+    font-family: 'RobotoMono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #ffffff;
+    margin: 0;
+    padding: 10px 40px; /* Padding links/rechts passend zum Titel */
+}
