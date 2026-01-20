@@ -2,7 +2,7 @@
 @font-face {
     font-family: 'Pixel2';
     src: url('../assets/fonts/pixel-2.ttf') format('truetype');
-    font-weight: normal;
+    font-weight: bold;
 }
 
 @font-face {
