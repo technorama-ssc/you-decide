@@ -23,8 +23,8 @@ html, body {
 /* ------------------ WRAPPER ------------------ */
 .content-wrapper {
     background-color: transparent; /* Standard durchsichtig */
-    margin: 0;
-    padding: 40px 0 80px 0; /* oben 0, links/rechts 0, unten 80px */
+    margin: 50;
+    padding: 0px 0 80px 0; /* oben 0, links/rechts 0, unten 80px */
     transition: background-color 0.3s;
 }
 
