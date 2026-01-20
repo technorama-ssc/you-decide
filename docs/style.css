@@ -1,22 +1,26 @@
+/* ------------------ Grundlegendes ------------------ */
 html, body {
     margin: 0;
     padding: 0;
-    background: #000;
+    background-color: #000000;
     font-family: 'RobotoMono', monospace;
 }
 
 .content-wrapper {
     width: 100%;
     padding: 0;
+    box-sizing: border-box;
 }
 
-/* Wrapper */
+/* ------------------ Akkordeon Wrapper ------------------ */
 .accordion-wrapper {
+    width: 100%;
     padding: 60px 62px;
     transition: background-color 0.3s;
+    box-sizing: border-box;
 }
 
-/* Titel */
+/* ------------------ Titel ------------------ */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -24,34 +28,55 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666;
+    color: #666666;
     margin: 0;
+    padding: 0;
     transition: color 0.3s;
 }
 
 .accordion:hover {
-    color: #fff;
+    color: #ffffff;
 }
 
-/* Panel */
+/* ------------------ Panel ------------------ */
 .panel {
     display: none;
     margin-top: 10px;
-    color: #fff;
+    color: #000000; /* Textfarbe beim Panel offen */
 }
 
-/* Einheitliche Lauftextgröße für ALLES */
-.panel * {
-    font-size: 16px !important;
-    line-height: 1.6 !important;
-    color: inherit;
-    margin-bottom: 10px;
+/* ------------------ Lauftext einheitlich ------------------ */
+.panel p,
+.panel li,
+.panel ul,
+.panel ol,
+.panel a,
+.panel div,
+.panel span,
+.panel code,
+.panel pre {
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000; /* auf gelbem Hintergrund */
+    max-width: 800px;
+    margin: 0 0 10px 0;
 }
 
-/* Bilder */
+/* ------------------ Bilder ------------------ */
 .panel img {
     max-width: 600px;
     height: auto;
-    display: block;
-    margin: 40px 0 0 0;
+    display: block;  /* linksbündig */
+    margin: 20px 0 0 0;
+}
+
+/* ------------------ Links ------------------ */
+.panel a {
+    text-decoration: underline;
+    color: #000000; /* auf gelbem Panel */
+}
+
+.panel a:hover {
+    color: #222222;
 }
