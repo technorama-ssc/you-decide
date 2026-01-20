@@ -12,11 +12,11 @@ html, body {
     box-sizing: border-box;
 }
 
-/* ------------------ Akkordeon Wrapper ------------------ */
+/* ------------------ Wrapper ------------------ */
 .accordion-wrapper {
     width: 100%;
-    transition: background-color 0.3s;
     padding: 60px 62px;
+    transition: background-color 0.3s;
     box-sizing: border-box;
 }
 
@@ -29,49 +29,47 @@ html, body {
     background: none;
     border: none;
     color: #666666;
-    transition: color 0.3s;
     margin: 0;
     padding: 0;
+    transition: color 0.3s;
 }
 
 .accordion:hover {
     color: #ffffff;
 }
 
-/* ------------------ Panel / Text ------------------ */
+/* ------------------ Panel ------------------ */
 .panel {
     display: none;
-    font-family: 'RobotoMono', monospace;
-    font-size: 14px; /* Einheitlich für alle Panels */
-    line-height: 1.5;
-    color: #ffffff;
-    margin: 10px 0 0 0;
-    padding: 0;
-    text-align: left;
-}
-
-/* Einheitliche Markdown-Tags */
-.panel p, .panel li, .panel a, .panel h2, .panel h3 {
     font-size: 14px;
     line-height: 1.5;
-    color: inherit;
+    margin-top: 10px;
+    color: #ffffff;
+}
+
+.panel p,
+.panel li,
+.panel a,
+.panel h2,
+.panel h3 {
+    font-size: 14px;
     margin: 0 0 10px 0;
+    color: inherit;
 }
 
 /* ------------------ Bilder ------------------ */
 .panel img {
     max-width: 600px;
     height: auto;
-    display: block; /* linksbündig */
+    display: block;
     margin: 40px 0 0 0;
 }
 
 /* ------------------ Links ------------------ */
 .panel a {
-    color: inherit;
     text-decoration: underline;
 }
 
 .panel a:hover {
-    color: #333333;
+    color: #222222;
 }
