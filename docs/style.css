@@ -1,21 +1,35 @@
+/* ------------------ SCHRIFTEN ------------------ */ @font-face {
+    font-family: 'Pixel2';
+    src: url('../assets/fonts/pixel-2.ttf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('../assets/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+}
+
 /* ------------------ GRUNDEINSTELLUNG ------------------ */ html, body {
     height: 100%;
     margin: 0;
     background-color: #000000; /* schwarzer Hintergrund */
-    color: #ffffff; /* Standardfarbe weiß für alle Texte */
-    font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
-    text-align: center;
+    color: #ffffff; /* Standardfarbe weiß */
+    font-family: 'RobotoMono', monospace; /* Standard-Lauftext */
+    text-align: left; /* alles linksbündig */
+    padding: 50px;
 }
 
-/* ------------------ TITEL / ACCORDION ------------------ */ .accordion {
-    font-size: 60px;
+/* ------------------ TITEL ------------------ */ .accordion {
+    font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
+    font-size: 40px;
     text-transform: uppercase;
     cursor: pointer;
-    background: none; /* kein Hintergrund */
-    border: none; /* kein Rahmen */
+    background: none;
+    border: none;
     color: #ffffff; /* Standardfarbe weiß */
-    transition: color 0.3s; /* sanfter Farbwechsel bei Hover */
-    margin: 50px 0 20px 0;
+    transition: color 0.3s;
+    margin: 20px 0 10px 0;
 }
 
 .accordion:hover {
@@ -23,10 +37,11 @@
 
 /* ------------------ PANEL / LAUFTEXT ------------------ */ .panel {
     display: none; /* anfänglich versteckt */
-    color: #ffffff; /* Textfarbe weiß */
-    background: none; /* kein Hintergrund */
-    border: none; /* kein Rahmen */
-    font-size: 24px;
+    font-family: 'RobotoMono', monospace; /* Roboto Mono für Lauftext */
+    font-size: 20px;
     line-height: 1.5;
-    margin-bottom: 50px;
+    color: #ffffff; /* Lauftext weiß */
+    background: none;
+    border: none;
+    margin-bottom: 30px;
 }
