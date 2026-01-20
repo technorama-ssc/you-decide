@@ -30,7 +30,7 @@
             <h1 class="accordion">SYSTEM</h1>
             <div class="panel">
                 <p>
-                    Inhalt von SYSTEM.  
+                    Here you find the information and materials on the construction system used throughout the exhibition.
                 </p>
             </div>
         </div>
@@ -40,7 +40,7 @@
             <h1 class="accordion">EXHIBITS</h1>
             <div class="panel">
                 <p>
-                    Inhalt von EXHIBITS.  
+                    Here you find information and materials for the single exhibits.
                 </p>
             </div>
         </div>
@@ -52,21 +52,33 @@
 
         for (var i = 0; i < acc.length; i++) {
             acc[i].addEventListener("click", function() {
-                var wrapper = this.parentElement; // nur der aktuelle Wrapper
+                var wrapper = this.parentElement; // aktueller Wrapper
                 var panel = this.nextElementSibling;
 
+                // Zuerst alle Panels schließen
+                for (var j = 0; j < acc.length; j++) {
+                    var otherWrapper = acc[j].parentElement;
+                    var otherPanel = acc[j].nextElementSibling;
+
+                    if (otherWrapper !== wrapper) {
+                        otherPanel.style.display = "none";
+                        otherWrapper.style.backgroundColor = "transparent";
+                        acc[j].style.color = "#666666"; // Titel grau
+                        otherPanel.style.color = "#ffffff"; // Text weiß
+                    }
+                }
+
+                // Dann das angeklickte Panel öffnen oder schließen
                 if (panel.style.display === "block") {
-                    // Panel schließen
                     panel.style.display = "none";
                     wrapper.style.backgroundColor = "transparent";
-                    this.style.color = "#666666"; // Titel grau
-                    panel.style.color = "#ffffff"; // Text weiß
+                    this.style.color = "#666666";
+                    panel.style.color = "#ffffff";
                 } else {
-                    // Panel öffnen
                     panel.style.display = "block";
-                    wrapper.style.backgroundColor = "#eaff00"; // nur aktueller Wrapper gelb
-                    this.style.color = "#000000"; // Titel schwarz
-                    panel.style.color = "#000000"; // Text schwarz
+                    wrapper.style.backgroundColor = "#eaff00";
+                    this.style.color = "#000000";
+                    panel.style.color = "#000000";
                 }
             });
         }
