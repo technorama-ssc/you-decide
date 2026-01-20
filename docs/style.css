@@ -19,14 +19,15 @@ html, body {
     color: #ffffff; /* Standardfarbe weiß */
     font-family: 'RobotoMono', monospace; /* Standard-Lauftext */
     text-align: left;
-    padding: 40px;
+    padding: 0; /* Wir steuern Padding über Wrapper */
 }
 
 /* ------------------ WRAPPER ------------------ */
 .content-wrapper {
     background-color: transparent; /* Standard durchsichtig */
-    padding-bottom: 50px; /* Abstand unterhalb des Textes */
+    padding: 0 0 80px 0; /* oben 0, links/rechts 0, unten 80px */
     transition: background-color 0.3s; /* sanftes Überblenden */
+    margin: 0; /* keine Ränder */
 }
 
 /* ------------------ TITEL ------------------ */ 
@@ -39,7 +40,7 @@ html, body {
     border: none;
     color: #666666; /* Standard 40% Grau */
     transition: color 0.3s;
-    margin: 0px 0px 0px 0px;
+    margin: 0;
     padding: 10px;
 }
 
@@ -56,6 +57,6 @@ html, body {
     color: #ffffff; /* Standard Text weiß */
     background: none;
     border: none;
-    margin-bottom: 30px;
+    margin: 0 0 0 0;
     padding: 10px;
 }
