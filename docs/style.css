@@ -2,7 +2,7 @@
 @font-face {
     font-family: 'Pixel2';
     src: url('../assets/fonts/pixel-2.ttf') format('truetype');
-    font-weight: bold;
+    font-weight: normal;
 }
 
 @font-face {
@@ -22,9 +22,16 @@ html, body {
     padding: 40px;
 }
 
+/* ------------------ WRAPPER ------------------ */
+.content-wrapper {
+    background-color: transparent; /* Standard durchsichtig */
+    padding-bottom: 50px; /* Abstand unterhalb des Textes */
+    transition: background-color 0.3s; /* sanftes Überblenden */
+}
+
 /* ------------------ TITEL ------------------ */ 
 .accordion {
-    font-family: 'Pixel2', monospace; /* Pixel-2 Schrift */
+    font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
     font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
