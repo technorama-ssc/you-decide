@@ -1,3 +1,33 @@
-<link rel="stylesheet" href="style.css">
-<h1>YOU DECIDE<h1>
-  <p>OPENSOURCE SITE<p>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Meine Website</title>
+
+    <!-- CSS einbinden -->
+    <link rel="stylesheet" href="style.css"> </head> <body>
+
+    <!-- Großer Titel in Pixel-2 Schrift -->
+    <h1 class="accordion">YOU DECIDE</h1>
+    <div class="panel">
+        <p>Hier kannst du später Inhalte einfügen.</p>
+    </div>
+
+    <!-- JavaScript für Klick-Funktion -->
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        for (var i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
