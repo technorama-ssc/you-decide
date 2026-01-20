@@ -1,4 +1,3 @@
-# YOU DECIDE
 An exhibition on decisions and how to save the World.
 
 This is the new open-source platform for the “You Decide” exhibition.<br>
