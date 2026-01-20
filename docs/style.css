@@ -52,6 +52,6 @@ html, body {
 .panel img {
     max-width: 600px; /* maximale Breite */
     height: auto;      /* Höhe proportional */
-    display: block;    /* zentriert einfacher */
+    display: inline-block; /* linksbündig */
     margin: 20px auto 0 auto; /* 20px Abstand oben, zentriert */
 }
