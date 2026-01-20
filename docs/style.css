@@ -49,10 +49,10 @@ html, body {
     margin: 10px 0 0 0;
     padding: 20px 0 20px 0;
     text-align: left;
-    -webkit-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%; /* iOS */
 }
 
-/* Alle Panel-Kinder */
+/* Alle Panel-Kinder einheitlich */
 .panel * {
     font-family: 'RobotoMono', monospace !important;
     font-size: 2vw !important;
