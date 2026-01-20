@@ -6,21 +6,24 @@ html, body {
 }
 
 .content-wrapper {
-    position: relative;
     width: 100%;
-    background-color: transparent;
-    transition: background-color 0.3s;
-    padding: 40px 62px 80px 62px; /* oben 40px, links/rechts 62px, unten 80px */
+    padding: 40px 62px 80px 62px;
     box-sizing: border-box;
-    overflow: hidden; /* verhindert schwarzen Balken oben */
 }
 
-/* Abstand zwischen YOU DECIDE und anderen Titeln */
+/* Abstand zwischen Titeln */
 .spacer {
-    height: 80px; /* doppelter Abstand */
+    height: 80px;
 }
 
-/* Akkordeon-Titel */
+/* Jeder Titel + Panel in eigenem Wrapper */
+.accordion-wrapper {
+    width: 100%;
+    transition: background-color 0.3s;
+    padding: 0;
+}
+
+/* Titel */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -46,5 +49,5 @@ html, body {
     line-height: 1.5;
     color: #ffffff;
     margin: 10px 0 0 0;
-    padding: 0;
+    padding: 40px 62px 40px 62px; /* Text innerhalb des gelben Feldes */
 }
