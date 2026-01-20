@@ -30,20 +30,14 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #808080; /* Standard 50% Grau */
-    transition: color 0.3s, background-color 0.3s;
+    color: #666666; /* Standard 40% Grau */
+    transition: color 0.3s;
     margin: 0px 0px 0px 0px;
     padding: 10px;
 }
 
 .accordion:hover {
     color: #ffffff; /* Weiß bei Mouseover */
-}
-
-/* Aktiv-Zustand nach Klick */
-.accordion.active {
-    background-color: #eaff00; /* Neongelb */
-    color: #000000; /* Titel schwarz */
 }
 
 /* ------------------ PANEL / LAUFTEXT ------------------ */ 
@@ -57,10 +51,4 @@ html, body {
     border: none;
     margin-bottom: 30px;
     padding: 10px;
-    transition: color 0.3s, background-color 0.3s;
-}
-
-/* Panel-Text schwarz, wenn der Titel aktiv ist */
-.accordion.active + .panel {
-    color: #000000; 
 }
