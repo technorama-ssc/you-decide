@@ -1,78 +1,114 @@
-/* ------------------ Grundlegendes ------------------ */
-html, body {
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-    font-family: 'RobotoMono', monospace;
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Du entscheidest / Opensource Website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css"> 
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head> 
+<body>
+
+<div class="content-wrapper">
+
+    <!-- YOU DECIDE -->
+    <div class="accordion-wrapper">
+        <h1 class="accordion">YOU DECIDE</h1>
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20exhibition" data-images='["du-entscheidest.gif"]'>
+        </div>
+    </div>
+
+    <!-- SYSTEM -->
+    <div class="accordion-wrapper">
+        <h1 class="accordion">SYSTEM</h1>
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system" data-images='["system1.jpg","system2.png"]'>
+        </div>
+    </div>
+
+    <!-- EXHIBITS -->
+    <div class="accordion-wrapper">
+        <h1 class="accordion">EXHIBITS</h1>
+        <div class="panel" data-readme-url="https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits" data-images='["exhibit1.jpg","exhibit2.gif"]'>
+        </div>
+    </div>
+
+</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+
+// README + Bilder laden
+async function loadPanel(panel, titleElement) {
+    if (panel.dataset.loaded) return;
+
+    const folderUrl = panel.dataset.readmeUrl;
+    const imageFiles = JSON.parse(panel.dataset.images);
+
+    try {
+        // README.md laden
+        const readmeResponse = await fetch(`${folderUrl}/README.md`);
+        let markdown = await readmeResponse.text();
+
+        // Erste Zeile als Akkordeon-Titel
+        const lines = markdown.split("\n");
+        if(lines[0].startsWith("# ")) {
+            titleElement.textContent = lines[0].replace("# ","").toUpperCase();
+            lines.shift(); // erste Zeile entfernen
+        }
+
+        panel.innerHTML = marked.parse(lines.join("\n"));
+
+        // Bilder einfügen
+        imageFiles.forEach(file => {
+            const img = document.createElement("img");
+            img.src = `${folderUrl}/${file}`;
+            img.onerror = () => img.remove(); // Broken images vermeiden
+            panel.appendChild(img);
+        });
+
+        panel.dataset.loaded = "true";
+    } catch(err) {
+        panel.innerHTML = "<p style='color:red;'>Fehler beim Laden</p>";
+        console.error(err);
+    }
 }
 
-.content-wrapper {
-    width: 100%;
-    padding: 0;
-    box-sizing: border-box;
-}
+// Akkordeon-Funktion
+for (var i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", async function() {
+        var wrapper = this.parentElement;
+        var panel = this.nextElementSibling;
 
-/* ------------------ Akkordeon Wrapper ------------------ */
-.accordion-wrapper {
-    width: 100%;
-    transition: background-color 0.3s;
-    padding: 60px 62px;
-    box-sizing: border-box;
-}
+        // Alle anderen Panels schließen
+        for (var j = 0; j < acc.length; j++) {
+            var otherWrapper = acc[j].parentElement;
+            var otherPanel = acc[j].nextElementSibling;
+            if (otherWrapper !== wrapper) {
+                otherPanel.style.display = "none";
+                otherWrapper.style.backgroundColor = "transparent";
+                acc[j].style.color = "#666666";
+                otherPanel.style.color = "#ffffff";
+            }
+        }
 
-/* ------------------ Titel ------------------ */
-.accordion {
-    font-family: 'Pixel2', sans-serif;
-    font-size: 80px;
-    text-transform: uppercase;
-    cursor: pointer;
-    background: none;
-    border: none;
-    color: #666666;
-    transition: color 0.3s;
-    margin: 0;
-    padding: 0;
-}
+        // Aktuelles Panel öffnen oder schließen
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+            wrapper.style.backgroundColor = "transparent";
+            this.style.color = "#666666";
+            panel.style.color = "#ffffff";
+        } else {
+            panel.style.display = "block";
+            wrapper.style.backgroundColor = "#eaff00";
+            this.style.color = "#000000";
+            panel.style.color = "#000000";
 
-.accordion:hover {
-    color: #ffffff;
+            // README + Bilder laden
+            await loadPanel(panel, this);
+        }
+    });
 }
+</script>
 
-/* ------------------ Panel / Lauftext ------------------ */
-.panel {
-    display: none;
-    font-family: 'RobotoMono', monospace;
-    font-size: 16px;
-    line-height: 1.5;
-    max-width: 800px;
-    color: #000000;
-    margin: 10px 0 0 0;
-    padding: 0;
-    text-align: left;
-    -webkit-text-size-adjust: 100%; /* verhindert iOS Schrift-Skalierung */
-}
-
-/* Alle Panel-Kinder einheitlich */
-.panel * {
-    font-family: 'RobotoMono', monospace !important;
-    font-size: 16px !important;
-    line-height: 1.5 !important;
-}
-
-/* ------------------ Bilder ------------------ */
-.panel img {
-    max-width: 600px;
-    height: auto;
-    display: block; /* linksbündig */
-    margin: 40px 0 0 0;
-}
-
-/* ------------------ Links ------------------ */
-.panel a {
-    color: inherit;
-    text-decoration: underline;
-}
-
-.panel a:hover {
-    color: #333333;
-}
+</body>
+</html>
