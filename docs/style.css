@@ -38,34 +38,28 @@ html, body {
     color: #ffffff;
 }
 
-/* ------------------ Panel / Lauftext ------------------ */
+/* ------------------ Panel / Text ------------------ */
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
-    font-size: 16px;
-    line-height: 1.4; /* kompakter */
-    max-width: 800px;
-    color: #000000;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #ffffff;
     margin: 10px 0 0 0;
-    padding: 20px 0 20px 0; /* kompakt */
+    padding: 0;
     text-align: left;
-    -webkit-text-size-adjust: 100%; /* iOS */
 }
 
-/* Alle Panel-Kinder einheitlich */
-.panel * {
-    font-family: 'RobotoMono', monospace !important;
-    font-size: 16px !important;
-    line-height: 1.4 !important;
+.panel p, .panel li, .panel a, .panel h2, .panel h3 {
+    color: inherit;
 }
 
 /* ------------------ Bilder ------------------ */
 .panel img {
     max-width: 600px;
-    width: 100%;
     height: auto;
     display: block; /* linksbündig */
-    margin: 20px 0 0 0;
+    margin: 40px 0 0 0;
 }
 
 /* ------------------ Links ------------------ */
