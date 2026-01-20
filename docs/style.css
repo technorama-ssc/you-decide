@@ -1,0 +1,47 @@
+/* ------------------ SCHRIFTEN ------------------ */
+
+/* Roboto Mono für Fließtext */
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('assets/fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+}
+
+/* Pixel-2 für große Titel */
+@font-face {
+    font-family: 'Pixel2';
+    src: url('assets/fonts/pixel-2.ttf') format('truetype');
+    font-weight: normal;
+}
+
+/* ------------------ ALLGEMEIN ------------------ */ body {
+    font-family: 'RobotoMono', monospace; /* Standardtext */
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px;
+}
+
+/* ------------------ ACCORDION / TITEL ------------------ */ .accordion {
+    font-family: 'Pixel2', sans-serif; /* Pixel2 Schrift für Titel */
+    font-size: 24px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    transition: background-color 0.3s;
+}
+
+.accordion:hover {
+    background-color: #e0e0e0;
+}
+
+/* ------------------ PANEL / INHALT ------------------ */ .panel {
+    padding: 0 10px;
+    display: none; /* versteckt bis der Titel geklickt wird */
+    background-color: #fafafa;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
