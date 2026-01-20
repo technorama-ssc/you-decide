@@ -49,11 +49,11 @@ async function loadReadme(panel, titleElement) {
         if (!response.ok) throw new Error("Fehler beim Laden der README");
         let markdown = await response.text();
 
-        // Erste Überschrift als Titel nutzen
+        // Erste Überschrift als Akkordeon-Titel nutzen
         const lines = markdown.split("\n");
         if(lines[0].startsWith("# ")) {
             titleElement.textContent = lines[0].replace("# ", "").toUpperCase();
-            lines.shift(); // erste Zeile entfernen
+            lines.shift(); // erste Zeile entfernen → nicht im Panel
         }
 
         markdown = lines.join("\n");
