@@ -22,7 +22,7 @@
 
 /* ------------------ TITEL ------------------ */ .accordion {
     font-family: 'Pixel2', sans-serif; /* Pixel-2 Schrift */
-    font-size: 40px;
+    font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
     background: none;
@@ -38,7 +38,7 @@
 /* ------------------ PANEL / LAUFTEXT ------------------ */ .panel {
     display: none; /* anfänglich versteckt */
     font-family: 'RobotoMono', monospace; /* Roboto Mono für Lauftext */
-    font-size: 20px;
+    font-size: 10px;
     line-height: 1.5;
     color: #ffffff; /* Lauftext weiß */
     background: none;
