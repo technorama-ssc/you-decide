@@ -50,10 +50,8 @@ html, body {
     padding-left: 5px;
 }
 
-/* Lauftext */
-.panel p,
-.panel li,
-.panel a {
+/* Panel-Kinder inherit */
+.panel p, .panel li, .panel a, .panel h2, .panel h3 {
     color: inherit;
 }
 
@@ -97,20 +95,16 @@ html, body {
     color: #333333;
 }
 
-/* ============================= */
-/* UNTERORDNER-TITEL (README.md) */
-/* ============================= */
-
-.panel-content h1 {
+/* Unterordner-Titel */
+.panel .sub-accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 60px 0 20px 0; /* gleicher Abstand wie Haupttitel */
-    padding: 0;
-    line-height: 1;
+    color: #666666;
+    cursor: pointer;
+    margin-top: 60px; /* Abstand wie Haupttitel */
 }
 
-/* Kein Extra-Abstand beim ersten Unterordner */
-.panel-content h1:first-child {
-    margin-top: 0;
+.panel .sub-accordion:hover {
+    color: #000000;
 }
