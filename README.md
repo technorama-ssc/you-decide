@@ -11,7 +11,6 @@ Here you find the information and materials on the construciton system used thro
 # 03 Exhibits
 Here you find information and materials for the single exhibits.
 
-
 # Licencing
 All Information and Materials are provided under the following licencses:
 
