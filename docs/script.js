@@ -4,7 +4,7 @@ const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/content
 // Zielcontainer
 const container = document.getElementById("dynamic-content");
 
-// Akkordeon-HTML erzeugen
+// Funktion: Akkordeon erstellen
 function createAccordion(folderName, readmeUrl) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
@@ -23,9 +23,8 @@ function createAccordion(folderName, readmeUrl) {
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
-    // Click: Accordion öffnen/schließen
+    // Click: Akkordeon öffnen/schließen
     title.addEventListener("click", async () => {
-
         // alle anderen schließen
         document.querySelectorAll(".panel").forEach(p => {
             if (p !== panel) p.style.display = "none";
@@ -46,8 +45,6 @@ function createAccordion(folderName, readmeUrl) {
             panel.style.display = "block";
             wrapper.style.backgroundColor = "#eaff00";
             title.style.color = "#000";
-
-            // Textfarbe auf schwarz setzen
             panel.style.color = "#000000";
 
             // Markdown laden
@@ -73,42 +70,48 @@ function createAccordion(folderName, readmeUrl) {
 // Ordner + README automatisch laden
 async function loadFolders() {
     try {
+        console.log("Starte Repo-Fetch:", repoBase);
         const response = await fetch(repoBase);
-        console.log("Repo-Response Status:", response.status);
-        if (!response.ok) throw new Error(`Repo konnte nicht geladen werden: ${response.status}`);
-        const items = await response.json();
 
+        // GitHub-API Status prüfen
+        if (!response.ok) {
+            const text = await response.text();
+            console.error("Fehler beim Abrufen des Repos:", response.status, text);
+            container.innerHTML = `<p style="color:red">Fehler beim Laden des Repos: ${response.status}<br>${text}</p>`;
+            return;
+        }
+
+        const items = await response.json();
         console.log("Gefundene Items im Repo:", items.map(i => i.name));
 
         for (const item of items) {
             if (item.type === "dir") {
                 try {
                     const folderResponse = await fetch(item.url);
-                    console.log(`Ordner ${item.name} Status:`, folderResponse.status);
                     if (!folderResponse.ok) throw new Error(`Ordner ${item.name} konnte nicht geladen werden: ${folderResponse.status}`);
-                    const folderContent = await folderResponse.json();
+                    let folderContent = await folderResponse.json();
 
-                    // Prüfen, ob folderContent ein Array ist
-                    let filesArray = Array.isArray(folderContent) ? folderContent : [folderContent];
+                    // Prüfen, ob folderContent ein Array ist (leere Ordner manchmal Objekt)
+                    if (!Array.isArray(folderContent)) folderContent = [folderContent];
 
-                    console.log(`Inhalt von Ordner ${item.name}:`, filesArray.map(f => f.name));
+                    console.log(`Inhalt von Ordner ${item.name}:`, folderContent.map(f => f.name));
 
                     // README.md finden
-                    const readme = filesArray.find(f => f.name.toLowerCase() === "readme.md");
-
+                    const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
                     if (readme && readme.download_url) {
                         createAccordion(item.name, readme.download_url);
                     } else {
                         console.warn(`README.md fehlt oder hat keine download_url in Ordner ${item.name}`);
                     }
+
                 } catch (err) {
                     console.warn(`Fehler beim Laden des Ordners ${item.name}:`, err);
                 }
             }
         }
     } catch (err) {
-        console.error("Fehler beim Laden der Ordner:", err);
-        container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
+        console.error("Unbekannter Fehler beim Laden der Ordner:", err);
+        container.innerHTML = "<p style='color:red'>Unbekannter Fehler beim Laden der Inhalte</p>";
     }
 }
 
