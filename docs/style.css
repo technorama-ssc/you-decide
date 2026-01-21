@@ -28,7 +28,7 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666;
+    color: #666666; /* grau */
     transition: color 0.3s;
     margin: 0;
     padding: 0;
@@ -44,17 +44,17 @@ html, body {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
-    color: #000000;
-    background-color: #eaff00;
+    color: #000000; /* Lauftext schwarz */
+    background-color: #eaff00; /* gelber Hintergrund */
     margin: 10px 0 0 0;
     padding: 20px;
     text-align: left;
 }
 
-/* Innerer Wrapper für maximale Textbreite + bündiger Text mit Titel */
+/* Innerer Wrapper für maximale Textbreite */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 0; /* bündig mit Akkordeon-Titel */
+    margin-left: 0; /* bündig links */
 }
 
 /* Panel-Kinder inherit */
@@ -72,10 +72,32 @@ html, body {
 
 /* ------------------ Links in Panels ------------------ */
 .panel a {
-    color: #000000;
+    color: #000000; /* Links schwarz */
     text-decoration: underline;
 }
 
 .panel a:hover {
+    color: #333333;
+}
+
+/* ------------------ Download-Link ------------------ */
+.download-link {
+    display: block;
+    margin-top: 20px;
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+}
+
+.download-link span {
+    font-weight: bold; /* "Download" fett */
+    margin-right: 5px;
+}
+
+.download-link a {
+    text-decoration: underline;
+    color: #000000;
+}
+
+.download-link a:hover {
     color: #333333;
 }
