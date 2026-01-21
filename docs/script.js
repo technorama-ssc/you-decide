@@ -1,4 +1,4 @@
-const repoBase = "https://bold-king-d69b.clehmann-330.workers.dev/api";
+const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
 function createAccordion(titleText, contentMarkdown, zipFile) {
@@ -43,11 +43,21 @@ function createAccordion(titleText, contentMarkdown, zipFile) {
 
                 const textSpan = document.createElement("span");
                 textSpan.textContent = "Download"; 
-                textSpan.style.fontWeight = "normal"; 
+                textSpan.style.fontWeight = "normal"; // zwingend regular
 
                 const link = document.createElement("a");
-                link.href = `${repoBase}/${encodeURIComponent(zipFile.path)}`;
-                link.textContent = zipFile.name.replace(/_/g, " ").replace(/\.zip$/i,"");
+                link.href = zipFile.download_url;
+
+                // ZIP-Name aufteilen: erster Teil Content, letzter Exhibition
+                let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
+                let displayName = "";
+                if(parts.length >= 2){
+                    displayName = parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
+                                  parts[parts.length-1].charAt(0).toUpperCase() + parts[parts.length-1].slice(1);
+                } else {
+                    displayName = zipFile.name.replace(/\.zip$/i, "");
+                }
+                link.textContent = displayName;
                 link.target = "_blank";
 
                 dl.appendChild(textSpan);
@@ -62,17 +72,16 @@ function createAccordion(titleText, contentMarkdown, zipFile) {
 
 async function loadFolders() {
     try {
-        const itemsResp = await fetch(repoBase);
-        if(!itemsResp.ok) throw new Error("Fehler beim Zugriff auf den Worker");
-        const items = await itemsResp.json();
+        const response = await fetch(repoBase);
+        if(!response.ok) throw new Error("Fehler beim Zugriff auf das Repo");
+        const items = await response.json();
 
         for(const item of items){
             if(item.type==="dir"){
                 try{
-                    // Ordner über Worker abrufen
-                    const folderResp = await fetch(`${repoBase}/${encodeURIComponent(item.name)}`);
-                    if(!folderResp.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
-                    const folderContent = await folderResp.json();
+                    const folderResponse = await fetch(item.url);
+                    if(!folderResponse.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
+                    const folderContent = await folderResponse.json();
                     if(!Array.isArray(folderContent)) continue;
 
                     const readme = folderContent.find(f=>f.name.toLowerCase()==="readme.md");
@@ -80,19 +89,18 @@ async function loadFolders() {
 
                     const zipFile = folderContent.find(f=>f.name.toLowerCase().endsWith(".zip"));
 
-                    // README über Worker abrufen
-                    const readmeResp = await fetch(`${repoBase}/${encodeURIComponent(readme.path)}`);
+                    const readmeResp = await fetch(readme.download_url);
                     if(!readmeResp.ok) throw new Error(`Fehler beim Laden von ${readme.name}`);
-                    const readmeData = await readmeResp.json();
-
-                    // GitHub liefert content base64-codiert
-                    const md = atob(readmeData.content.replace(/\n/g,''));
+                    let md = await readmeResp.text();
 
                     let lines = md.split("\n");
-                    let titleLine = lines.length>0 && lines[0].startsWith("#")
-                        ? lines[0].replace(/^#\s*/, "")
-                        : "KEIN TITEL";
-                    let content = lines.slice(1).join("\n");
+                    let titleLine = "KEIN TITEL";
+                    let content = md;
+
+                    if(lines.length>0 && lines[0].startsWith("#")){
+                        titleLine = lines[0].replace(/^#\s*/, "");
+                        content = lines.slice(1).join("\n");
+                    }
 
                     createAccordion(titleLine, content, zipFile);
 
@@ -103,7 +111,7 @@ async function loadFolders() {
         }
 
     } catch(err){
-        console.error("Fehler beim Laden der Inhalte:", err);
+        console.error("Fehler beim Laden der Ordner:", err);
         container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
     }
 }
