@@ -1,4 +1,3 @@
-// Worker-URL als Basis
 const repoBase = "https://bold-king-d69b.clehmann-330.workers.dev/api";
 const container = document.getElementById("dynamic-content");
 
@@ -47,14 +46,8 @@ function createAccordion(titleText, contentMarkdown, zipFile) {
                 textSpan.style.fontWeight = "normal"; 
 
                 const link = document.createElement("a");
-                link.href = zipFile.download_url;
-
-                let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
-                let displayName = parts.length >= 2
-                    ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " + parts[parts.length-1].charAt(0).toUpperCase() + parts[parts.length-1].slice(1)
-                    : zipFile.name.replace(/\.zip$/i, "");
-                
-                link.textContent = displayName;
+                link.href = `${repoBase}/${encodeURIComponent(zipFile.path)}`;
+                link.textContent = zipFile.name.replace(/_/g, " ").replace(/\.zip$/i,"");
                 link.target = "_blank";
 
                 dl.appendChild(textSpan);
@@ -69,16 +62,17 @@ function createAccordion(titleText, contentMarkdown, zipFile) {
 
 async function loadFolders() {
     try {
-        const response = await fetch(repoBase); // Worker aufrufen
-        if(!response.ok) throw new Error("Fehler beim Zugriff auf den Worker");
-        const items = await response.json();
+        const itemsResp = await fetch(repoBase);
+        if(!itemsResp.ok) throw new Error("Fehler beim Zugriff auf den Worker");
+        const items = await itemsResp.json();
 
         for(const item of items){
             if(item.type==="dir"){
                 try{
-                    const folderResponse = await fetch(`${repoBase}/${encodeURIComponent(item.name)}`);
-                    if(!folderResponse.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
-                    const folderContent = await folderResponse.json();
+                    // Ordner über Worker abrufen
+                    const folderResp = await fetch(`${repoBase}/${encodeURIComponent(item.name)}`);
+                    if(!folderResp.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
+                    const folderContent = await folderResp.json();
                     if(!Array.isArray(folderContent)) continue;
 
                     const readme = folderContent.find(f=>f.name.toLowerCase()==="readme.md");
@@ -86,9 +80,13 @@ async function loadFolders() {
 
                     const zipFile = folderContent.find(f=>f.name.toLowerCase().endsWith(".zip"));
 
-                    const readmeResp = await fetch(readme.download_url);
+                    // README über Worker abrufen
+                    const readmeResp = await fetch(`${repoBase}/${encodeURIComponent(readme.path)}`);
                     if(!readmeResp.ok) throw new Error(`Fehler beim Laden von ${readme.name}`);
-                    let md = await readmeResp.text();
+                    const readmeData = await readmeResp.json();
+
+                    // GitHub liefert content base64-codiert
+                    const md = atob(readmeData.content.replace(/\n/g,''));
 
                     let lines = md.split("\n");
                     let titleLine = lines.length>0 && lines[0].startsWith("#")
