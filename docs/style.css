@@ -51,10 +51,10 @@ html, body {
     text-align: left;
 }
 
-/* Innerer Wrapper für maximale Textbreite */
+/* Innerer Wrapper für maximale Textbreite und bündig mit Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 0; /* bündig links */
+    margin-left: 0; /* bündig mit Akkordeon-Titel */
 }
 
 /* Panel-Kinder inherit */
@@ -72,7 +72,7 @@ html, body {
 
 /* ------------------ Links in Panels ------------------ */
 .panel a {
-    color: #000000; /* Links schwarz */
+    color: #000000;
     text-decoration: underline;
 }
 
@@ -84,20 +84,11 @@ html, body {
 .download-link {
     display: block;
     margin-top: 20px;
-    font-family: 'RobotoMono', monospace;
-    font-size: 16px;
-}
-
-.download-link span {
-    font-weight: bold; /* "Download" fett */
-    margin-right: 5px;
-}
-
-.download-link a {
     text-decoration: underline;
     color: #000000;
 }
 
-.download-link a:hover {
-    color: #333333;
+.download-text {
+    font-weight: normal; /* Download Text normal */
+    margin-right: 5px;
 }
