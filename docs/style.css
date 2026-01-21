@@ -1,4 +1,4 @@
-/* ------------------ Grundlayout ------------------ */
+/* ------------------ Grundlegendes ------------------ */
 html, body {
     margin: 0;
     padding: 0;
@@ -6,18 +6,18 @@ html, body {
     font-family: 'RobotoMono', monospace;
 }
 
-/* ------------------ Container für alle Akkordeons ------------------ */
-#dynamic-content {
+.content-wrapper {
     width: 100%;
+    padding: 0;
     box-sizing: border-box;
 }
 
-/* ------------------ Akkordeon Bereiche ------------------ */
+/* ------------------ Akkordeon Wrapper ------------------ */
 .accordion-wrapper {
     width: 100%;
+    transition: background-color 0.3s;
     padding: 60px 62px;
     box-sizing: border-box;
-    transition: background-color 0.3s ease;
 }
 
 /* ------------------ Titel ------------------ */
@@ -28,8 +28,8 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666;
-    transition: color 0.3s ease;
+    color: #666666; /* grau */
+    transition: color 0.3s;
     margin: 0;
     padding: 0;
 }
@@ -38,65 +38,42 @@ html, body {
     color: #ffffff;
 }
 
-/* ------------------ Panel (aufklappbarer Bereich) ------------------ */
+/* ------------------ Panel / Text ------------------ */
 .panel {
     display: none;
-    margin-top: 10px;
-    color: #000000;
-}
-
-/* Maximalbreite für alle Lauftexte */
-.panel-content {
-    max-width: 800px;
-    width: 100%;
-    line-height: 1.5;
+    font-family: 'RobotoMono', monospace;
     font-size: 16px;
+    line-height: 1.5;
+    color: #000000; /* Lauftext schwarz auf gelbem Hintergrund */
+    margin: 10px 0 0 0;
+    padding: 0;
+    text-align: left;
 }
 
-/* Vererbung der Farben auf Markdown */
-.panel p,
-.panel li,
-.panel a,
-.panel h2,
-.panel h3 {
+/* Innerer Wrapper für maximale Textbreite */
+.panel .panel-content {
+    max-width: 800px;
+}
+
+/* Panel-Kinder inherit */
+.panel p, .panel li, .panel a, .panel h2, .panel h3 {
     color: inherit;
 }
 
-/* ------------------ Bilder ------------------ */
+/* ------------------ Bilder in Panels ------------------ */
 .panel img {
     max-width: 600px;
-    width: 100%;
     height: auto;
     display: block;
-    margin-top: 40px;
+    margin: 40px 0 0 0;
 }
 
-/* ------------------ Links ------------------ */
+/* ------------------ Links in Panels ------------------ */
 .panel a {
-    color: #000000;
+    color: #000000; /* Links schwarz auf gelbem Hintergrund */
     text-decoration: underline;
 }
 
 .panel a:hover {
     color: #333333;
-}
-
-/* ------------------ Mobile Optimierung ------------------ */
-@media (max-width: 600px) {
-    .accordion-wrapper {
-        padding: 40px 32px;
-    }
-
-    .accordion {
-        font-size: 48px;
-    }
-
-    .panel-content {
-        font-size: 16px;
-        max-width: 100%;
-    }
-
-    .panel img {
-        max-width: 100%;
-    }
 }
