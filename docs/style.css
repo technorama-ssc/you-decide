@@ -47,7 +47,7 @@ html, body {
 .panel .panel-content {
     max-width: 800px;
     margin-left: 0; /* bündig links */
-    padding-left: 62px; /* gleich wie Titel links */
+    padding-left: 0px; /* gleich wie Titel links */
 }
 
 /* Panel-Kinder inherit */
