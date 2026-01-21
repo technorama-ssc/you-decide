@@ -16,7 +16,7 @@ html, body {
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
-    padding: 60px 62px;
+    padding: 60px 62px; /* Abstand wie Titel */
     box-sizing: border-box;
 }
 
@@ -47,13 +47,16 @@ html, body {
     color: #000000; /* Lauftext schwarz */
     background-color: #eaff00; /* gelber Hintergrund */
     margin: 10px 0 0 0;
-    padding: 20px;
+    padding: 60px 62px; /* exakt wie Accordion Wrapper für bündige Ausrichtung */
     text-align: left;
+    box-sizing: border-box;
 }
 
 /* Innerer Wrapper für maximale Textbreite */
 .panel .panel-content {
     max-width: 800px;
+    margin: 0; /* bündig links */
+    padding: 0; /* bündig links */
 }
 
 /* Panel-Kinder inherit */
