@@ -6,12 +6,6 @@ html, body {
     font-family: 'RobotoMono', monospace;
 }
 
-.content-wrapper {
-    width: 100%;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 /* ------------------ Akkordeon Wrapper ------------------ */
 .accordion-wrapper {
     width: 100%;
@@ -28,7 +22,7 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666; /* grau */
+    color: #666666;
     transition: color 0.3s;
     margin: 0;
     padding: 0;
@@ -44,17 +38,17 @@ html, body {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
-    color: #000000; /* Lauftext schwarz */
-    background-color: #eaff00; /* gelber Hintergrund */
+    color: #000000; 
+    background-color: #eaff00;
     margin: 10px 0 0 0;
     padding: 20px;
     text-align: left;
 }
 
-/* Innerer Wrapper für maximale Textbreite */
+/* Innerer Wrapper für Text bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 0; /* bündig links */
+    margin-left: 0; /* bündig links mit Titel */
 }
 
 /* Panel-Kinder inherit */
@@ -72,7 +66,7 @@ html, body {
 
 /* ------------------ Links in Panels ------------------ */
 .panel a {
-    color: #000000; /* Links schwarz */
+    color: #000000; 
     text-decoration: underline;
 }
 
@@ -89,7 +83,7 @@ html, body {
 }
 
 .download-link span {
-    font-weight: bold; /* "Download" fett */
+    font-weight: normal; /* Download Text regular */
     margin-right: 5px;
 }
 
@@ -100,3 +94,4 @@ html, body {
 
 .download-link a:hover {
     color: #333333;
+}
