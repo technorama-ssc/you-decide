@@ -13,7 +13,7 @@ html, body {
     box-sizing: border-box;
 }
 
-/* Titel */
+/* Haupttitel */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -40,18 +40,20 @@ html, body {
     color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 20px 0 20px 0; /* padding links/ rechts auf 0 */
+    padding: 20px 0 20px 0;
 }
 
 /* Panel-Content bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 0; /* bündig links */
-    padding-left: 5px; /* gleich wie Titel links */
+    margin-left: 0;
+    padding-left: 5px;
 }
 
-/* Panel-Kinder inherit */
-.panel p, .panel li, .panel a, .panel h2, .panel h3 {
+/* Lauftext */
+.panel p,
+.panel li,
+.panel a {
     color: inherit;
 }
 
@@ -82,7 +84,7 @@ html, body {
 }
 
 .download-link span {
-    font-weight: normal !important; /* sicherstellen */
+    font-weight: normal !important;
     margin-right: 5px;
 }
 
@@ -93,4 +95,22 @@ html, body {
 
 .download-link a:hover {
     color: #333333;
+}
+
+/* ============================= */
+/* UNTERORDNER-TITEL (README.md) */
+/* ============================= */
+
+.panel-content h1 {
+    font-family: 'Pixel2', sans-serif;
+    font-size: 80px;
+    text-transform: uppercase;
+    margin: 60px 0 20px 0; /* gleicher Abstand wie Haupttitel */
+    padding: 0;
+    line-height: 1;
+}
+
+/* Kein Extra-Abstand beim ersten Unterordner */
+.panel-content h1:first-child {
+    margin-top: 0;
 }
