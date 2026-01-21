@@ -12,9 +12,8 @@ function createAccordion(folderName, readmeUrl) {
     const title = document.createElement("h1");
     title.className = "accordion";
 
-    // Alle führenden Zahlen + Unterstrich, Bindestrich oder Leerzeichen entfernen
-    // z.B. "01_Ordnername" → "Ordnername", "02-Ordnername" → "Ordnername", "3 Ordnername" → "Ordnername"
-    const displayName = folderName.replace(/^\d+[\s-_]*/, "");
+    // Führende Zahlen + Leerzeichen entfernen: "01 system" -> "system"
+    const displayName = folderName.replace(/^\d+\s+/, "");
     title.textContent = displayName.toUpperCase();
     title.title = displayName; // Mouseover ohne Nummer
 
@@ -28,7 +27,7 @@ function createAccordion(folderName, readmeUrl) {
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
-    // Click: Accordion öffnen/schließen
+    // Click: Akkordeon öffnen/schließen
     title.addEventListener("click", async () => {
 
         // alle anderen schließen
@@ -57,11 +56,17 @@ function createAccordion(folderName, readmeUrl) {
 
             // Markdown laden
             if (!panel.dataset.loaded) {
-                const response = await fetch(readmeUrl);
-                let md = await response.text();
-                md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
-                inner.innerHTML = marked.parse(md);
-                panel.dataset.loaded = "true";
+                try {
+                    const response = await fetch(readmeUrl);
+                    if (!response.ok) throw new Error("Fehler beim Laden der README");
+                    let md = await response.text();
+                    md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
+                    inner.innerHTML = marked.parse(md);
+                    panel.dataset.loaded = "true";
+                } catch (err) {
+                    inner.innerHTML = "<p style='color:red'>Fehler beim Laden der README</p>";
+                    console.error(err);
+                }
             }
         }
     });
@@ -73,19 +78,26 @@ function createAccordion(folderName, readmeUrl) {
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
+        if (!response.ok) throw new Error("Fehler beim Zugriff auf das Repo");
         const items = await response.json();
 
         for (const item of items) {
             if (item.type === "dir") {
-                const folderUrl = item.url;
-                const folderContent = await fetch(folderUrl).then(r => r.json());
+                try {
+                    const folderResponse = await fetch(item.url);
+                    if (!folderResponse.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
+                    const folderContent = await folderResponse.json();
 
-                // README.md finden
-                const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
+                    if (!Array.isArray(folderContent)) continue; // Safety-Check
 
-                // nur Ordner anzeigen, die README haben
-                if (readme) {
+                    // README.md finden
+                    const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
+                    if (!readme) continue; // nur Ordner mit README
+
                     createAccordion(item.name, readme.download_url);
+
+                } catch (err) {
+                    console.warn("Fehler beim Laden eines Ordners:", item.name, err);
                 }
             }
         }
@@ -95,4 +107,5 @@ async function loadFolders() {
     }
 }
 
+// Alles starten
 loadFolders();
