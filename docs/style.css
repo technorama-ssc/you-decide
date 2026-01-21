@@ -40,14 +40,14 @@ html, body {
     color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 20px 0 20px 0;
+    padding: 20px 0 20px 0; /* padding links/ rechts auf 0 */
 }
 
 /* Panel-Content bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 0;
-    padding-left: 5px;
+    margin-left: 0; /* bündig links */
+    padding-left: 5px; /* gleich wie Titel links */
 }
 
 /* Panel-Kinder inherit */
@@ -82,7 +82,7 @@ html, body {
 }
 
 .download-link span {
-    font-weight: normal !important;
+    font-weight: normal !important; /* sicherstellen */
     margin-right: 5px;
 }
 
