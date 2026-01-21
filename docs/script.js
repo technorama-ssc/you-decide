@@ -5,17 +5,14 @@ const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/content
 const container = document.getElementById("dynamic-content");
 
 // Akkordeon-HTML erzeugen
-function createAccordion(folderName, readmeUrl) {
+function createAccordion(titleText, contentMarkdown) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
     const title = document.createElement("h1");
     title.className = "accordion";
-
-    // Führende Zahlen + Leerzeichen entfernen: "01 system" -> "system"
-    const displayName = folderName.replace(/^\d+\s+/, "");
-    title.textContent = displayName.toUpperCase();
-    title.title = displayName; // Mouseover ohne Nummer
+    title.textContent = titleText.toUpperCase();
+    title.title = titleText; // Mouseover
 
     const panel = document.createElement("div");
     panel.className = "panel";
@@ -27,8 +24,8 @@ function createAccordion(folderName, readmeUrl) {
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
-    // Click: Akkordeon öffnen/schließen
-    title.addEventListener("click", async () => {
+    // Click: Accordion öffnen/schließen
+    title.addEventListener("click", () => {
 
         // alle anderen schließen
         document.querySelectorAll(".panel").forEach(p => {
@@ -50,24 +47,10 @@ function createAccordion(folderName, readmeUrl) {
             panel.style.display = "block";
             wrapper.style.backgroundColor = "#eaff00";
             title.style.color = "#000";
-
-            // Sicherstellen, dass Textfarbe schwarz ist
             panel.style.color = "#000000";
 
-            // Markdown laden
-            if (!panel.dataset.loaded) {
-                try {
-                    const response = await fetch(readmeUrl);
-                    if (!response.ok) throw new Error("Fehler beim Laden der README");
-                    let md = await response.text();
-                    md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
-                    inner.innerHTML = marked.parse(md);
-                    panel.dataset.loaded = "true";
-                } catch (err) {
-                    inner.innerHTML = "<p style='color:red'>Fehler beim Laden der README</p>";
-                    console.error(err);
-                }
-            }
+            // Markdown-Inhalt einfügen
+            inner.innerHTML = marked.parse(contentMarkdown);
         }
     });
 
@@ -88,13 +71,28 @@ async function loadFolders() {
                     if (!folderResponse.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
                     const folderContent = await folderResponse.json();
 
-                    if (!Array.isArray(folderContent)) continue; // Safety-Check
+                    if (!Array.isArray(folderContent)) continue;
 
                     // README.md finden
                     const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
-                    if (!readme) continue; // nur Ordner mit README
+                    if (!readme) continue;
 
-                    createAccordion(item.name, readme.download_url);
+                    // README laden
+                    const readmeResponse = await fetch(readme.download_url);
+                    if (!readmeResponse.ok) throw new Error(`Fehler beim Laden von ${readme.name}`);
+                    let md = await readmeResponse.text();
+
+                    // Erste Zeile als Titel verwenden
+                    const lines = md.split("\n");
+                    let titleLine = "KEIN TITEL"; // fallback
+                    let content = md;
+
+                    if (lines.length > 0 && lines[0].startsWith("#")) {
+                        titleLine = lines[0].replace(/^#\s*/, ""); // Hash entfernen
+                        content = lines.slice(1).join("\n"); // Rest als Inhalt
+                    }
+
+                    createAccordion(titleLine, content);
 
                 } catch (err) {
                     console.warn("Fehler beim Laden eines Ordners:", item.name, err);
