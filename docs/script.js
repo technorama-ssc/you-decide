@@ -1,10 +1,9 @@
-// --- TRAGE HIER DEINE WORKER-URL EIN ---
-const repoBase = "https://youdecide-worker.abc123.workers.dev/api/"; 
-
+// Cloudflare Worker URL
+const repoBase = "https://bold-king-d69b.clehmann-330.workers.dev/api/";
 const container = document.getElementById("dynamic-content");
 
-// Accordion erzeugen
-function createAccordion(titleText, contentMarkdown, zipFile) {
+// Akkordeon erzeugen
+function createAccordion(titleText, contentMarkdown, zipFile, folderPath) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
@@ -38,98 +37,45 @@ function createAccordion(titleText, contentMarkdown, zipFile) {
             title.style.color="#000";
             panel.style.color="#000";
 
+            // Markdown-Inhalt einfügen
             inner.innerHTML = marked.parse(contentMarkdown);
 
-            // ZIP-Datei Download-Link erstellen
+            // Download-Link erstellen
             if(zipFile){
                 const dl = document.createElement("div");
                 dl.className = "download-link";
 
                 const textSpan = document.createElement("span");
-                textSpan.textContent = "Download"; 
-                textSpan.style.fontWeight = "normal";
+                textSpan.textContent = "Download";
 
                 const link = document.createElement("a");
                 link.href = zipFile.download_url;
 
-                // Name aus ZIP: Content + Exhibition
-                let parts = zipFile.name.replace(/\.zip$/i,"").split("_");
+                // Display-Name: erster und letzter Teil der ZIP
+                let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
                 let displayName = "";
                 if(parts.length >= 2){
                     displayName = parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
                                   parts[parts.length-1].charAt(0).toUpperCase() + parts[parts.length-1].slice(1);
                 } else {
-                    displayName = zipFile.name.replace(/\.zip$/i,"");
+                    displayName = zipFile.name.replace(/\.zip$/i, "");
                 }
                 link.textContent = displayName;
                 link.target = "_blank";
 
                 dl.appendChild(textSpan);
                 dl.appendChild(link);
-
-                // Optional: GitHub Link für Developers
-                const devLink = document.createElement("div");
-                devLink.className = "download-link";
-                const devAnchor = document.createElement("a");
-                devAnchor.href = `https://github.com/technorama-ssc/you-decide/tree/main/${zipFile.path.replace(/\/[^/]+$/,"")}`;
-                devAnchor.textContent = "For Developers";
-                devAnchor.target = "_blank";
-                devLink.appendChild(devAnchor);
-
                 inner.appendChild(dl);
-                inner.appendChild(devLink);
+
+                // Developer-Link unter Download
+                const dev = document.createElement("div");
+                dev.className = "developer-link";
+                const devLink = document.createElement("a");
+                devLink.href = `https://github.com/technorama-ssc/you-decide/tree/main/${encodeURIComponent(folderPath)}`;
+                devLink.textContent = "For Developers";
+                devLink.target = "_blank";
+                dev.appendChild(devLink);
+                inner.appendChild(dev);
             }
         }
-    });
-
-    container.appendChild(wrapper);
-}
-
-// Folders laden
-async function loadFolders() {
-    try {
-        const response = await fetch(repoBase);
-        if(!response.ok) throw new Error("Fehler beim Zugriff auf das Repo über Worker");
-        const items = await response.json();
-
-        for(const item of items){
-            if(item.type==="dir"){
-                try{
-                    const folderResp = await fetch(`${repoBase}${encodeURIComponent(item.name)}`);
-                    if(!folderResp.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
-                    const folderContent = await folderResp.json();
-                    if(!Array.isArray(folderContent)) continue;
-
-                    const readme = folderContent.find(f=>f.name.toLowerCase()==="readme.md");
-                    if(!readme) continue;
-
-                    const zipFile = folderContent.find(f=>f.name.toLowerCase().endsWith(".zip"));
-
-                    const readmeResp = await fetch(readme.download_url);
-                    if(!readmeResp.ok) throw new Error(`Fehler beim Laden von ${readme.name}`);
-                    let md = await readmeResp.text();
-
-                    let lines = md.split("\n");
-                    let titleLine = "KEIN TITEL";
-                    let content = md;
-
-                    if(lines.length>0 && lines[0].startsWith("#")){
-                        titleLine = lines[0].replace(/^#\s*/, "");
-                        content = lines.slice(1).join("\n");
-                    }
-
-                    createAccordion(titleLine, content, zipFile);
-
-                } catch(err){
-                    console.warn("Fehler beim Laden eines Ordners:", item.name, err);
-                }
-            }
-        }
-
-    } catch(err){
-        console.error(err);
-        container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
-    }
-}
-
-loadFolders();
+    })
