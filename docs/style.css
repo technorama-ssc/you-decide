@@ -44,9 +44,10 @@ html, body {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
-    color: #000000; /* Lauftext schwarz auf gelbem Hintergrund */
+    color: #000000; /* Lauftext schwarz */
+    background-color: #eaff00; /* gelber Hintergrund */
     margin: 10px 0 0 0;
-    padding: 0;
+    padding: 20px;
     text-align: left;
 }
 
@@ -70,7 +71,7 @@ html, body {
 
 /* ------------------ Links in Panels ------------------ */
 .panel a {
-    color: #000000; /* Links schwarz auf gelbem Hintergrund */
+    color: #000000; /* Links schwarz */
     text-decoration: underline;
 }
 
