@@ -47,6 +47,9 @@ function createAccordion(folderName, readmeUrl) {
             wrapper.style.backgroundColor = "#eaff00";
             title.style.color = "#000";
 
+            // Sicherstellen, dass Textfarbe schwarz ist
+            panel.style.color = "#000000";
+
             // Markdown laden
             if (!panel.dataset.loaded) {
                 const response = await fetch(readmeUrl);
