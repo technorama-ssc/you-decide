@@ -1,10 +1,18 @@
+// ------------------ Konfiguration ------------------
+
 // GitHub Repo Basis-URL
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
+
+// Dein Personal Access Token (von GitHub generiert)
+const token = "DEIN_PERSONAL_ACCESS_TOKEN"; // <-- Hier einfügen
+const headers = {
+    "Authorization": `token ${token}`
+};
 
 // Zielcontainer
 const container = document.getElementById("dynamic-content");
 
-// Funktion: Akkordeon erstellen
+// ------------------ Funktion: Akkordeon erstellen ------------------
 function createAccordion(folderName, readmeUrl) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
@@ -50,7 +58,7 @@ function createAccordion(folderName, readmeUrl) {
             // Markdown laden
             if (!panel.dataset.loaded && readmeUrl) {
                 try {
-                    const response = await fetch(readmeUrl);
+                    const response = await fetch(readmeUrl, { headers });
                     if (!response.ok) throw new Error(`README konnte nicht geladen werden: ${response.status}`);
                     let md = await response.text();
                     md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
@@ -67,11 +75,11 @@ function createAccordion(folderName, readmeUrl) {
     container.appendChild(wrapper);
 }
 
-// Ordner + README automatisch laden
+// ------------------ Funktion: Ordner + README laden ------------------
 async function loadFolders() {
     try {
         console.log("Starte Repo-Fetch:", repoBase);
-        const response = await fetch(repoBase);
+        const response = await fetch(repoBase, { headers });
 
         // GitHub-API Status prüfen
         if (!response.ok) {
@@ -87,7 +95,7 @@ async function loadFolders() {
         for (const item of items) {
             if (item.type === "dir") {
                 try {
-                    const folderResponse = await fetch(item.url);
+                    const folderResponse = await fetch(item.url, { headers });
                     if (!folderResponse.ok) throw new Error(`Ordner ${item.name} konnte nicht geladen werden: ${folderResponse.status}`);
                     let folderContent = await folderResponse.json();
 
@@ -115,4 +123,5 @@ async function loadFolders() {
     }
 }
 
+// ------------------ Script starten ------------------
 loadFolders();
