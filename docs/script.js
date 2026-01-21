@@ -4,7 +4,7 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 
 // Dein Personal Access Token (von GitHub generiert)
-const token = "DEIN_PERSONAL_ACCESS_TOKEN"; // <-- Hier einfügen
+const token = "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";
 const headers = {
     "Authorization": `token ${token}`
 };
