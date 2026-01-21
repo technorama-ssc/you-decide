@@ -47,16 +47,22 @@ function createAccordion(folderName, readmeUrl) {
             wrapper.style.backgroundColor = "#eaff00";
             title.style.color = "#000";
 
-            // Sicherstellen, dass Textfarbe schwarz ist
+            // Textfarbe auf schwarz setzen (falls nötig)
             panel.style.color = "#000000";
 
             // Markdown laden
-            if (!panel.dataset.loaded) {
-                const response = await fetch(readmeUrl);
-                let md = await response.text();
-                md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
-                inner.innerHTML = marked.parse(md);
-                panel.dataset.loaded = "true";
+            if (!panel.dataset.loaded && readmeUrl) {
+                try {
+                    const response = await fetch(readmeUrl);
+                    if (!response.ok) throw new Error(`README konnte nicht geladen werden: ${response.status}`);
+                    let md = await response.text();
+                    md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
+                    inner.innerHTML = marked.parse(md);
+                    panel.dataset.loaded = "true";
+                } catch (err) {
+                    console.warn(`Fehler beim Laden der README für Ordner ${folderName}:`, err);
+                    inner.innerHTML = "<p style='color:red'>README konnte nicht geladen werden.</p>";
+                }
             }
         }
     });
@@ -68,19 +74,30 @@ function createAccordion(folderName, readmeUrl) {
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
+        if (!response.ok) throw new Error(`Repo konnte nicht geladen werden: ${response.status}`);
         const items = await response.json();
+
+        console.log("Gefundene Items im Repo:", items.map(i => i.name));
 
         for (const item of items) {
             if (item.type === "dir") {
-                const folderUrl = item.url;
-                const folderContent = await fetch(folderUrl).then(r => r.json());
+                try {
+                    const folderResponse = await fetch(item.url);
+                    if (!folderResponse.ok) throw new Error(`Ordner ${item.name} konnte nicht geladen werden: ${folderResponse.status}`);
+                    const folderContent = await folderResponse.json();
 
-                // README.md finden
-                const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
+                    console.log(`Inhalt von Ordner ${item.name}:`, folderContent.map(f => f.name));
 
-                // nur Ordner anzeigen, die README haben
-                if (readme) {
-                    createAccordion(item.name, readme.download_url);
+                    // README.md finden
+                    const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
+
+                    if (readme && readme.download_url) {
+                        createAccordion(item.name, readme.download_url);
+                    } else {
+                        console.warn(`README.md fehlt oder hat keine download_url in Ordner ${item.name}`);
+                    }
+                } catch (err) {
+                    console.warn(`Fehler beim Laden des Ordners ${item.name}:`, err);
                 }
             }
         }
