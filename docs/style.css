@@ -1,4 +1,3 @@
-/* ------------------ Grundlegendes ------------------ */
 html, body {
     margin: 0;
     padding: 0;
@@ -6,7 +5,7 @@ html, body {
     font-family: 'RobotoMono', monospace;
 }
 
-/* ------------------ Akkordeon Wrapper ------------------ */
+/* Akkordeon Wrapper */
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
@@ -14,7 +13,7 @@ html, body {
     box-sizing: border-box;
 }
 
-/* ------------------ Titel ------------------ */
+/* Titel */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -32,23 +31,23 @@ html, body {
     color: #ffffff;
 }
 
-/* ------------------ Panel / Text ------------------ */
+/* Panel / Text */
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
-    color: #000000; 
+    color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 20px;
-    text-align: left;
+    padding: 20px 0 20px 0; /* padding links/ rechts auf 0 */
 }
 
-/* Innerer Wrapper für Text bündig zum Titel */
+/* Panel-Content bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 0; /* bündig links mit Titel */
+    margin-left: 0; /* bündig links */
+    padding-left: 62px; /* gleich wie Titel links */
 }
 
 /* Panel-Kinder inherit */
@@ -56,7 +55,7 @@ html, body {
     color: inherit;
 }
 
-/* ------------------ Bilder in Panels ------------------ */
+/* Bilder */
 .panel img {
     max-width: 600px;
     height: auto;
@@ -64,9 +63,9 @@ html, body {
     margin: 40px 0 0 0;
 }
 
-/* ------------------ Links in Panels ------------------ */
+/* Links */
 .panel a {
-    color: #000000; 
+    color: #000000;
     text-decoration: underline;
 }
 
@@ -74,7 +73,7 @@ html, body {
     color: #333333;
 }
 
-/* ------------------ Download-Link ------------------ */
+/* Download-Link */
 .download-link {
     display: block;
     margin-top: 20px;
@@ -83,7 +82,7 @@ html, body {
 }
 
 .download-link span {
-    font-weight: normal; /* Download Text regular */
+    font-weight: normal !important; /* sicherstellen */
     margin-right: 5px;
 }
 
