@@ -11,7 +11,11 @@ function createAccordion(folderName, readmeUrl) {
 
     const title = document.createElement("h1");
     title.className = "accordion";
-    title.textContent = folderName.toUpperCase();
+
+    // Ordnernummer entfernen (z. B. "01_Ordnername" → "Ordnername")
+    const displayName = folderName.replace(/^\d+_/, "");
+    title.textContent = displayName.toUpperCase();
+    title.title = displayName; // Mouseover ohne Nummer
 
     const panel = document.createElement("div");
     panel.className = "panel";
