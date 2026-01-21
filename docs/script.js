@@ -80,7 +80,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
 }
 
 
-
 /* ---------------------------------------------------------
    🔥 HILFSFUNKTION: Lädt README + Titel aus einem Ordner
 ---------------------------------------------------------- */
@@ -108,7 +107,6 @@ async function loadReadmeFromFolder(url){
 
     return { title, content };
 }
-
 
 
 /* ---------------------------------------------------------
@@ -164,7 +162,7 @@ async function loadFolders() {
 
                 subHtml += `
                     <div class="subfolder-block">
-                        <h2 class="subfolder-title">${subData.title}</h2>
+                        <h1 class="subfolder-title">${subData.title}</h1>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
                         </div>
