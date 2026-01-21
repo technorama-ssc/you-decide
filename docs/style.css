@@ -1,3 +1,7 @@
+/* ============================= */
+/* GLOBAL STYLES                 */
+/* ============================= */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -101,7 +105,7 @@ html, body {
 /* UNTERORDNER-TITEL (README.md) */
 /* ============================= */
 
-.panel-content h1 {
+.subfolder-title {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
@@ -110,7 +114,34 @@ html, body {
     line-height: 1;
 }
 
-/* Kein Extra-Abstand beim ersten Unterordner */
-.panel-content h1:first-child {
+/* Kein Extra-Abstand beim ersten Unterordner im Panel */
+.subfolder-block:first-child .subfolder-title {
     margin-top: 0;
+}
+
+/* Unterordner-Text */
+.subfolder-text {
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000;
+    margin: 10px 0 0 0;
+}
+
+/* Optional: Bilder in Unterordner-Text */
+.subfolder-text img {
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 40px 0 0 0;
+}
+
+/* Optional: Links in Unterordner-Text */
+.subfolder-text a {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.subfolder-text a:hover {
+    color: #333333;
 }
