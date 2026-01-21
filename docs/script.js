@@ -1,9 +1,9 @@
-// Cloudflare Worker URL
-const repoBase = "https://bold-king-d69b.clehmann-330.workers.dev/api/";
+// ------------------ Worker-URL verwenden ------------------
+const repoBase = "https://bold-king-d69b.clehmann-330.workers.dev/api";
 const container = document.getElementById("dynamic-content");
 
-// Akkordeon erzeugen
-function createAccordion(titleText, contentMarkdown, zipFile, folderPath) {
+// Funktion: Akkordeon erzeugen
+function createAccordion(titleText, contentMarkdown, zipFile) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
@@ -22,6 +22,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, folderPath) {
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
+    // Click: Accordion öffnen/schließen
     title.addEventListener("click", () => {
         document.querySelectorAll(".panel").forEach(p => { if(p!==panel) p.style.display="none"; });
         document.querySelectorAll(".accordion-wrapper").forEach(w => { if(w!==wrapper) w.style.backgroundColor="transparent"; });
@@ -40,18 +41,19 @@ function createAccordion(titleText, contentMarkdown, zipFile, folderPath) {
             // Markdown-Inhalt einfügen
             inner.innerHTML = marked.parse(contentMarkdown);
 
-            // Download-Link erstellen
+            // ZIP-Datei Download-Link erstellen
             if(zipFile){
                 const dl = document.createElement("div");
                 dl.className = "download-link";
 
                 const textSpan = document.createElement("span");
-                textSpan.textContent = "Download";
+                textSpan.textContent = "Download"; 
+                textSpan.style.fontWeight = "normal"; // zwingend regular
 
                 const link = document.createElement("a");
                 link.href = zipFile.download_url;
 
-                // Display-Name: erster und letzter Teil der ZIP
+                // ZIP-Name aufteilen: erster Teil Content, letzter Exhibition
                 let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
                 let displayName = "";
                 if(parts.length >= 2){
@@ -65,17 +67,71 @@ function createAccordion(titleText, contentMarkdown, zipFile, folderPath) {
 
                 dl.appendChild(textSpan);
                 dl.appendChild(link);
-                inner.appendChild(dl);
 
-                // Developer-Link unter Download
-                const dev = document.createElement("div");
-                dev.className = "developer-link";
-                const devLink = document.createElement("a");
-                devLink.href = `https://github.com/technorama-ssc/you-decide/tree/main/${encodeURIComponent(folderPath)}`;
-                devLink.textContent = "For Developers";
-                devLink.target = "_blank";
-                dev.appendChild(devLink);
-                inner.appendChild(dev);
+                // Optional: Link für Entwickler GitHub
+                const devLink = document.createElement("div");
+                devLink.style.marginTop = "5px";
+                devLink.innerHTML = `<a href="https://github.com/technorama-ssc/you-decide/tree/main/${zipFile.path.replace(/ /g,"%20")}" target="_blank">For Developers</a>`;
+                dl.appendChild(devLink);
+
+                inner.appendChild(dl);
             }
         }
-    })
+    });
+
+    container.appendChild(wrapper);
+}
+
+// ------------------ Ordner + README + ZIP automatisch laden ------------------
+async function loadFolders() {
+    try {
+        const response = await fetch(repoBase);
+        if(!response.ok) throw new Error("Fehler beim Zugriff auf das Repo");
+        const items = await response.json();
+
+        for(const item of items){
+            if(item.type==="dir"){
+                try{
+                    const folderResponse = await fetch(`${repoBase}/${encodeURIComponent(item.name)}`);
+                    if(!folderResponse.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
+                    const folderContent = await folderResponse.json();
+                    if(!Array.isArray(folderContent)) continue;
+
+                    // README.md finden
+                    const readme = folderContent.find(f=>f.name.toLowerCase()==="readme.md");
+                    if(!readme) continue;
+
+                    // ZIP-Datei im Ordner finden (optional)
+                    const zipFile = folderContent.find(f=>f.name.toLowerCase().endsWith(".zip"));
+
+                    // README laden
+                    const readmeResp = await fetch(readme.download_url);
+                    if(!readmeResp.ok) throw new Error(`Fehler beim Laden von ${readme.name}`);
+                    let md = await readmeResp.text();
+
+                    // Erste Zeile als Titel
+                    let lines = md.split("\n");
+                    let titleLine = "KEIN TITEL";
+                    let content = md;
+
+                    if(lines.length>0 && lines[0].startsWith("#")){
+                        titleLine = lines[0].replace(/^#\s*/, "");
+                        content = lines.slice(1).join("\n");
+                    }
+
+                    createAccordion(titleLine, content, zipFile);
+
+                } catch(err){
+                    console.warn("Fehler beim Laden eines Ordners:", item.name, err);
+                }
+            }
+        }
+
+    } catch(err){
+        console.error("Fehler beim Laden der Ordner:", err);
+        container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
+    }
+}
+
+// ------------------ Alles starten ------------------
+loadFolders();
