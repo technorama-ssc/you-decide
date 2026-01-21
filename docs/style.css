@@ -9,7 +9,7 @@ html, body {
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
-    padding: 60px 0 60px 0; /* padding oben/unten, links/rechts = 0 */
+    padding: 60px 62px;
     box-sizing: border-box;
 }
 
@@ -24,7 +24,7 @@ html, body {
     color: #666666;
     transition: color 0.3s;
     margin: 0;
-    padding-left: 20px; /* links bündig */
+    padding: 0;
 }
 
 .accordion:hover {
@@ -40,14 +40,14 @@ html, body {
     color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 20px 0; /* links/rechts padding auf 0 */
+    padding: 20px 0 20px 0; /* padding links/ rechts auf 0 */
 }
 
 /* Panel-Content bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 20px; /* bündig links wie Titel */
-    padding-left: 0;
+    margin-left: 0; /* bündig links */
+    padding-left: 5px; /* gleich wie Titel links */
 }
 
 /* Panel-Kinder inherit */
@@ -82,7 +82,7 @@ html, body {
 }
 
 .download-link span {
-    font-weight: normal; /* zwingend regular */
+    font-weight: normal !important; /* sicherstellen */
     margin-right: 5px;
 }
 
@@ -92,22 +92,5 @@ html, body {
 }
 
 .download-link a:hover {
-    color: #333333;
-}
-
-/* Developer-Link */
-.developer-link {
-    display: block;
-    margin-top: 5px;
-    font-family: 'RobotoMono', monospace;
-    font-size: 14px;
-}
-
-.developer-link a {
-    text-decoration: underline;
-    color: #000000;
-}
-
-.developer-link a:hover {
     color: #333333;
 }
