@@ -1,4 +1,4 @@
-# Plate System
+Plate System
 
 Different system plates based on the basic grid
 
@@ -13,7 +13,7 @@ _
 
 System expansions [ITEM D30](https://www.item24.com/de-de/rohr-d30-natur-62856)
 
-# Crate System
+Crate System
 
 12 x 1,0 l glass bottle crate / 400 x 300 x 384.5 mm [Stöckli 1210-74.05 Bottle Crate](https://www.gebinde-technologie.ch/index.cfm?tem=1&spr=1&hpn=1&sbn=1&ssn=9)
 
