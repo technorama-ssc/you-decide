@@ -109,7 +109,7 @@ html, body {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 60px 0 20px 0; /* gleicher Abstand wie Haupttitel */
+    margin: 60px 0 40px -5px; /* gleicher Abstand wie Haupttitel */
     padding: 0;
     line-height: 1;
 }
