@@ -1,9 +1,11 @@
 // GitHub Repo Basis-URL
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
+
+// Zielcontainer
 const container = document.getElementById("dynamic-content");
 
 // Funktion: Akkordeon erzeugen
-function createAccordion(titleText, contentMarkdown, downloadUrl) {
+function createAccordion(titleText, contentMarkdown, zipFile) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
@@ -18,20 +20,11 @@ function createAccordion(titleText, contentMarkdown, downloadUrl) {
     const inner = document.createElement("div");
     inner.className = "panel-content";
 
-    // Panel-Content: Markdown
-    inner.innerHTML = marked.parse(contentMarkdown);
-
-    // Download-Link hinzufügen, falls vorhanden
-    if (downloadUrl) {
-        const downloadHTML = `<br><p>Download <a href="${downloadUrl}" target="_blank">Exhibition Content</a></p>`;
-        inner.innerHTML += downloadHTML;
-    }
-
     panel.appendChild(inner);
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
-    // Click: Akkordeon öffnen/schließen
+    // Click: Accordion öffnen/schließen
     title.addEventListener("click", () => {
         document.querySelectorAll(".panel").forEach(p => { if(p!==panel) p.style.display="none"; });
         document.querySelectorAll(".accordion-wrapper").forEach(w => { if(w!==wrapper) w.style.backgroundColor="transparent"; });
@@ -45,13 +38,38 @@ function createAccordion(titleText, contentMarkdown, downloadUrl) {
             panel.style.display="block";
             wrapper.style.backgroundColor="#eaff00";
             title.style.color="#000";
+            panel.style.color="#000";
+
+            // Markdown-Inhalt einfügen
+            inner.innerHTML = marked.parse(contentMarkdown);
+
+            // ZIP-Datei Download-Link erstellen
+            if(zipFile){
+                const dl = document.createElement("div");
+                dl.className = "download-link";
+
+                const textSpan = document.createElement("span");
+                textSpan.textContent = "Download";
+
+                const link = document.createElement("a");
+                link.href = zipFile.download_url;
+                // Name aus ZIP-Datei: remove prefix "content_" & ".zip" und ersetzen "_" durch Leerzeichen
+                let name = zipFile.name.replace(/^content_/, "").replace(/\.zip$/i, "").replace(/_/g," ");
+                link.textContent = name;
+                link.target = "_blank";
+
+                dl.appendChild(textSpan);
+                dl.appendChild(link);
+
+                inner.appendChild(dl);
+            }
         }
     });
 
     container.appendChild(wrapper);
 }
 
-// Ordner + README automatisch laden
+// Ordner + README + ZIP automatisch laden
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
@@ -61,36 +79,34 @@ async function loadFolders() {
         for(const item of items){
             if(item.type==="dir"){
                 try{
-                    const folderResp = await fetch(item.url);
-                    if(!folderResp.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
-                    const folderContent = await folderResp.json();
+                    const folderResponse = await fetch(item.url);
+                    if(!folderResponse.ok) throw new Error(`Fehler beim Laden von ${item.name}`);
+                    const folderContent = await folderResponse.json();
                     if(!Array.isArray(folderContent)) continue;
 
+                    // README.md finden
                     const readme = folderContent.find(f=>f.name.toLowerCase()==="readme.md");
                     if(!readme) continue;
 
+                    // ZIP-Datei im Ordner finden (optional)
+                    const zipFile = folderContent.find(f=>f.name.toLowerCase().endsWith(".zip"));
+
+                    // README laden
                     const readmeResp = await fetch(readme.download_url);
                     if(!readmeResp.ok) throw new Error(`Fehler beim Laden von ${readme.name}`);
                     let md = await readmeResp.text();
 
-                    // Titel aus erster Zeile der README
-                    const lines = md.split("\n");
+                    // Erste Zeile als Titel
+                    let lines = md.split("\n");
                     let titleLine = "KEIN TITEL";
                     let content = md;
+
                     if(lines.length>0 && lines[0].startsWith("#")){
                         titleLine = lines[0].replace(/^#\s*/, "");
                         content = lines.slice(1).join("\n");
                     }
 
-                    // Prüfen, ob ZIP-Datei existiert (Download-Link)
-                    // Annahme: Ordner heißt content_<foldername>, ZIP-Datei im gleichen Ordner
-                    const zipName = folderContent.find(f=>f.name.endsWith(".zip") && f.name.toLowerCase().startsWith("content_"));
-                    let downloadUrl = null;
-                    if(zipName){
-                        downloadUrl = zipName.download_url; // Raw-Link
-                    }
-
-                    createAccordion(titleLine, content, downloadUrl);
+                    createAccordion(titleLine, content, zipFile);
 
                 } catch(err){
                     console.warn("Fehler beim Laden eines Ordners:", item.name, err);
