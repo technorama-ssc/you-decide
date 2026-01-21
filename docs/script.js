@@ -49,13 +49,19 @@ function createAccordion(titleText, contentMarkdown, zipFile) {
                 dl.className = "download-link";
 
                 const textSpan = document.createElement("span");
-                textSpan.textContent = "Download";
+                textSpan.textContent = "Download"; // regular
 
                 const link = document.createElement("a");
                 link.href = zipFile.download_url;
-                // Name aus ZIP-Datei: remove prefix "content_" & ".zip" und ersetzen "_" durch Leerzeichen
-                let name = zipFile.name.replace(/^content_/, "").replace(/\.zip$/i, "").replace(/_/g," ");
-                link.textContent = name;
+
+                // Name aus ZIP-Datei: remove "content_" prefix & ".zip" suffix
+                let nameParts = zipFile.name.replace(/^content_/, "").replace(/\.zip$/i, "").split("_");
+                let displayName = nameParts.map((p,i)=>{
+                    if(i===0) return p.charAt(0).toUpperCase() + p.slice(1); // erster Teil: Content
+                    if(i===nameParts.length-1) return p.charAt(0).toUpperCase() + p.slice(1); // letzter Teil: Exhibition
+                    return p; // alles dazwischen unverändert
+                }).join(" ");
+                link.textContent = displayName;
                 link.target = "_blank";
 
                 dl.appendChild(textSpan);
@@ -116,9 +122,4 @@ async function loadFolders() {
 
     } catch(err){
         console.error("Fehler beim Laden der Ordner:", err);
-        container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
-    }
-}
-
-// Alles starten
-loadFolders();
+        container.innerHTML = "<p style='color
