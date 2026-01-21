@@ -9,6 +9,7 @@ Here you find general information and materials on the exhibition "You Decide"
 Here you find the information and materials on the construciton system used througout the exhibition.
 
 # 02 Exhibiton
+(Inhalt neu in 00 You DEcide)
 Here you find general information and materials on the exhibition "You Decide". 
 
 # 03 Exhibits
