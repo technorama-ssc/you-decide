@@ -1,5 +1,5 @@
 Paper 
-https://www.papierdirekt.ch/druckpapier/druckpapier-nach-marke/color-troph-e/clairefontaine-troph-e-fluo-neon-din-a4-gelb.html
+[Paperdirekt / Clairefontaine]([https://creativecommons.org/licenses/by/4.0/](https://www.papierdirekt.ch/druckpapier/druckpapier-nach-marke/color-troph-e/clairefontaine-troph-e-fluo-neon-din-a4-gelb.html))
 
-Tape 
-https://www.amazon.de/dp/B09HZVJXY6?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1
+Tape
+[Masking Tape / Amazone](https://www.amazon.de/dp/B09HZVJXY6?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)
