@@ -1,18 +1,10 @@
-// ------------------ Konfiguration ------------------
-
 // GitHub Repo Basis-URL
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
-
-// Dein Personal Access Token (von GitHub generiert)
-const token = "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";
-const headers = {
-    "Authorization": `token ${token}`
-};
 
 // Zielcontainer
 const container = document.getElementById("dynamic-content");
 
-// ------------------ Funktion: Akkordeon erstellen ------------------
+// Akkordeon-HTML erzeugen
 function createAccordion(folderName, readmeUrl) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
@@ -31,8 +23,9 @@ function createAccordion(folderName, readmeUrl) {
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
-    // Click: Akkordeon öffnen/schließen
+    // Click: Accordion öffnen/schließen
     title.addEventListener("click", async () => {
+
         // alle anderen schließen
         document.querySelectorAll(".panel").forEach(p => {
             if (p !== panel) p.style.display = "none";
@@ -53,21 +46,17 @@ function createAccordion(folderName, readmeUrl) {
             panel.style.display = "block";
             wrapper.style.backgroundColor = "#eaff00";
             title.style.color = "#000";
+
+            // Sicherstellen, dass Textfarbe schwarz ist
             panel.style.color = "#000000";
 
             // Markdown laden
-            if (!panel.dataset.loaded && readmeUrl) {
-                try {
-                    const response = await fetch(readmeUrl, { headers });
-                    if (!response.ok) throw new Error(`README konnte nicht geladen werden: ${response.status}`);
-                    let md = await response.text();
-                    md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
-                    inner.innerHTML = marked.parse(md);
-                    panel.dataset.loaded = "true";
-                } catch (err) {
-                    console.warn(`Fehler beim Laden der README für Ordner ${folderName}:`, err);
-                    inner.innerHTML = "<p style='color:red'>README konnte nicht geladen werden.</p>";
-                }
+            if (!panel.dataset.loaded) {
+                const response = await fetch(readmeUrl);
+                let md = await response.text();
+                md = md.replace(/^# .*\n/, ""); // erste H1 entfernen
+                inner.innerHTML = marked.parse(md);
+                panel.dataset.loaded = "true";
             }
         }
     });
@@ -75,53 +64,30 @@ function createAccordion(folderName, readmeUrl) {
     container.appendChild(wrapper);
 }
 
-// ------------------ Funktion: Ordner + README laden ------------------
+// Ordner + README automatisch laden
 async function loadFolders() {
     try {
-        console.log("Starte Repo-Fetch:", repoBase);
-        const response = await fetch(repoBase, { headers });
-
-        // GitHub-API Status prüfen
-        if (!response.ok) {
-            const text = await response.text();
-            console.error("Fehler beim Abrufen des Repos:", response.status, text);
-            container.innerHTML = `<p style="color:red">Fehler beim Laden des Repos: ${response.status}<br>${text}</p>`;
-            return;
-        }
-
+        const response = await fetch(repoBase);
         const items = await response.json();
-        console.log("Gefundene Items im Repo:", items.map(i => i.name));
 
         for (const item of items) {
             if (item.type === "dir") {
-                try {
-                    const folderResponse = await fetch(item.url, { headers });
-                    if (!folderResponse.ok) throw new Error(`Ordner ${item.name} konnte nicht geladen werden: ${folderResponse.status}`);
-                    let folderContent = await folderResponse.json();
+                const folderUrl = item.url;
+                const folderContent = await fetch(folderUrl).then(r => r.json());
 
-                    // Prüfen, ob folderContent ein Array ist (leere Ordner manchmal Objekt)
-                    if (!Array.isArray(folderContent)) folderContent = [folderContent];
+                // README.md finden
+                const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
 
-                    console.log(`Inhalt von Ordner ${item.name}:`, folderContent.map(f => f.name));
-
-                    // README.md finden
-                    const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
-                    if (readme && readme.download_url) {
-                        createAccordion(item.name, readme.download_url);
-                    } else {
-                        console.warn(`README.md fehlt oder hat keine download_url in Ordner ${item.name}`);
-                    }
-
-                } catch (err) {
-                    console.warn(`Fehler beim Laden des Ordners ${item.name}:`, err);
+                // nur Ordner anzeigen, die README haben
+                if (readme) {
+                    createAccordion(item.name, readme.download_url);
                 }
             }
         }
     } catch (err) {
-        console.error("Unbekannter Fehler beim Laden der Ordner:", err);
-        container.innerHTML = "<p style='color:red'>Unbekannter Fehler beim Laden der Inhalte</p>";
+        console.error("Fehler beim Laden der Ordner:", err);
+        container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
     }
 }
 
-// ------------------ Script starten ------------------
 loadFolders();
