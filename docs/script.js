@@ -37,6 +37,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
 
             inner.innerHTML = marked.parse(contentMarkdown);
 
+            // ZIP Download (falls vorhanden)
             if(zipFile){
                 const dl = document.createElement("div");
                 dl.className = "download-link";
@@ -57,6 +58,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 } else {
                     displayName = zipFile.name.replace(/\.zip$/i, "");
                 }
+
                 link.textContent = displayName;
                 link.target = "_blank";
 
@@ -65,6 +67,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 inner.appendChild(dl);
             }
 
+            // Unterordner HTML anhängen (erst beim Klicken sichtbar)
             if(subfoldersHtml){
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
@@ -74,7 +77,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     container.appendChild(wrapper);
 }
 
-/* Unterordner laden */
+/* ------------------- */
+/* Hilfsfunktion: Lädt README + Titel eines Ordners */
+/* ------------------- */
 async function loadReadmeFromFolder(url){
     const folderResponse = await fetch(url);
     if(!folderResponse.ok) return null;
@@ -99,7 +104,9 @@ async function loadReadmeFromFolder(url){
     return { title, content };
 }
 
-/* Hauptordner + Unterordner */
+/* ------------------- */
+/* Hauptfunktion: Lädt Hauptordner + Unterordner */
+/* ------------------- */
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
@@ -134,18 +141,19 @@ async function loadFolders() {
 
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
 
+            // Unterordner sammeln
             let subHtml = "";
 
             for(const sub of folderContent){
                 if(sub.type !== "dir") continue;
-                if(!/^\d/.test(sub.name)) continue;
+                if(!/^\d/.test(sub.name)) continue; // nur nummerierte Ordner
 
                 const subData = await loadReadmeFromFolder(sub.url);
                 if(!subData) continue;
 
                 subHtml += `
                     <div class="subfolder-block">
-                        <h2 class="subfolder-title">${subData.title.toUpperCase()}</h2>
+                        <h2 class="subfolder-title">${subData.title}</h2>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
                         </div>
@@ -154,6 +162,7 @@ async function loadFolders() {
             }
 
             createAccordion(titleLine, content, zipFile, subHtml);
+
         }
 
     } catch(err){
