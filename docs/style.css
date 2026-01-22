@@ -49,7 +49,7 @@ html, body {
     color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 20px 0 0 0; /* Oben 20px, unten 0, Unterordner regeln Abstand */
+    padding: 20px 0 60px 0; /* Oben 20px, unten 60px für Abstand zur ersten Linie der Unterordner */
 }
 
 /* Panel-Content bündig zum Titel */
@@ -110,8 +110,8 @@ html, body {
    Unterordner-Titel & Linien
 ============================= */
 .subfolder-block {
-    padding-top: 60px;     /* Abstand oberhalb = 60px */
-    padding-bottom: 60px;  /* Abstand unterhalb = 60px */
+    padding-top: 60px; /* Abstand oberhalb zum vorherigen Text oder Linie */
+    padding-bottom: 60px; /* Abstand unterhalb des Unterordner-Textes */
     margin: 0;
     width: 100%;
     border-top: 1px solid #000000; /* Linie zwischen Unterordnern */
@@ -119,7 +119,7 @@ html, body {
 }
 
 .subfolder-block:first-child {
-    border-top: none; /* erste Linie nicht anzeigen */
+    border-top: none; /* erste Linie nach Hauptordner nicht anzeigen */
 }
 
 .subfolder-title {
