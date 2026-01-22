@@ -30,7 +30,7 @@ async function loadImagesFromFolder(url) {
 /* -------------------------------------------------
    Accordion erstellen
 -------------------------------------------------- */
-function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
+function createAccordion(titleText, contentMarkdown, zipFile, imagesHtml, subfoldersHtml) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
@@ -70,8 +70,10 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
             wrapper.style.backgroundColor = "#eaff00";
             title.style.color = "#000";
 
+            /* 1️⃣ Lauftext */
             inner.innerHTML = marked.parse(contentMarkdown);
 
+            /* 2️⃣ Download */
             if (zipFile) {
                 const dl = document.createElement("div");
                 dl.className = "download-link";
@@ -94,6 +96,12 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 inner.appendChild(dl);
             }
 
+            /* 3️⃣ Bilder (immer nach Download) */
+            if (imagesHtml) {
+                inner.insertAdjacentHTML("beforeend", imagesHtml);
+            }
+
+            /* 4️⃣ Unterordner */
             if (subfoldersHtml) {
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
@@ -169,16 +177,17 @@ async function loadFolders() {
                         <h2 class="subfolder-title">${subData.title}</h2>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
-                            ${subImages}
                         </div>
+                        ${subImages}
                     </div>
                 `;
             }
 
             createAccordion(
                 title,
-                content + imagesHtml,
+                content,
                 zipFile,
+                imagesHtml,
                 subHtml
             );
         }
