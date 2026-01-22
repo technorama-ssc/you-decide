@@ -110,24 +110,24 @@ html, body {
    Unterordner-Titel & Linien
 ============================= */
 .subfolder-block {
-    padding-top: 60px; /* Abstand zum oberen Rand / vorheriger Text */
+    width: 100vw; /* gesamte Breite des Viewports */
+    padding-top: 60px; /* Abstand oberhalb des Textes */
     padding-bottom: 60px; /* Abstand unterhalb des Textes */
     margin: 0;
-    width: 100%;
     border-top: 1px solid #000000; /* Linie zwischen Unterordnern */
     box-sizing: border-box;
 }
 
 .subfolder-block:first-child {
-    border-top: none; /* erste Linie nicht anzeigen */
-    padding-top: 0;
+    border-top: 1px solid #000; /* Linie direkt unter Hauptordner */
+    padding-top: 60px; /* Abstand vom Hauptordnerlauftext */
 }
 
 .subfolder-title {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 0 0 20px -5px; /* bündig links wie Haupttitel */
+    margin: 0 0 20px 5px; /* bündig links, kleiner Versatz */
 }
 
 .subfolder-text {
