@@ -49,14 +49,14 @@ html, body {
     color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 60px 0; /* oben/unten Abstand 60px */
+    padding: 60px 0; /* Abstand oben/unten */
 }
 
 /* PANEL-CONTENT bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
     margin: 0 auto;
-    padding-left: 5px; /* leichter Linkseinzug */
+    padding-left: 5px; 
     padding-right: 5px;
 }
 
@@ -112,14 +112,17 @@ html, body {
 /* ==================== */
 .subfolder-block {
     background-color: #eaff00;
-    padding: 60px 0;  /* Abstand oben/unten 60px */
+    padding: 60px 0;  /* Abstand oben/unten */
     position: relative;
-    margin: 0;         /* keine extra Abstände außen */
+    margin: 0;        
 }
 
-/* Linie zwischen Unterordnern */
+/* Linie zwischen Unterordnern: oben 1px */
 .subfolder-block + .subfolder-block {
     border-top: 1px solid #000; /* schwarze Linie */
+    width: 100%;
+    position: absolute;
+    left: 0;
 }
 
 /* Unterordner-Titel */
@@ -127,7 +130,7 @@ html, body {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 0 0 20px 5px; /* 5px links, 20px unten */
+    margin: 0 0 20px 5px; /* links bündig mit leichtem Einzug */
 }
 
 /* Unterordner-Text */
@@ -136,5 +139,5 @@ html, body {
     font-size: 16px;
     line-height: 1.5;
     color: #000000;
-    margin: 0 5px; /* leicht eingerückt, Linie läuft bis Rand */
+    margin: 0 5px;
 }
