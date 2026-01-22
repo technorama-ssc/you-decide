@@ -74,7 +74,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     container.appendChild(wrapper);
 }
 
-/* Lädt README + Titel aus einem Ordner */
+/* Unterordner laden */
 async function loadReadmeFromFolder(url){
     const folderResponse = await fetch(url);
     if(!folderResponse.ok) return null;
@@ -99,7 +99,7 @@ async function loadReadmeFromFolder(url){
     return { title, content };
 }
 
-/* Lädt Hauptordner + Unterordner */
+/* Hauptordner + Unterordner */
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
