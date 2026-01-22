@@ -1,49 +1,71 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000000;
+    background-color: #000;
     font-family: 'RobotoMono', monospace;
 }
 
-/* --------------------------- */
-/* Block (Haupt- oder Unterordner) */
-.folder-block {
+/* Allgemeiner Block */
+.block {
     background-color: #eaff00;
-    padding: 60px 62px; /* Abstand oben/unten innerhalb des Blocks */
+    padding: 60px 62px;
     box-sizing: border-box;
     position: relative;
 }
 
-/* Titel */
-.folder-block .accordion,
-.folder-block .subfolder-title {
+/* Linie zwischen Blöcken */
+.block + .block {
+    border-top: 1px solid #000;
+}
+
+/* Haupttitel */
+.accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666;
+    color: #666;
+    transition: color 0.3s;
     margin: 0;
     padding: 0;
 }
 
-.folder-block .accordion:hover,
-.folder-block .subfolder-title:hover {
-    color: #000000;
+.accordion:hover {
+    color: #000;
 }
 
 /* Panel / Text */
-.panel-content {
+.panel {
+    display: none;
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
-    color: #000000;
-    margin-top: 40px; /* Abstand vom Titel zum Text */
+    color: #000;
+    margin-top: 20px;
+}
+
+/* Panel-Content bündig zum Titel */
+.panel .panel-content {
+    max-width: 800px;
+    margin-left: 5px;
+}
+
+/* Unterordner */
+.subfolder-title {
+    font-family: 'Pixel2', sans-serif;
+    font-size: 80px;
+    margin: 60px 0 20px -5px; /* 60px oben wie Haupttitel, 5px links */
+    padding: 0;
+}
+
+.subfolder-text {
+    margin-bottom: 60px; /* Abstand bis Linie oder nächster Block */
 }
 
 /* Bilder */
-.panel-content img {
+.panel img {
     max-width: 600px;
     height: auto;
     display: block;
@@ -51,13 +73,13 @@ html, body {
 }
 
 /* Links */
-.panel-content a {
-    color: #000000;
+.panel a {
+    color: #000;
     text-decoration: underline;
 }
 
-.panel-content a:hover {
-    color: #333333;
+.panel a:hover {
+    color: #333;
 }
 
 /* Download-Link */
@@ -75,18 +97,9 @@ html, body {
 
 .download-link a {
     text-decoration: underline;
-    color: #000000;
+    color: #000;
 }
 
 .download-link a:hover {
-    color: #333333;
-}
-
-/* --------------------------- */
-/* Linie zwischen Blöcken */
-.separator-line {
-    height: 1px;
-    background-color: #000000;
-    width: 100%; /* ganze Breite */
-    margin: 0; /* direkt zwischen Blöcken */
+    color: #333;
 }
