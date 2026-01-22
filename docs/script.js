@@ -37,7 +37,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
 
             inner.innerHTML = marked.parse(contentMarkdown);
 
-            // ZIP Download (falls vorhanden)
             if(zipFile){
                 const dl = document.createElement("div");
                 dl.className = "download-link";
@@ -67,7 +66,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 inner.appendChild(dl);
             }
 
-            // Unterordner HTML anhängen (erst beim Klicken sichtbar)
             if(subfoldersHtml){
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
@@ -77,8 +75,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     container.appendChild(wrapper);
 }
 
-/* ------------------- */
-/* Hilfsfunktion: Lädt README + Titel eines Ordners */
 /* ------------------- */
 async function loadReadmeFromFolder(url){
     const folderResponse = await fetch(url);
@@ -104,8 +100,6 @@ async function loadReadmeFromFolder(url){
     return { title, content };
 }
 
-/* ------------------- */
-/* Hauptfunktion: Lädt Hauptordner + Unterordner */
 /* ------------------- */
 async function loadFolders() {
     try {
@@ -146,7 +140,7 @@ async function loadFolders() {
 
             for(const sub of folderContent){
                 if(sub.type !== "dir") continue;
-                if(!/^\d/.test(sub.name)) continue; // nur nummerierte Ordner
+                if(!/^\d/.test(sub.name)) continue;
 
                 const subData = await loadReadmeFromFolder(sub.url);
                 if(!subData) continue;
