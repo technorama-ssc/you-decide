@@ -4,7 +4,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000000;
+    background-color: #000000; 
     font-family: 'RobotoMono', monospace;
 }
 
@@ -49,7 +49,7 @@ html, body {
     color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 20px 0 20px 0;
+    padding: 20px 0 0 0; /* bottom padding jetzt 0, siehe unten */
 }
 
 /* Panel-Content bündig zum Titel */
@@ -110,37 +110,38 @@ html, body {
    Unterordner-Titel & Linien
 ============================= */
 .subfolder-block {
-    width: 100%;
-    box-sizing: border-box;
-    border-top: 1px solid #000000;
-
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding-top: 60px; /* Abstand zum oberen Rand / vorheriger Text */
+    padding-bottom: 60px; /* Abstand unterhalb des Textes */
     margin: 0;
+    width: 100%;
+    border-top: 1px solid #000000; /* Linie zwischen Unterordnern */
+    box-sizing: border-box;
 }
 
-/* Erste Linie nicht anzeigen */
 .subfolder-block:first-child {
-    border-top: none;
-    padding-top: 0;
+    border-top: none; /* erste Linie nicht anzeigen */
+    padding-top: 60px; /* Abstand vom Haupttext */
 }
 
-/* ⭐ WICHTIGE KORREKTUR ⭐
-   Abstand Lauftext Hauptordner → erste Linie */
-.panel-content > .subfolder-block:first-of-type {
-    margin-top: 60px;
-}
-
-/* Unterordner-Titel */
 .subfolder-title {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 0 0 20px -5px;
+    margin: 0 0 20px -5px; /* bündig links wie Haupttitel */
 }
 
-/* Unterordner-Text */
 .subfolder-text {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
+}
+
+/* =============================
+   Abschlussabstand korrigieren
+============================= */
+.panel {
+    padding-bottom: 0; /* Panel bottom-Padding neutralisieren */
+}
+
+.subfolder-block:last-child {
+    padding-bottom: 60px; /* Letzter Unterordner bestimmt Abschluss */
 }
