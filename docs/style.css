@@ -1,21 +1,19 @@
+/* ---------------------------- */
+/* Grundlayout / Startseite */
+/* ---------------------------- */
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000;
+    background-color: #000000; /* schwarz */
     font-family: 'RobotoMono', monospace;
 }
 
-/* Allgemeiner Block */
-.block {
-    background-color: #eaff00;
+/* Akkordeon Wrapper */
+.accordion-wrapper {
+    width: 100%;
+    transition: background-color 0.3s;
     padding: 60px 62px;
     box-sizing: border-box;
-    position: relative;
-}
-
-/* Linie zwischen Blöcken */
-.block + .block {
-    border-top: 1px solid #000;
 }
 
 /* Haupttitel */
@@ -26,14 +24,14 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666;
+    color: #666666; /* grau auf Startseite */
     transition: color 0.3s;
     margin: 0;
     padding: 0;
 }
 
 .accordion:hover {
-    color: #000;
+    color: #ffffff;
 }
 
 /* Panel / Text */
@@ -42,26 +40,24 @@ html, body {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
-    color: #000;
-    margin-top: 20px;
+    color: #000000; /* schwarz auf gelbem Hintergrund */
+    background-color: #eaff00; /* gelb beim Öffnen */
+    margin: 10px 0 0 0;
+    padding: 20px 0 20px 0;
 }
 
 /* Panel-Content bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin-left: 5px;
+    margin-left: 0;
+    padding-left: 5px;
 }
 
-/* Unterordner */
-.subfolder-title {
-    font-family: 'Pixel2', sans-serif;
-    font-size: 80px;
-    margin: 60px 0 20px -5px; /* 60px oben wie Haupttitel, 5px links */
-    padding: 0;
-}
-
-.subfolder-text {
-    margin-bottom: 60px; /* Abstand bis Linie oder nächster Block */
+/* Lauftext */
+.panel p,
+.panel li,
+.panel a {
+    color: inherit;
 }
 
 /* Bilder */
@@ -74,12 +70,12 @@ html, body {
 
 /* Links */
 .panel a {
-    color: #000;
+    color: #000000;
     text-decoration: underline;
 }
 
 .panel a:hover {
-    color: #333;
+    color: #333333;
 }
 
 /* Download-Link */
@@ -97,9 +93,35 @@ html, body {
 
 .download-link a {
     text-decoration: underline;
-    color: #000;
+    color: #000000;
 }
 
 .download-link a:hover {
-    color: #333;
+    color: #333333;
+}
+
+/* ============================= */
+/* UNTERORDNER-TITEL & LINIEN */
+/* ============================= */
+.subfolder-block {
+    padding-top: 60px; /* Abstand zum oberen Rand */
+    margin: 0; /* Abstand zu vorherigem Block wird über padding geregelt */
+    border-top: 1px solid #000000; /* Linie zwischen Unterordnern */
+}
+
+.subfolder-block:first-child {
+    border-top: none; /* keine Linie beim ersten Unterordner */
+    padding-top: 0;
+}
+
+.subfolder-title {
+    font-family: 'Pixel2', sans-serif;
+    font-size: 80px;
+    text-transform: uppercase; /* Großbuchstaben */
+    margin: 0 0 20px 0; /* bündig links */
+}
+
+.subfolder-text {
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
 }
