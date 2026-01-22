@@ -1,47 +1,168 @@
-function createBlock(titleText, contentMarkdown, zipFile, isSubfolder=false) {
-    // Block Wrapper
-    const block = document.createElement("div");
-    block.className = "folder-block";
+const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
+const container = document.getElementById("dynamic-content");
 
-    // Titel
-    const title = document.createElement(isSubfolder ? "h2" : "h1");
-    title.className = isSubfolder ? "subfolder-title" : "accordion";
+function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "block"; // block mit Hintergrund + Abstände
+
+    const title = document.createElement("h1");
+    title.className = "accordion";
     title.textContent = titleText.toUpperCase();
-    block.appendChild(title);
+    title.title = titleText;
 
-    // Panel / Inhalt
     const panel = document.createElement("div");
-    panel.className = "panel-content";
-    panel.style.display = isSubfolder ? "block" : "none"; // Unterordner erst beim Klick sichtbar
-    panel.innerHTML = marked.parse(contentMarkdown);
-    block.appendChild(panel);
+    panel.className = "panel";
 
-    // ZIP Download
-    if(zipFile){
-        const dl = document.createElement("div");
-        dl.className = "download-link";
-        const textSpan = document.createElement("span");
-        textSpan.textContent = "Download"; 
-        textSpan.style.fontWeight = "normal";
-        const link = document.createElement("a");
-        link.href = zipFile.download_url;
-        let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
-        let displayName = parts.length >= 2 ? 
-            parts[0].charAt(0).toUpperCase()+parts[0].slice(1)+" "+parts[parts.length-1].charAt(0).toUpperCase()+parts[parts.length-1].slice(1)
-            : zipFile.name.replace(/\.zip$/i,"");
-        link.textContent = displayName;
-        link.target = "_blank";
-        dl.appendChild(textSpan);
-        dl.appendChild(link);
-        panel.appendChild(dl);
-    }
+    const inner = document.createElement("div");
+    inner.className = "panel-content";
 
-    container.appendChild(block);
+    panel.appendChild(inner);
+    wrapper.appendChild(title);
+    wrapper.appendChild(panel);
 
-    // Linie außerhalb des Blocks
-    const line = document.createElement("div");
-    line.className = "separator-line";
-    container.appendChild(line);
+    title.addEventListener("click", () => {
+        // andere Panels schließen
+        document.querySelectorAll(".panel").forEach(p => { if(p!==panel) p.style.display="none"; });
+        document.querySelectorAll(".accordion").forEach(a => { if(a!==title) a.style.color="#666"; });
 
-    return { block, panel };
+        if(panel.style.display==="block"){
+            panel.style.display="none";
+            title.style.color="#666";
+        } else {
+            panel.style.display="block";
+            title.style.color="#000";
+
+            // Markdown des Hauptordners
+            inner.innerHTML = marked.parse(contentMarkdown);
+
+            // ZIP Download
+            if(zipFile){
+                const dl = document.createElement("div");
+                dl.className = "download-link";
+
+                const textSpan = document.createElement("span");
+                textSpan.textContent = "Download"; 
+                textSpan.style.fontWeight = "normal";
+
+                const link = document.createElement("a");
+                link.href = zipFile.download_url;
+
+                let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
+                let displayName = "";
+                if(parts.length >= 2){
+                    displayName = parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
+                                  parts[parts.length-1].charAt(0).toUpperCase() + parts[parts.length-1].slice(1);
+                } else {
+                    displayName = zipFile.name.replace(/\.zip$/i, "");
+                }
+                link.textContent = displayName;
+                link.target = "_blank";
+
+                dl.appendChild(textSpan);
+                dl.appendChild(link);
+                inner.appendChild(dl);
+            }
+
+            // Unterordner HTML anhängen
+            if(subfoldersHtml){
+                inner.insertAdjacentHTML("beforeend", subfoldersHtml);
+            }
+        }
+    });
+
+    container.appendChild(wrapper);
 }
+
+/* ---------------------------------------------------------
+   Hilfsfunktion: Lädt README + Titel aus einem Ordner
+---------------------------------------------------------- */
+async function loadReadmeFromFolder(url){
+    const folderResponse = await fetch(url);
+    if(!folderResponse.ok) return null;
+
+    const folderContent = await folderResponse.json();
+    if(!Array.isArray(folderContent)) return null;
+
+    const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
+    if(!readme) return null;
+
+    const readmeResp = await fetch(readme.download_url);
+    if(!readmeResp.ok) return null;
+
+    let md = await readmeResp.text();
+    let lines = md.split("\n");
+
+    // Titel nur wenn erste Zeile mit #
+    if(!lines[0].startsWith("#")) return null;
+
+    const title = lines[0].replace(/^#\s*/, "");
+    const content = lines.slice(1).join("\n");
+
+    return { title, content };
+}
+
+/* ---------------------------------------------------------
+   Haupt-Funktion: Lädt Hauptordner + Unterordner
+---------------------------------------------------------- */
+async function loadFolders() {
+    try {
+        const response = await fetch(repoBase);
+        if(!response.ok) throw new Error("Fehler beim Zugriff auf das Repo");
+
+        const items = await response.json();
+
+        for(const item of items){
+            if(item.type !== "dir") continue;
+
+            const folderResp = await fetch(item.url);
+            if(!folderResp.ok) continue;
+            const folderContent = await folderResp.json();
+
+            // README Hauptordner
+            const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
+            if(!readme) continue;
+
+            const readmeResp = await fetch(readme.download_url);
+            if(!readmeResp.ok) continue;
+
+            let md = await readmeResp.text();
+            let lines = md.split("\n");
+
+            let titleLine = "KEIN TITEL";
+            let content = md;
+            if(lines[0].startsWith("#")){
+                titleLine = lines[0].replace(/^#\s*/, "");
+                content = lines.slice(1).join("\n");
+            }
+
+            const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
+
+            // Unterordner sammeln
+            let subHtml = "";
+            for(const sub of folderContent){
+                if(sub.type !== "dir") continue;
+                if(!/^\d/.test(sub.name)) continue;
+
+                const subData = await loadReadmeFromFolder(sub.url);
+                if(!subData) continue;
+
+                subHtml += `
+                    <div class="block">
+                        <h2 class="subfolder-title">${subData.title}</h2>
+                        <div class="subfolder-text">
+                            ${marked.parse(subData.content)}
+                        </div>
+                    </div>
+                `;
+            }
+
+            createAccordion(titleLine, content, zipFile, subHtml);
+        }
+
+    } catch(err){
+        console.error("Fehler beim Laden der Ordner:", err);
+        container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
+    }
+}
+
+loadFolders();
