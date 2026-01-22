@@ -9,7 +9,7 @@ html, body {
 /* Block (Haupt- oder Unterordner) */
 .folder-block {
     background-color: #eaff00;
-    padding: 60px 62px; /* 60px oben/unten, 62px links/rechts */
+    padding: 60px 62px; /* Abstand oben/unten innerhalb des Blocks */
     box-sizing: border-box;
     position: relative;
 }
@@ -87,5 +87,6 @@ html, body {
 .separator-line {
     height: 1px;
     background-color: #000000;
-    margin: 0; /* Linie direkt zwischen Blöcken */
+    width: 100%; /* ganze Breite */
+    margin: 0; /* direkt zwischen Blöcken */
 }
