@@ -1,3 +1,4 @@
 # Click Click Click
 
-Work in progress - content coming soon ...
+Work in progress ... <br>
+Content coming soon.
