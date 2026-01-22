@@ -2,13 +2,10 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #000000;
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'RobotoMono', monospace;
 }
 
-/* ============================= */
-/* AKKORDEON WRAPPER             */
-/* ============================= */
-
+/* Akkordeon Wrapper */
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
@@ -16,10 +13,7 @@ html, body {
     box-sizing: border-box;
 }
 
-/* ============================= */
-/* HAUPTTITEL                    */
-/* ============================= */
-
+/* Haupttitel */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -37,98 +31,97 @@ html, body {
     color: #ffffff;
 }
 
-/* ============================= */
-/* PANEL / HAUPTINHALT           */
-/* ============================= */
-
+/* Panel / Text */
 .panel {
     display: none;
-    background-color: #eaff00;
-    margin-top: 10px;
-    padding: 0;
-}
-
-.panel-content {
-    max-width: 800px;
-    padding: 20px 0 0 5px;
-    font-family: 'Roboto Mono', monospace;
+    font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
     color: #000000;
+    background-color: #eaff00;
+    margin: 10px 0 0 0;
+    padding: 20px 0 20px 0;
+}
+
+/* Panel-Content bündig zum Titel */
+.panel .panel-content {
+    max-width: 800px;
+    margin-left: 0;
+    padding-left: 5px;
 }
 
 /* Lauftext */
-.panel-content p,
-.panel-content li,
-.panel-content a {
+.panel p,
+.panel li,
+.panel a {
     color: inherit;
 }
 
 /* Bilder */
-.panel-content img {
+.panel img {
     max-width: 600px;
     height: auto;
     display: block;
-    margin-top: 40px;
+    margin: 40px 0 0 0;
 }
 
 /* Links */
-.panel-content a {
+.panel a {
+    color: #000000;
     text-decoration: underline;
 }
 
-/* ============================= */
-/* DOWNLOAD LINK                 */
-/* ============================= */
+.panel a:hover {
+    color: #333333;
+}
 
+/* Download-Link */
 .download-link {
+    display: block;
     margin-top: 20px;
+    font-family: 'RobotoMono', monospace;
     font-size: 16px;
 }
 
 .download-link span {
+    font-weight: normal !important;
     margin-right: 5px;
-    font-weight: normal;
+}
+
+.download-link a {
+    text-decoration: underline;
+    color: #000000;
+}
+
+.download-link a:hover {
+    color: #333333;
 }
 
 /* ============================= */
-/* UNTERORDNER BLOCK             */
+/* UNTERORDNER-TITEL (README.md) */
 /* ============================= */
 
-.subfolder-block {
-    background-color: #eaff00;
-    padding: 20px 0 20px 5px;
-    margin-top: 1px; /* 🔥 1px schwarze Linie */
-}
-
-/* ============================= */
-/* UNTERORDNER TITEL             */
-/* ============================= */
-
-.subfolder-title {
+.panel-content h1 {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    line-height: 1;
-    margin: 60px 0 20px -5px; /* oben wie Haupttitel, links bündig */
+    margin: 60px 0 20px -5px; /* 60px oben wie Haupttitel, 5px links */
     padding: 0;
+    line-height: 1;
 }
 
-/* ============================= */
-/* UNTERORDNER TEXT              */
-/* ============================= */
-
-.subfolder-text {
-    font-family: 'Roboto Mono', monospace;
-    font-size: 16px;
-    line-height: 1.5;
+/* Kein Extra-Abstand beim ersten Unterordner */
+.panel-content h1:first-child {
+    margin-top: 0;
 }
 
-/* ============================= */
-/* ERSTE TRENNLINIE              */
-/* (zwischen Haupttext & Unterordner) */
-/* ============================= */
+/* ------------------------ */
+/* Unterordner Block + Linie */
+/* ------------------------ */
 
-.panel-content > .subfolder-block:first-of-type {
-    margin-top: 1px;
+.subfolder-block {
+    background-color: #eaff00; /* gelb */
+    padding: 20px 0 20px 5px;   /* Abstand links 5px, oben/unten 20px */
+    margin: 0;                  /* kein zusätzlicher Abstand */
+    border-top: 1px solid #000; /* schwarze 1px Linie */
 }
