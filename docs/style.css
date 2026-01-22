@@ -110,19 +110,32 @@ html, body {
    Unterordner-Titel & Linien
 ============================= */
 .subfolder-block {
-    width: 100vw; /* gesamte Breite des Viewports */
-    padding-top: 60px; /* Abstand oberhalb des Textes */
-    padding-bottom: 60px; /* Abstand unterhalb des Textes */
+    width: 100%; /* volle Breite des Containers */
+    padding-top: 60px; /* Abstand oberhalb vom Blockinhalt */
+    padding-bottom: 60px; /* Abstand unterhalb des Inhalts */
     margin: 0;
-    border-top: 1px solid #000000; /* Linie zwischen Unterordnern */
+    border-top: 1px solid #000000; /* Linie */
     box-sizing: border-box;
+    position: relative;
 }
 
-.subfolder-block:first-child {
-    border-top: 1px solid #000; /* Linie direkt unter Hauptordner */
-    padding-top: 60px; /* Abstand vom Hauptordnerlauftext */
+/* Linie bis ganz an den Rand */
+.subfolder-block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* volle Viewport-Breite */
+    height: 1px;
+    background-color: #000;
 }
 
+/* Erster Unterordner: Linie direkt unter Hauptordnerlauftext, Abstand 60px */
+.subfolder-block:first-child::before {
+    top: 60px; /* Abstand vom Lauftext Hauptordner bis Linie */
+}
+
+/* Unterordner-Titel */
 .subfolder-title {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -130,6 +143,7 @@ html, body {
     margin: 0 0 20px 5px; /* bündig links, kleiner Versatz */
 }
 
+/* Unterordner-Lauftext */
 .subfolder-text {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
