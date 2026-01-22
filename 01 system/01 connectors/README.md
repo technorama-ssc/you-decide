@@ -1,7 +1,5 @@
 # CONNECTORS
 
-Plate System
-
 Main connector.stp printet with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971)
 
 INOX Screw M6 x 35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/)
