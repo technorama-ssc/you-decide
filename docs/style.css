@@ -9,7 +9,7 @@ html, body {
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
-    padding: 60px 62px;
+    padding: 60px 62px; /* Haupttitel Abstand oben */
     box-sizing: border-box;
 }
 
@@ -39,7 +39,6 @@ html, body {
     line-height: 1.5;
     color: #000000;
     background-color: #eaff00;
-    margin: 10px 0 0 0;
     padding: 20px 0 20px 0;
 }
 
@@ -55,6 +54,8 @@ html, body {
 .panel li,
 .panel a {
     color: inherit;
+    margin-top: 0;
+    margin-bottom: 20px; /* Abstand zum nächsten Block / Linie */
 }
 
 /* Bilder */
@@ -105,7 +106,7 @@ html, body {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 60px 0 20px -5px; /* 60px oben wie Haupttitel, 5px links */
+    margin: 60px 0 20px -5px; /* Abstand oben wie Haupttitel, links 5px */
     padding: 0;
     line-height: 1;
 }
@@ -121,7 +122,23 @@ html, body {
 
 .subfolder-block {
     background-color: #eaff00; /* gelb */
-    padding: 20px 0 20px 5px;   /* Abstand links 5px, oben/unten 20px */
+    padding: 20px 0 20px 5px;  /* Lauftext oben/unten 20px, links 5px */
     margin: 0;                  /* kein zusätzlicher Abstand */
-    border-top: 1px solid #000; /* schwarze 1px Linie */
+    position: relative;
+}
+
+/* Linie über dem Unterordner, mittig zwischen Textblöcken */
+.subfolder-block::before {
+    content: "";
+    position: absolute;
+    top: 0;                     /* oben vom Block */
+    left: 0;
+    width: 100%;
+    height: 1px;                /* 1px Linie */
+    background-color: #000000;  /* schwarz */
+}
+
+/* Linie zwischen Hauptblock und erstem Unterordner */
+.panel-content h1 + .subfolder-block::before {
+    top: -20px; /* Linie zentriert zwischen Haupttext und Unterordner */
 }
