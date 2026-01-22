@@ -1,16 +1,14 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000000;
-    font-family: 'RobotoMono', monospace;
+    background-color: #000;
+    font-family: 'Roboto Mono', monospace;
 }
 
-/* Akkordeon Wrapper */
+/* Wrapper */
 .accordion-wrapper {
-    width: 100%;
-    transition: background-color 0.3s;
     padding: 60px 62px;
-    box-sizing: border-box;
+    transition: background-color 0.3s;
 }
 
 /* Haupttitel */
@@ -19,38 +17,30 @@ html, body {
     font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
-    background: none;
-    border: none;
-    color: #666666;
-    transition: color 0.3s;
+    color: #666;
     margin: 0;
-    padding: 0;
 }
 
 .accordion:hover {
-    color: #ffffff;
+    color: #fff;
 }
 
-/* Panel / Text */
+/* Panel */
 .panel {
     display: none;
-    font-family: 'RobotoMono', monospace;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #000000;
     background-color: #eaff00;
-    margin: 10px 0 0 0;
-    padding: 20px 0 20px 0;
+    color: #000;
+    margin: 10px 0 1px 0; /* 👈 1px schwarze Linie */
+    padding: 20px 0;
 }
 
-/* Panel-Content bündig zum Titel */
-.panel .panel-content {
+/* Inhalt */
+.panel-content {
     max-width: 800px;
-    margin-left: 0;
     padding-left: 5px;
 }
 
-/* Lauftext */
+/* Text */
 .panel p,
 .panel li,
 .panel a {
@@ -60,56 +50,32 @@ html, body {
 /* Bilder */
 .panel img {
     max-width: 600px;
-    height: auto;
     display: block;
-    margin: 40px 0 0 0;
+    margin-top: 40px;
 }
 
-/* Links */
-.panel a {
-    color: #000000;
-    text-decoration: underline;
-}
-
-.panel a:hover {
-    color: #333333;
-}
-
-/* Download-Link */
+/* Download */
 .download-link {
-    display: block;
     margin-top: 20px;
-    font-family: 'RobotoMono', monospace;
-    font-size: 16px;
-}
-
-.download-link span {
-    font-weight: normal !important;
-    margin-right: 5px;
 }
 
 .download-link a {
+    color: #000;
     text-decoration: underline;
-    color: #000000;
-}
-
-.download-link a:hover {
-    color: #333333;
 }
 
 /* ============================= */
-/* UNTERORDNER-TITEL (README.md) */
+/* Unterordner */
 /* ============================= */
-.panel-content h1 {
+
+.subfolder-block {
+    margin-bottom: 1px; /* 👈 1px schwarze Linie */
+}
+
+.subfolder-title {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 60px 0 40px -5px; /* oben 60px wie Haupttitel, unten 40px = Abstand zum Text, links -5px */
-    padding: 0;
+    margin: 60px 0 20px -5px;
     line-height: 1;
-}
-
-/* Kein Extra-Abstand beim ersten Unterordner */
-.panel-content h1:first-child {
-    margin-top: 0;
 }
