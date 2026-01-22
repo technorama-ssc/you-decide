@@ -1,14 +1,16 @@
-/* ---------------------------- */
-/* Grundlayout / Startseite */
-/* ---------------------------- */
+/* =============================
+   Grundlayout / Startseite
+============================= */
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #000000; /* schwarz */
+    background-color: #000000; 
     font-family: 'RobotoMono', monospace;
 }
 
-/* Akkordeon Wrapper */
+/* =============================
+   Akkordeon Wrapper
+============================= */
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
@@ -16,7 +18,9 @@ html, body {
     box-sizing: border-box;
 }
 
-/* Haupttitel */
+/* =============================
+   Haupttitel
+============================= */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -24,7 +28,7 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666; /* grau auf Startseite */
+    color: #666666;
     transition: color 0.3s;
     margin: 0;
     padding: 0;
@@ -34,14 +38,16 @@ html, body {
     color: #ffffff;
 }
 
-/* Panel / Text */
+/* =============================
+   Panel / Text
+============================= */
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     line-height: 1.5;
-    color: #000000; /* schwarz auf gelbem Hintergrund */
-    background-color: #eaff00; /* gelb beim Öffnen */
+    color: #000000;
+    background-color: #eaff00;
     margin: 10px 0 0 0;
     padding: 20px 0 20px 0;
 }
@@ -100,25 +106,28 @@ html, body {
     color: #333333;
 }
 
-/* ============================= */
-/* UNTERORDNER-TITEL & LINIEN */
-/* ============================= */
+/* =============================
+   Unterordner-Titel & Linien
+============================= */
 .subfolder-block {
-    padding-top: 60px; /* Abstand zum oberen Rand */
-    margin: 0; /* Abstand zu vorherigem Block wird über padding geregelt */
+    padding-top: 60px; /* Abstand zum oberen Rand / vorheriger Text */
+    padding-bottom: 60px; /* Abstand unterhalb des Textes */
+    margin: 0;
+    width: 100%;
     border-top: 1px solid #000000; /* Linie zwischen Unterordnern */
+    box-sizing: border-box;
 }
 
 .subfolder-block:first-child {
-    border-top: none; /* keine Linie beim ersten Unterordner */
+    border-top: none; /* erste Linie nicht anzeigen */
     padding-top: 0;
 }
 
 .subfolder-title {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
-    text-transform: uppercase; /* Großbuchstaben */
-    margin: 0 0 20px 0; /* bündig links */
+    text-transform: uppercase;
+    margin: 0 0 20px -5px; /* bündig links wie Haupttitel */
 }
 
 .subfolder-text {
