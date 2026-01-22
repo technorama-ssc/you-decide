@@ -1,6 +1,5 @@
-/* ==================== */
-/* GLOBAL / BODY        */
-/* ==================== */
+/* ============================= */
+/* Grundstil */
 html, body {
     margin: 0;
     padding: 0;
@@ -8,9 +7,8 @@ html, body {
     font-family: 'RobotoMono', monospace;
 }
 
-/* ==================== */
-/* AKKORDEON WRAPPER    */
-/* ==================== */
+/* ============================= */
+/* Akkordeon Wrapper */
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
@@ -18,9 +16,7 @@ html, body {
     box-sizing: border-box;
 }
 
-/* ==================== */
-/* HAUPTTITEL           */
-/* ==================== */
+/* Haupttitel */
 .accordion {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
@@ -38,9 +34,7 @@ html, body {
     color: #ffffff;
 }
 
-/* ==================== */
-/* PANEL / TEXT         */
-/* ==================== */
+/* Panel / Text */
 .panel {
     display: none;
     font-family: 'RobotoMono', monospace;
@@ -49,15 +43,14 @@ html, body {
     color: #000000;
     background-color: #eaff00;
     margin: 10px 0 0 0;
-    padding: 60px 0; /* Abstand oben/unten */
+    padding: 20px 0 20px 0;
 }
 
-/* PANEL-CONTENT bündig zum Titel */
+/* Panel-Content bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
-    margin: 0 auto;
-    padding-left: 5px; 
-    padding-right: 5px;
+    margin-left: 0;
+    padding-left: 5px;
 }
 
 /* Lauftext */
@@ -107,22 +100,20 @@ html, body {
     color: #333333;
 }
 
-/* ==================== */
-/* UNTERORDNER-BLOCK    */
-/* ==================== */
+/* ============================= */
+/* UNTERORDNER-STYLE */
+
+/* Unterordner-Block */
 .subfolder-block {
-    background-color: #eaff00;
-    padding: 60px 0;  /* Abstand oben/unten */
-    position: relative;
-    margin: 0;        
+    background-color: inherit; /* Panel übernimmt Hintergrundfarbe */
+    padding: 60px 0;           /* Abstand oben/unten */
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* Linie zwischen Unterordnern: oben 1px */
+/* Linie zwischen Unterordnern */
 .subfolder-block + .subfolder-block {
     border-top: 1px solid #000; /* schwarze Linie */
-    width: 100%;
-    position: absolute;
-    left: 0;
 }
 
 /* Unterordner-Titel */
@@ -130,7 +121,7 @@ html, body {
     font-family: 'Pixel2', sans-serif;
     font-size: 80px;
     text-transform: uppercase;
-    margin: 0 0 20px 5px; /* links bündig mit leichtem Einzug */
+    margin: 0 0 20px 5px; /* bündig links unter Haupttitel */
 }
 
 /* Unterordner-Text */
