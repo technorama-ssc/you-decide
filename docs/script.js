@@ -21,14 +21,13 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     wrapper.appendChild(panel);
 
     title.addEventListener("click", () => {
-        // Alle anderen Panels schließen
-        document.querySelectorAll(".panel").forEach(p => { if(p !== panel) p.style.display = "none"; });
-        document.querySelectorAll(".accordion-wrapper").forEach(w => { if(w !== wrapper) w.style.backgroundColor = "transparent"; });
+        document.querySelectorAll(".panel").forEach(p => { if(p !== panel) p.style.display="none"; });
+        document.querySelectorAll(".accordion-wrapper").forEach(w => { if(w !== wrapper) w.style.backgroundColor="transparent"; });
         document.querySelectorAll(".accordion").forEach(a => { if(a !== title) a.style.color="#666"; });
 
-        if(panel.style.display === "block"){
-            panel.style.display = "none";
-            wrapper.style.backgroundColor = "transparent";
+        if(panel.style.display==="block"){
+            panel.style.display="none";
+            wrapper.style.backgroundColor="transparent";
             title.style.color="#666";
         } else {
             panel.style.display="block";
@@ -36,10 +35,8 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
             title.style.color="#000";
             panel.style.color="#000";
 
-            // Markdown Hauptordner
             inner.innerHTML = marked.parse(contentMarkdown);
 
-            // ZIP Download
             if(zipFile){
                 const dl = document.createElement("div");
                 dl.className = "download-link";
@@ -54,8 +51,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
                 let displayName = "";
                 if(parts.length >= 2){
-                    displayName = parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
-                                  parts[parts.length-1].charAt(0).toUpperCase() + parts[parts.length-1].slice(1);
+                    displayName =
+                        parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
+                        parts[parts.length-1].charAt(0).toUpperCase() + parts[parts.length-1].slice(1);
                 } else {
                     displayName = zipFile.name.replace(/\.zip$/i, "");
                 }
@@ -67,7 +65,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 inner.appendChild(dl);
             }
 
-            // Unterordner HTML anhängen
             if(subfoldersHtml){
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
@@ -77,7 +74,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     container.appendChild(wrapper);
 }
 
-// Hilfsfunktion: Lädt README + Titel aus einem Ordner
+/* Lädt README + Titel aus einem Ordner */
 async function loadReadmeFromFolder(url){
     const folderResponse = await fetch(url);
     if(!folderResponse.ok) return null;
@@ -94,7 +91,6 @@ async function loadReadmeFromFolder(url){
     let md = await readmeResp.text();
     let lines = md.split("\n");
 
-    // Nur Titel wenn erste Zeile mit #
     if(!lines[0].startsWith("#")) return null;
 
     const title = lines[0].replace(/^#\s*/, "");
@@ -103,7 +99,7 @@ async function loadReadmeFromFolder(url){
     return { title, content };
 }
 
-// Haupt-Funktion: Lädt Hauptordner + Unterordner
+/* Lädt Hauptordner + Unterordner */
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
@@ -138,8 +134,8 @@ async function loadFolders() {
 
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
 
-            // Unterordner sammeln
             let subHtml = "";
+
             for(const sub of folderContent){
                 if(sub.type !== "dir") continue;
                 if(!/^\d/.test(sub.name)) continue;
