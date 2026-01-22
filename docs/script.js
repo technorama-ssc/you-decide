@@ -69,24 +69,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 inner.appendChild(dl);
             }
 
-            // Unterordner HTML anhängen mit Linie
+            // Unterordner HTML anhängen
             if(subfoldersHtml){
-                const tempDiv = document.createElement("div");
-                tempDiv.innerHTML = subfoldersHtml;
-
-                const subBlocks = tempDiv.querySelectorAll(".subfolder-block");
-                subBlocks.forEach((block, i) => {
-                    const line = document.createElement("div");
-                    line.style.width = "100%";
-                    line.style.height = "1px";
-                    line.style.backgroundColor = "#000";
-                    line.style.margin = "20px 0"; // Abstand oberhalb/unterhalb
-
-                    // Linie nur zwischen Blöcken, nicht über dem ersten Block
-                    if(i !== 0) inner.appendChild(line);
-
-                    inner.appendChild(block);
-                });
+                inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
         }
     });
@@ -94,9 +79,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     container.appendChild(wrapper);
 }
 
-/* ---------------------------------------------------------
-   Hilfsfunktion: Lädt README + Titel aus einem Ordner
----------------------------------------------------------- */
+/* 🔥 Hilfsfunktion: Lädt README + Titel aus einem Ordner */
 async function loadReadmeFromFolder(url){
     const folderResponse = await fetch(url);
     if(!folderResponse.ok) return null;
@@ -122,9 +105,7 @@ async function loadReadmeFromFolder(url){
     return { title, content };
 }
 
-/* ---------------------------------------------------------
-   Haupt-Funktion: Lädt Hauptordner + deren Unterordner
----------------------------------------------------------- */
+/* 🔥 Hauptfunktion: Lädt Hauptordner + Unterordner */
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
@@ -135,7 +116,6 @@ async function loadFolders() {
         for(const item of items){
             if(item.type !== "dir") continue;
 
-            // Hauptordner laden
             const folderResp = await fetch(item.url);
             if(!folderResp.ok) continue;
 
@@ -163,19 +143,21 @@ async function loadFolders() {
 
             // Unterordner sammeln
             let subHtml = "";
+            let firstSub = true;
 
             for(const sub of folderContent){
                 if(sub.type !== "dir") continue;
-
-                // nur Ordner die mit Zahl beginnen
                 if(!/^\d/.test(sub.name)) continue;
 
                 const subData = await loadReadmeFromFolder(sub.url);
                 if(!subData) continue;
 
+                // Linie vor dem Unterordner (auch vor dem ersten, somit Hauptordner <-> Unterordner)
+                subHtml += `<div style="height:1px; background-color:#000; margin:20px 0;"></div>`;
+
                 subHtml += `
                     <div class="subfolder-block">
-                        <h1 class="subfolder-title">${subData.title}</h1>
+                        <h2 class="subfolder-title">${subData.title}</h2>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
                         </div>
