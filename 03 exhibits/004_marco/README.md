@@ -1,3 +1,0 @@
-# MARCO
-
-Ciao
