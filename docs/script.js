@@ -1,11 +1,26 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
+// ⬇️ HIER DEINEN GITHUB TOKEN EINFÜGEN ⬇️
+// Der Token wird jetzt idealerweise aus der config.js geladen (die in .gitignore steht).
+// Falls config.js fehlt (z.B. live server), ist GITHUB_TOKEN undefined und der Code läuft ohne Token (mit Limit).
+if (typeof GITHUB_TOKEN === 'undefined') {
+    var GITHUB_TOKEN = ""; // Fallback: leerer Token
+}
+
+async function fetchGitHubAPI(url) {
+    const headers = {};
+    if (GITHUB_TOKEN) {
+        headers["Authorization"] = `Bearer ${GITHUB_TOKEN}`;
+    }
+    return fetch(url, { headers });
+}
+
 /* -------------------------------------------------
    Bilder (jpg/jpeg) aus Ordner laden
 -------------------------------------------------- */
 async function loadImagesFromFolder(url) {
-    const resp = await fetch(url);
+    const resp = await fetchGitHubAPI(url);
     if (!resp.ok) return "";
 
     const items = await resp.json();
@@ -115,7 +130,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, imagesHtml, subfol
    README aus Unterordner laden
 -------------------------------------------------- */
 async function loadReadmeFromFolder(url) {
-    const resp = await fetch(url);
+    const resp = await fetchGitHubAPI(url);
     if (!resp.ok) return null;
 
     const items = await resp.json();
@@ -140,12 +155,12 @@ async function loadReadmeFromFolder(url) {
 -------------------------------------------------- */
 async function loadFolders() {
     try {
-        const items = await (await fetch(repoBase)).json();
+        const items = await (await fetchGitHubAPI(repoBase)).json();
 
         for (const item of items) {
             if (item.type !== "dir") continue;
 
-            const folderContent = await (await fetch(item.url)).json();
+            const folderContent = await (await fetchGitHubAPI(item.url)).json();
 
             const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
             if (!readme) continue;
