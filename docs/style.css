@@ -133,7 +133,7 @@ html, body {
 
 /* Unterordner-Titel */
 .subfolder-title {
-    font-family: 'Pixel2', sans-serif;
+    font-family: 'RobotoMono', monospace;
     font-size: 80px;
     text-transform: uppercase;
     margin: 0 0 20px -5px;
