@@ -1,13 +1,13 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
-function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images) {
+function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images, subfolderImages) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
     const title = document.createElement("h1");
     title.className = "accordion";
-    title.textContent = titleText;
+    title.textContent = titleText.toUpperCase();
     title.title = titleText;
 
     const panel = document.createElement("div");
@@ -77,7 +77,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 lastMainContentNode = inner.lastChild;
             }
 
-            // Bilder unter Text / Download einfügen
+            // Bilder Hauptordner unter Text / Download
             if (images && images.length > 0) {
                 images.forEach(imgUrl => {
                     const imgEl = document.createElement("img");
@@ -95,9 +95,26 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 });
             }
 
-            // Unterordner HTML anhängen (erst beim Klicken sichtbar)
+            // Unterordner HTML anhängen
             if (subfoldersHtml) {
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
+
+                // Bilder für jeden Unterordner einfügen
+                if (subfolderImages) {
+                    const subfolderBlocks = inner.querySelectorAll(".subfolder-block");
+                    subfolderBlocks.forEach((block, index) => {
+                        const imgs = subfolderImages[index];
+                        if (imgs && imgs.length > 0) {
+                            imgs.forEach(url => {
+                                const imgEl = document.createElement("img");
+                                imgEl.src = url;
+                                imgEl.style.maxWidth = "600px";
+                                imgEl.style.height = "auto";
+                                block.appendChild(imgEl);
+                            });
+                        }
+                    });
+                }
             }
         }
     });
@@ -124,9 +141,15 @@ async function loadReadmeFromFolder(url) {
 
     if (!lines[0].startsWith("#")) return null;
 
+    // Bilder im Unterordner erkennen
+    const images = folderContent
+        .filter(f => f.type === "file" && /\.jpe?g$/i.test(f.name))
+        .map(f => f.download_url);
+
     return {
         title: lines[0].replace(/^#\s*/, ""),
-        content: lines.slice(1).join("\n")
+        content: lines.slice(1).join("\n"),
+        images
     };
 }
 
@@ -155,12 +178,13 @@ async function loadFolders() {
             const content = lines.slice(1).join("\n");
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
 
-            // Bilder aus dem Ordner automatisch erkennen (jpg)
+            // Bilder Hauptordner
             const images = folderContent
                 .filter(f => f.type === "file" && /\.jpe?g$/i.test(f.name))
                 .map(f => f.download_url);
 
             let subHtml = "";
+            let subfolderImages = []; // Array für Bilder jedes Unterordners
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
                 if (!/^\d/.test(sub.name)) continue;
@@ -176,9 +200,11 @@ async function loadFolders() {
                         </div>
                     </div>
                 `;
+
+                subfolderImages.push(subData.images || []);
             }
 
-            createAccordion(titleLine, content, zipFile, subHtml, images);
+            createAccordion(titleLine, content, zipFile, subHtml, images, subfolderImages);
         }
 
     } catch (err) {
