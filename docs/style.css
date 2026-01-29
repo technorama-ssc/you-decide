@@ -16,6 +16,7 @@ html, body {
     transition: background-color 0.3s;
     padding: 60px 62px;
     box-sizing: border-box;
+    background-color: transparent; /* Startseite: schwarz */
 }
 
 /* =============================
@@ -28,13 +29,14 @@ html, body {
     cursor: pointer;
     background: none;
     border: none;
-    color: #666666;
-    transition: color 0.3s;
+    color: #666666; /* graue Titel */
+    transition: color 0.3s, background-color 0.3s;
     margin: 0;
     padding: 0;
 }
 
-.accordion:hover {
+/* Hover auf allen Hauptordnern, auch wenn andere geöffnet */
+.accordion-wrapper .accordion:hover {
     color: #eaff00;
 }
 
@@ -47,7 +49,7 @@ html, body {
     font-size: 16px;
     line-height: 1.5;
     color: #000000;
-    background-color: #eaff00;
+    background-color: #eaff00; /* geöffneter Ordner */
     margin: 10px 0 0 0;
     padding: 20px 0 20px 0;
 }
@@ -113,17 +115,19 @@ html, body {
     width: 100%;
     box-sizing: border-box;
     border-top: 1px solid #000000;
+
     padding-top: 60px;
     padding-bottom: 60px;
     margin: 0;
 }
 
+/* Erste Linie nicht anzeigen */
 .subfolder-block:first-child {
     border-top: none;
     padding-top: 0;
 }
 
-/* ⭐ Abstand Lauftext Hauptordner → erste Linie ⭐ */
+/* Abstand Lauftext Hauptordner → erste Linie */
 .panel-content > .subfolder-block:first-of-type {
     margin-top: 60px;
 }
