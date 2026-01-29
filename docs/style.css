@@ -118,13 +118,12 @@ html, body {
     margin: 0;
 }
 
-/* Erste Linie nicht anzeigen */
 .subfolder-block:first-child {
     border-top: none;
     padding-top: 0;
 }
 
-/* Abstand Lauftext Hauptordner → erste Linie */
+/* ⭐ Abstand Lauftext Hauptordner → erste Linie ⭐ */
 .panel-content > .subfolder-block:first-of-type {
     margin-top: 60px;
 }
