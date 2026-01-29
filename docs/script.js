@@ -1,6 +1,9 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
+// -------------------------
+// Akkordeon erstellen
+// -------------------------
 function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images, subfolderImages) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
@@ -20,6 +23,24 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
+    // -----------------------
+    // Mouseover Effekt immer aktiv
+    // -----------------------
+    title.addEventListener("mouseenter", () => {
+        if (panel.style.display !== "block") {
+            title.style.color = "#eaff00"; // Hover-Farbe
+        }
+    });
+
+    title.addEventListener("mouseleave", () => {
+        if (panel.style.display !== "block") {
+            title.style.color = "#666"; // Standardfarbe
+        }
+    });
+
+    // -----------------------
+    // Klick-Funktion
+    // -----------------------
     title.addEventListener("click", () => {
         document.querySelectorAll(".panel").forEach(p => {
             if (p !== panel) p.style.display = "none";
@@ -46,7 +67,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             // Haupttext
             inner.innerHTML = marked.parse(contentMarkdown);
 
-            // ZIP Download (falls vorhanden)
+            // ZIP Download
             let lastMainContentNode = null;
             if (zipFile) {
                 const dl = document.createElement("div");
@@ -77,7 +98,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 lastMainContentNode = inner.lastChild;
             }
 
-            // Bilder Hauptordner unter Text / Download
+            // Bilder Hauptordner
             if (images && images.length > 0) {
                 images.forEach(imgUrl => {
                     const imgEl = document.createElement("img");
@@ -95,11 +116,10 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 });
             }
 
-            // Unterordner HTML anhängen
+            // Unterordner HTML + Bilder
             if (subfoldersHtml) {
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
 
-                // Bilder für jeden Unterordner einfügen
                 if (subfolderImages) {
                     const subfolderBlocks = inner.querySelectorAll(".subfolder-block");
                     subfolderBlocks.forEach((block, index) => {
@@ -122,7 +142,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     container.appendChild(wrapper);
 }
 
-/* README aus Ordner laden */
+// -------------------------
+// README aus Ordner laden
+// -------------------------
 async function loadReadmeFromFolder(url) {
     const folderResponse = await fetch(url);
     if (!folderResponse.ok) return null;
@@ -136,24 +158,34 @@ async function loadReadmeFromFolder(url) {
     const readmeResp = await fetch(readme.download_url);
     if (!readmeResp.ok) return null;
 
-    let md = await readmeResp.text();
-    let lines = md.split("\n");
+    const md = await readmeResp.text();
+    const lines = md.split("\n");
 
     if (!lines[0].startsWith("#")) return null;
 
-    // Bilder im Unterordner erkennen
-    const images = folderContent
-        .filter(f => f.type === "file" && /\.jpe?g$/i.test(f.name))
-        .map(f => f.download_url);
-
     return {
         title: lines[0].replace(/^#\s*/, ""),
-        content: lines.slice(1).join("\n"),
-        images
+        content: lines.slice(1).join("\n")
     };
 }
 
-/* Hauptordner + Unterordner + Bilder laden */
+// -------------------------
+// Bilder aus Ordner laden (nur JPG)
+async function loadImagesFromFolder(url) {
+    const folderResponse = await fetch(url);
+    if (!folderResponse.ok) return [];
+
+    const folderContent = await folderResponse.json();
+    if (!Array.isArray(folderContent)) return [];
+
+    return folderContent
+        .filter(f => f.type === "file" && /\.(jpe?g|png)$/i.test(f.name))
+        .map(f => f.download_url);
+}
+
+// -------------------------
+// Hauptordner + Unterordner laden
+// -------------------------
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
@@ -179,12 +211,12 @@ async function loadFolders() {
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
 
             // Bilder Hauptordner
-            const images = folderContent
-                .filter(f => f.type === "file" && /\.jpe?g$/i.test(f.name))
-                .map(f => f.download_url);
+            const images = await loadImagesFromFolder(item.url);
 
+            // Unterordner sammeln
             let subHtml = "";
-            let subfolderImages = []; // Array für Bilder jedes Unterordners
+            const subfolderImages = [];
+
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
                 if (!/^\d/.test(sub.name)) continue;
@@ -201,7 +233,9 @@ async function loadFolders() {
                     </div>
                 `;
 
-                subfolderImages.push(subData.images || []);
+                // Bilder Unterordner
+                const imgs = await loadImagesFromFolder(sub.url);
+                subfolderImages.push(imgs);
             }
 
             createAccordion(titleLine, content, zipFile, subHtml, images, subfolderImages);
