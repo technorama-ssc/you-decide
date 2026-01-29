@@ -1,57 +1,14 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
-// ⬇️ HIER DEINEN GITHUB TOKEN EINFÜGEN ⬇️
-// Der Token wird jetzt idealerweise aus der config.js geladen (die in .gitignore steht).
-// Falls config.js fehlt (z.B. live server), ist GITHUB_TOKEN undefined und der Code läuft ohne Token (mit Limit).
-if (typeof GITHUB_TOKEN === 'undefined') {
-    var GITHUB_TOKEN = ""; // Fallback: leerer Token
-}
-
-async function fetchGitHubAPI(url) {
-    const headers = {};
-    if (GITHUB_TOKEN) {
-        headers["Authorization"] = `Bearer ${GITHUB_TOKEN}`;
-    }
-    return fetch(url, { headers });
-}
-
-/* -------------------------------------------------
-   Bilder (jpg/jpeg) aus Ordner laden
--------------------------------------------------- */
-async function loadImagesFromFolder(url) {
-    const resp = await fetchGitHubAPI(url);
-    if (!resp.ok) return "";
-
-    const items = await resp.json();
-    if (!Array.isArray(items)) return "";
-
-    const images = items.filter(f =>
-        f.type === "file" && /\.(jpg|jpeg)$/i.test(f.name)
-    );
-
-    if (images.length === 0) return "";
-
-    let html = `<div class="folder-images">`;
-
-    for (const img of images) {
-        html += `<img src="${img.download_url}" alt="${img.name}">`;
-    }
-
-    html += `</div>`;
-    return html;
-}
-
-/* -------------------------------------------------
-   Accordion erstellen
--------------------------------------------------- */
-function createAccordion(titleText, contentMarkdown, zipFile, imagesHtml, subfoldersHtml) {
+function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
     const title = document.createElement("h1");
     title.className = "accordion";
     title.textContent = titleText.toUpperCase();
+    title.title = titleText;
 
     const panel = document.createElement("div");
     panel.className = "panel";
@@ -64,6 +21,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, imagesHtml, subfol
     wrapper.appendChild(panel);
 
     title.addEventListener("click", () => {
+
         document.querySelectorAll(".panel").forEach(p => {
             if (p !== panel) p.style.display = "none";
         });
@@ -73,50 +31,47 @@ function createAccordion(titleText, contentMarkdown, zipFile, imagesHtml, subfol
         });
 
         document.querySelectorAll(".accordion").forEach(a => {
-            if (a !== title) a.style.color = "#666";
+            if (a !== title) a.style.removeProperty("color");
         });
 
         if (panel.style.display === "block") {
             panel.style.display = "none";
             wrapper.style.backgroundColor = "transparent";
-            title.style.color = "#666";
+            title.style.removeProperty("color");
+
         } else {
             panel.style.display = "block";
             wrapper.style.backgroundColor = "#eaff00";
             title.style.color = "#000";
+            panel.style.color = "#000";
 
-            /* 1️⃣ Lauftext */
             inner.innerHTML = marked.parse(contentMarkdown);
 
-            /* 2️⃣ Download */
             if (zipFile) {
                 const dl = document.createElement("div");
                 dl.className = "download-link";
 
-                const span = document.createElement("span");
-                span.textContent = "Download";
+                const textSpan = document.createElement("span");
+                textSpan.textContent = "Download";
 
                 const link = document.createElement("a");
                 link.href = zipFile.download_url;
                 link.target = "_blank";
 
                 let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
-                link.textContent =
+                let displayName =
                     parts.length >= 2
-                        ? parts[0] + " " + parts[parts.length - 1]
-                        : zipFile.name;
+                        ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
+                          parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
+                        : zipFile.name.replace(/\.zip$/i, "");
 
-                dl.appendChild(span);
+                link.textContent = displayName;
+
+                dl.appendChild(textSpan);
                 dl.appendChild(link);
                 inner.appendChild(dl);
             }
 
-            /* 3️⃣ Bilder (immer nach Download) */
-            if (imagesHtml) {
-                inner.insertAdjacentHTML("beforeend", imagesHtml);
-            }
-
-            /* 4️⃣ Unterordner */
             if (subfoldersHtml) {
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
@@ -126,21 +81,22 @@ function createAccordion(titleText, contentMarkdown, zipFile, imagesHtml, subfol
     container.appendChild(wrapper);
 }
 
-/* -------------------------------------------------
-   README aus Unterordner laden
--------------------------------------------------- */
+/* README aus Ordner laden */
 async function loadReadmeFromFolder(url) {
-    const resp = await fetchGitHubAPI(url);
-    if (!resp.ok) return null;
+    const folderResponse = await fetch(url);
+    if (!folderResponse.ok) return null;
 
-    const items = await resp.json();
-    if (!Array.isArray(items)) return null;
+    const folderContent = await folderResponse.json();
+    if (!Array.isArray(folderContent)) return null;
 
-    const readme = items.find(f => f.name.toLowerCase() === "readme.md");
+    const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
     if (!readme) return null;
 
-    const md = await (await fetch(readme.download_url)).text();
-    const lines = md.split("\n");
+    const readmeResp = await fetch(readme.download_url);
+    if (!readmeResp.ok) return null;
+
+    let md = await readmeResp.text();
+    let lines = md.split("\n");
 
     if (!lines[0].startsWith("#")) return null;
 
@@ -150,17 +106,17 @@ async function loadReadmeFromFolder(url) {
     };
 }
 
-/* -------------------------------------------------
-   Hauptfunktion
--------------------------------------------------- */
+/* Hauptordner + Unterordner laden */
 async function loadFolders() {
     try {
-        const items = await (await fetchGitHubAPI(repoBase)).json();
+        const response = await fetch(repoBase);
+        const items = await response.json();
 
         for (const item of items) {
             if (item.type !== "dir") continue;
 
-            const folderContent = await (await fetchGitHubAPI(item.url)).json();
+            const folderResp = await fetch(item.url);
+            const folderContent = await folderResp.json();
 
             const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
             if (!readme) continue;
@@ -168,13 +124,12 @@ async function loadFolders() {
             const md = await (await fetch(readme.download_url)).text();
             const lines = md.split("\n");
 
-            if (!lines[0].startsWith("#")) continue;
+            const titleLine = lines[0].startsWith("#")
+                ? lines[0].replace(/^#\s*/, "")
+                : "KEIN TITEL";
 
-            const title = lines[0].replace(/^#\s*/, "");
             const content = lines.slice(1).join("\n");
-
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
-            const imagesHtml = await loadImagesFromFolder(item.url);
 
             let subHtml = "";
 
@@ -185,26 +140,17 @@ async function loadFolders() {
                 const subData = await loadReadmeFromFolder(sub.url);
                 if (!subData) continue;
 
-                const subImages = await loadImagesFromFolder(sub.url);
-
                 subHtml += `
                     <div class="subfolder-block">
                         <h2 class="subfolder-title">${subData.title}</h2>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
                         </div>
-                        ${subImages}
                     </div>
                 `;
             }
 
-            createAccordion(
-                title,
-                content,
-                zipFile,
-                imagesHtml,
-                subHtml
-            );
+            createAccordion(titleLine, content, zipFile, subHtml);
         }
 
     } catch (err) {
