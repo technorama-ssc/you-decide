@@ -1,7 +1,7 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
-function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images) {
+function createAccordion(titleText, contentMarkdown, zipFile, imageUrls, subfoldersHtml) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
@@ -45,7 +45,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 
             inner.innerHTML = marked.parse(contentMarkdown);
 
-            // Download-Link
+            // ZIP Download (falls vorhanden)
             if (zipFile) {
                 const dl = document.createElement("div");
                 dl.className = "download-link";
@@ -71,22 +71,22 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 inner.appendChild(dl);
             }
 
-            // Unterordner HTML
-            if (subfoldersHtml) {
-                inner.insertAdjacentHTML("beforeend", subfoldersHtml);
+            // ⭐ Bilder des Hauptordners direkt nach Text / Download
+            if (imageUrls && imageUrls.length > 0) {
+                imageUrls.forEach(url => {
+                    const img = document.createElement("img");
+                    img.src = url;
+                    img.style.maxWidth = "600px";
+                    img.style.height = "auto";
+                    img.style.display = "block";
+                    img.style.marginTop = "40px";
+                    inner.appendChild(img);
+                });
             }
 
-            // Bilder einfügen
-            if (images && images.length > 0) {
-                images.forEach(img => {
-                    const imageEl = document.createElement("img");
-                    imageEl.src = img.download_url;
-                    imageEl.style.maxWidth = "600px";
-                    imageEl.style.height = "auto";
-                    imageEl.style.display = "block";
-                    imageEl.style.marginTop = "20px";
-                    inner.appendChild(imageEl);
-                });
+            // Unterordner HTML anhängen
+            if (subfoldersHtml) {
+                inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
         }
     });
@@ -94,7 +94,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     container.appendChild(wrapper);
 }
 
-/* README + Titel laden */
+/* README aus Ordner laden */
 async function loadReadmeFromFolder(url) {
     const folderResponse = await fetch(url);
     if (!folderResponse.ok) return null;
@@ -119,10 +119,10 @@ async function loadReadmeFromFolder(url) {
     };
 }
 
-/* Bilder aus Ordner erkennen */
+/* Bilder aus Ordner laden */
 async function loadImagesFromFolder(folderContent) {
-    if (!folderContent) return [];
-    return folderContent.filter(f => f.type === "file" && f.name.toLowerCase().endsWith(".jpg"));
+    const images = folderContent.filter(f => f.name.toLowerCase().endsWith(".jpg"));
+    return images.map(img => img.download_url);
 }
 
 /* Hauptordner + Unterordner laden */
@@ -150,10 +150,9 @@ async function loadFolders() {
             const content = lines.slice(1).join("\n");
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
 
-            // Bilder für Hauptordner
-            const images = await loadImagesFromFolder(folderContent);
+            // Bilder im Hauptordner
+            const imageUrls = await loadImagesFromFolder(folderContent);
 
-            // Unterordner sammeln
             let subHtml = "";
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
@@ -162,14 +161,14 @@ async function loadFolders() {
                 const subData = await loadReadmeFromFolder(sub.url);
                 if (!subData) continue;
 
-                // Bilder für Unterordner
+                // Bilder im Unterordner
                 const subFolderResp = await fetch(sub.url);
                 const subFolderContent = await subFolderResp.json();
                 const subImages = await loadImagesFromFolder(subFolderContent);
 
-                let subImagesHtml = "";
-                subImages.forEach(img => {
-                    subImagesHtml += `<img src="${img.download_url}" style="max-width:600px;height:auto;display:block;margin-top:20px;">`;
+                let imagesHtml = "";
+                subImages.forEach(url => {
+                    imagesHtml += `<img src="${url}" style="max-width:600px;height:auto;display:block;margin-top:40px;">`;
                 });
 
                 subHtml += `
@@ -177,13 +176,13 @@ async function loadFolders() {
                         <h2 class="subfolder-title">${subData.title}</h2>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
+                            ${imagesHtml}
                         </div>
-                        ${subImagesHtml}
                     </div>
                 `;
             }
 
-            createAccordion(titleLine, content, zipFile, subHtml, images);
+            createAccordion(titleLine, content, zipFile, imageUrls, subHtml);
         }
 
     } catch (err) {
