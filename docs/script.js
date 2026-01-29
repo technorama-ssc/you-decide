@@ -1,13 +1,13 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
-function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, folderContent) {
+function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
     const title = document.createElement("h1");
     title.className = "accordion";
-    title.textContent = titleText.toUpperCase();
+    title.textContent = titleText;
     title.title = titleText;
 
     const panel = document.createElement("div");
@@ -20,7 +20,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, fo
     wrapper.appendChild(title);
     wrapper.appendChild(panel);
 
-    title.addEventListener("click", async () => {
+    title.addEventListener("click", () => {
         document.querySelectorAll(".panel").forEach(p => {
             if (p !== panel) p.style.display = "none";
         });
@@ -43,8 +43,11 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, fo
             title.style.color = "#000";
             panel.style.color = "#000";
 
+            // Haupttext
             inner.innerHTML = marked.parse(contentMarkdown);
 
+            // ZIP Download (falls vorhanden)
+            let lastMainContentNode = null;
             if (zipFile) {
                 const dl = document.createElement("div");
                 dl.className = "download-link";
@@ -68,20 +71,31 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, fo
                 dl.appendChild(textSpan);
                 dl.appendChild(link);
                 inner.appendChild(dl);
+
+                lastMainContentNode = dl;
+            } else {
+                lastMainContentNode = inner.lastChild;
             }
 
-            // ⭐ Bilder direkt unter Haupttext oder unter Download
-            const images = folderContent.filter(f => f.name.toLowerCase().endsWith(".jpg"));
-            for (const img of images) {
-                const imageEl = document.createElement("img");
-                imageEl.src = img.download_url;
-                imageEl.style.maxWidth = "600px";
-                imageEl.style.height = "auto";
-                imageEl.style.display = "block";
-                imageEl.style.margin = "20px 0 0 0";
-                inner.appendChild(imageEl);
+            // Bilder unter Text / Download einfügen
+            if (images && images.length > 0) {
+                images.forEach(imgUrl => {
+                    const imgEl = document.createElement("img");
+                    imgEl.src = imgUrl;
+                    imgEl.style.maxWidth = "600px";
+                    imgEl.style.height = "auto";
+
+                    if (lastMainContentNode && lastMainContentNode.parentNode) {
+                        inner.insertBefore(imgEl, lastMainContentNode.nextSibling);
+                        lastMainContentNode = imgEl;
+                    } else {
+                        inner.appendChild(imgEl);
+                        lastMainContentNode = imgEl;
+                    }
+                });
             }
 
+            // Unterordner HTML anhängen (erst beim Klicken sichtbar)
             if (subfoldersHtml) {
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
             }
@@ -116,7 +130,7 @@ async function loadReadmeFromFolder(url) {
     };
 }
 
-/* Hauptordner + Unterordner laden */
+/* Hauptordner + Unterordner + Bilder laden */
 async function loadFolders() {
     try {
         const response = await fetch(repoBase);
@@ -141,8 +155,12 @@ async function loadFolders() {
             const content = lines.slice(1).join("\n");
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
 
-            let subHtml = "";
+            // Bilder aus dem Ordner automatisch erkennen (jpg)
+            const images = folderContent
+                .filter(f => f.type === "file" && /\.jpe?g$/i.test(f.name))
+                .map(f => f.download_url);
 
+            let subHtml = "";
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
                 if (!/^\d/.test(sub.name)) continue;
@@ -160,7 +178,7 @@ async function loadFolders() {
                 `;
             }
 
-            createAccordion(titleLine, content, zipFile, subHtml, folderContent);
+            createAccordion(titleLine, content, zipFile, subHtml, images);
         }
 
     } catch (err) {
