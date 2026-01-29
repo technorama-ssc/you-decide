@@ -32,6 +32,7 @@ html, body {
     transition: color 0.3s;
     margin: 0;
     padding: 0;
+    pointer-events: auto;
 }
 
 .accordion:hover {
@@ -113,7 +114,6 @@ html, body {
     width: 100%;
     box-sizing: border-box;
     border-top: 1px solid #000000;
-
     padding-top: 60px;
     padding-bottom: 60px;
     margin: 0;
@@ -125,8 +125,7 @@ html, body {
     padding-top: 0;
 }
 
-/* ⭐ WICHTIGE KORREKTUR ⭐
-   Abstand Lauftext Hauptordner → erste Linie */
+/* Abstand Lauftext Hauptordner → erste Linie */
 .panel-content > .subfolder-block:first-of-type {
     margin-top: 60px;
 }
