@@ -1,7 +1,7 @@
 const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 const container = document.getElementById("dynamic-content");
 
-function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
+function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
 
@@ -21,7 +21,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     wrapper.appendChild(panel);
 
     title.addEventListener("click", () => {
-
         document.querySelectorAll(".panel").forEach(p => {
             if (p !== panel) p.style.display = "none";
         });
@@ -31,14 +30,13 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
         });
 
         document.querySelectorAll(".accordion").forEach(a => {
-            if (a !== title) a.style.removeProperty("color");
+            if (a !== title) a.style.color = "#666";
         });
 
         if (panel.style.display === "block") {
             panel.style.display = "none";
             wrapper.style.backgroundColor = "transparent";
-            title.style.removeProperty("color");
-
+            title.style.color = "#666";
         } else {
             panel.style.display = "block";
             wrapper.style.backgroundColor = "#eaff00";
@@ -47,6 +45,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
 
             inner.innerHTML = marked.parse(contentMarkdown);
 
+            // Download-Link
             if (zipFile) {
                 const dl = document.createElement("div");
                 dl.className = "download-link";
@@ -72,8 +71,22 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
                 inner.appendChild(dl);
             }
 
+            // Unterordner HTML
             if (subfoldersHtml) {
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
+            }
+
+            // Bilder einfügen
+            if (images && images.length > 0) {
+                images.forEach(img => {
+                    const imageEl = document.createElement("img");
+                    imageEl.src = img.download_url;
+                    imageEl.style.maxWidth = "600px";
+                    imageEl.style.height = "auto";
+                    imageEl.style.display = "block";
+                    imageEl.style.marginTop = "20px";
+                    inner.appendChild(imageEl);
+                });
             }
         }
     });
@@ -81,7 +94,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml) {
     container.appendChild(wrapper);
 }
 
-/* README aus Ordner laden */
+/* README + Titel laden */
 async function loadReadmeFromFolder(url) {
     const folderResponse = await fetch(url);
     if (!folderResponse.ok) return null;
@@ -104,6 +117,12 @@ async function loadReadmeFromFolder(url) {
         title: lines[0].replace(/^#\s*/, ""),
         content: lines.slice(1).join("\n")
     };
+}
+
+/* Bilder aus Ordner erkennen */
+async function loadImagesFromFolder(folderContent) {
+    if (!folderContent) return [];
+    return folderContent.filter(f => f.type === "file" && f.name.toLowerCase().endsWith(".jpg"));
 }
 
 /* Hauptordner + Unterordner laden */
@@ -131,8 +150,11 @@ async function loadFolders() {
             const content = lines.slice(1).join("\n");
             const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
 
-            let subHtml = "";
+            // Bilder für Hauptordner
+            const images = await loadImagesFromFolder(folderContent);
 
+            // Unterordner sammeln
+            let subHtml = "";
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
                 if (!/^\d/.test(sub.name)) continue;
@@ -140,17 +162,28 @@ async function loadFolders() {
                 const subData = await loadReadmeFromFolder(sub.url);
                 if (!subData) continue;
 
+                // Bilder für Unterordner
+                const subFolderResp = await fetch(sub.url);
+                const subFolderContent = await subFolderResp.json();
+                const subImages = await loadImagesFromFolder(subFolderContent);
+
+                let subImagesHtml = "";
+                subImages.forEach(img => {
+                    subImagesHtml += `<img src="${img.download_url}" style="max-width:600px;height:auto;display:block;margin-top:20px;">`;
+                });
+
                 subHtml += `
                     <div class="subfolder-block">
                         <h2 class="subfolder-title">${subData.title}</h2>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
                         </div>
+                        ${subImagesHtml}
                     </div>
                 `;
             }
 
-            createAccordion(titleLine, content, zipFile, subHtml);
+            createAccordion(titleLine, content, zipFile, subHtml, images);
         }
 
     } catch (err) {
