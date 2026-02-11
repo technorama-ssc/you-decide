@@ -1,4 +1,4 @@
 # The coin
 
-Work in progress ...
+Work in progress ...<br>
 Content coming soon.
