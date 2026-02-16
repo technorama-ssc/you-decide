@@ -190,6 +190,12 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                                 block.querySelectorAll("img:not(.nested-subfolder-img)").forEach(img => img.style.display = "block");
                                 // Nested subfolder imgs bleiben immer sichtbar
                                 block.querySelectorAll(".nested-subfolder-img").forEach(img => img.style.display = "block");
+                                
+                                // EXHIBITS: Wrapper wird gelb wenn ein Unterordner geöffnet wird
+                                wrapper.style.backgroundColor = "#eaff00";
+                            } else {
+                                // Wenn geschlossen, zurück zu grau
+                                wrapper.style.backgroundColor = "#666666";
                             }
                         });
                     });

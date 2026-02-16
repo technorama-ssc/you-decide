@@ -154,8 +154,8 @@ body {
 
 /* EXHIBITS: Unterordner Block geöffnet = gelb */
 .exhibits .subfolder-block.open {
-    background-color: #eaff00;
-    padding-left: 5px;
+    background-color: transparent;
+    padding-left: 0;
 }
 
 /* Erste Linie nicht anzeigen */
