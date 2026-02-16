@@ -157,10 +157,10 @@ body {
     margin: 0;
 }
 
-/* EXHIBITS: Unterordner Block schwarz ueber volle Breite */
+/* EXHIBITS: Unterordner Block grau ueber volle Breite */
 .exhibits .subfolder-block {
-    background-color: #000000;
-    color: #666666;
+    background-color: #666666;
+    color: #000000;
     margin-left: -62px;
     margin-right: -62px;
     padding-left: 62px;
@@ -168,9 +168,9 @@ body {
     width: calc(100% + 124px);
 }
 
-/* EXHIBITS: Links im Unterordner grau, Hover gelb */
+/* EXHIBITS: Links im Unterordner schwarz, Hover gelb */
 .exhibits .subfolder-block a {
-    color: #666666;
+    color: #000000;
 }
 
 .exhibits .subfolder-block a:hover {
@@ -206,18 +206,18 @@ body {
     color: #eaff00;
 }
 
-/* EXHIBITS: Unterordner-Titel grau, Hover gelb */
+/* EXHIBITS: Unterordner-Titel schwarz, Hover gelb */
 .exhibits .subfolder-title {
-    color: #666666;
+    color: #000000;
 }
 
 .exhibits .subfolder-title:hover {
     color: #eaff00;
 }
 
-/* EXHIBITS: Geoeffneter Titel bleibt grau */
+/* EXHIBITS: Geoeffneter Titel bleibt schwarz */
 .exhibits .subfolder-block.open .subfolder-title {
-    color: #666666;
+    color: #000000;
 }
 
 .exhibits .subfolder-block.open .subfolder-title:hover {
@@ -235,7 +235,7 @@ body {
 /* EXHIBITS: Unterordner-Text versteckt, Bilder versteckt */
 .exhibits .subfolder-text {
     display: none;
-    color: #666666;
+    color: #000000;
 }
 
 .exhibits .subfolder-block img {
