@@ -217,20 +217,9 @@ body {
 }
 
 /* =============================
-   Nested Subfolder - Immer offen (z.B. Libet Experiment)
+   Nested Subfolder - verwende normale subfolder-Stiles
 ============================= */
-.nested-always-open .subfolder-title {
-    cursor: default;
-    /* Nicht klickbar */
-}
-
-.nested-always-open .subfolder-title:hover {
-    color: #000000;
-    /* Kein Hover-Effekt */
-}
-
-.exhibits .nested-always-open .subfolder-title:hover {
-    color: #000000;
-    /* Kein Hover-Effekt auch in EXHIBITS */
+.nested-subfolder {
+    /* Verwende normale subfolder-Stiles */
 }
 
