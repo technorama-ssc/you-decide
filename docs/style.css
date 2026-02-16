@@ -1,7 +1,8 @@
 /* =============================
    Grundlayout / Startseite
 ============================= */
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     background-color: #000000;
@@ -127,7 +128,7 @@ html, body {
 
 /* ⭐ WICHTIGE KORREKTUR ⭐
    Abstand Lauftext Hauptordner → erste Linie */
-.panel-content > .subfolder-block:first-of-type {
+.panel-content>.subfolder-block:first-of-type {
     margin-top: 60px;
 }
 

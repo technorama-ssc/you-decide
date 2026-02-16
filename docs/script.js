@@ -1,16 +1,18 @@
-const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
+const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const repoBase = isLocal
+    ? "http://localhost:8000/repos/technorama-ssc/you-decide/contents/"
+    : "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
+
 const container = document.getElementById("dynamic-content");
 
 // ⬇️ HIER DEINEN GITHUB TOKEN EINFÜGEN ⬇️
 // Der Token wird jetzt idealerweise aus der config.js geladen (die in .gitignore steht).
 // Falls config.js fehlt (z.B. live server), ist GITHUB_TOKEN undefined und der Code läuft ohne Token (mit Limit).
-if (typeof GITHUB_TOKEN === 'undefined') {
-    var GITHUB_TOKEN = ""; // Fallback: leerer Token
-}
 
 async function fetchGitHubAPI(url) {
     const headers = {};
-    if (GITHUB_TOKEN) {
+    // Nur Token senden, wenn wir NICHT lokal sind und ein Token da ist
+    if (!isLocal && typeof GITHUB_TOKEN !== 'undefined' && GITHUB_TOKEN) {
         headers["Authorization"] = `Bearer ${GITHUB_TOKEN}`;
     }
     return fetch(url, { headers });
