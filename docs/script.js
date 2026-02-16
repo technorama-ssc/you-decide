@@ -165,7 +165,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 
                 // EXHIBITS: Unterordner-Titel klickbar machen
                 if (wrapper.classList.contains("exhibits")) {
-                    const subfolderTitles = inner.querySelectorAll(".subfolder-title");
+                    const subfolderTitles = inner.querySelectorAll(".subfolder-block:not(.nested-always-open) > .subfolder-title");
                     subfolderTitles.forEach(title => {
                         title.style.cursor = "pointer";
                         title.addEventListener("click", (e) => {
@@ -404,7 +404,7 @@ async function loadStaticContent() {
                     if (sub.subsections && Array.isArray(sub.subsections) && sub.subsections.length > 0) {
                         for (const subsub of sub.subsections) {
                             subHtml += `
-                                <div class="subfolder-block">
+                                <div class="subfolder-block nested-always-open">
                                     <h2 class="subfolder-title">${subsub.title}</h2>
                                     <div class="subfolder-text">
                                         ${marked.parse(subsub.content)}
