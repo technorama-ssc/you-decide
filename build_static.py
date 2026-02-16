@@ -1,14 +1,15 @@
 import os
 import json
 import re
-import shutil
 from urllib.parse import quote
 
 # Konfiguration
 ROOT_DIR = os.getcwd()
 DOCS_DIR = os.path.join(ROOT_DIR, "docs")
-ASSETS_DIR = os.path.join(DOCS_DIR, "assets")
 OUTPUT_FILE = os.path.join(DOCS_DIR, "content.json")
+
+# Raw GitHub base URL for assets hosted outside docs
+RAW_BASE_URL = "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/"
 
 # Bild-Endungen
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png')
@@ -41,19 +42,13 @@ def find_images(directory):
         
     for f in os.listdir(directory):
         if f.lower().endswith(IMAGE_EXTENSIONS):
-                source_path = os.path.join(directory, f)
-                rel_path_from_root = os.path.relpath(source_path, ROOT_DIR)
-                rel_path_normalized = rel_path_from_root.replace("\\", "/")
+            source_path = os.path.join(directory, f)
+            rel_path_from_root = os.path.relpath(source_path, ROOT_DIR)
+            rel_path_normalized = rel_path_from_root.replace("\\", "/")
 
-                # Copy into docs/assets so GitHub Pages can serve it
-                dest_path = os.path.join(ASSETS_DIR, rel_path_normalized)
-                dest_dir = os.path.dirname(dest_path)
-                os.makedirs(dest_dir, exist_ok=True)
-                shutil.copy2(source_path, dest_path)
-
-                # Web path: assets/<relative-path> (URL-encoded for spaces)
-                web_path = "assets/" + quote(rel_path_normalized, safe="/")
-                images.append(web_path)
+            # Web path: raw GitHub URL (URL-encoded for spaces)
+            web_path = RAW_BASE_URL + quote(rel_path_normalized, safe="/")
+            images.append(web_path)
     return sorted(images)
 
 def scan_repository():
@@ -82,7 +77,7 @@ def scan_repository():
         for f in os.listdir(full_path):
             if f.lower().endswith('.zip'):
                 rel_path_from_root = os.path.relpath(os.path.join(full_path, f), ROOT_DIR)
-                web_path = "../" + quote(rel_path_from_root.replace("\\", "/"), safe="/")
+                web_path = RAW_BASE_URL + quote(rel_path_from_root.replace("\\", "/"), safe="/")
                 
                 zip_file = {
                     "download_url": web_path,
@@ -161,7 +156,6 @@ def scan_repository():
 
 if __name__ == "__main__":
     print("Starte Scan...")
-    os.makedirs(ASSETS_DIR, exist_ok=True)
     content_data = scan_repository()
     
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
