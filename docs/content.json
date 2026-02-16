@@ -41,29 +41,6 @@
         "images": [
           "../01 system/01 connectors/youdecide_plate connector.jpg"
         ]
-      },
-      {
-        "title": "KEIN TITEL",
-        "content": "Documentation:\n\nModular System\n\nModule Connections\n",
-        "images": []
-      },
-      {
-        "title": "KEIN TITEL",
-        "content": "Plate System\n\nDifferent system plates based on the basic grid\n\nsystem plate 240 x 120.stp / 18 mm [Plywood Sperrapin, French maritime pine](https://www.zehnder-handel.ch/customer/files/73/A---Sperrholz-2025-05-01.pdf)\n\ndrilling jig plate system.stp [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?p=W3sicHJvcGVydHlLZXkiOiJGYXJiZSIsInByb3BlcnR5VmFsdWUiOiJNYXRjaGEtR3LDvG4gKDE0NTAwKSJ9LHsicHJvcGVydHlLZXkiOiJUeXAiLCJwcm9wZXJ0eVZhbHVlIjoiIn0seyJwcm9wZXJ0eUtleSI6Ikdyw7bDn2UiLCJwcm9wZXJ0eVZhbHVlIjoiMSBrZyJ9XQ%3D%3D\n)\n\n2 x 7 mm drill bushing [DIN 172 - A 7 x 20](https://www.maedler.de/Article/62210720)\n\n_\n\nSystem expansions [ITEM D30](https://www.item24.com/de-de/rohr-d30-natur-62856)\n\nCrate System\n\n12 x 1,0 l glass bottle crate / 400 x 300 x 384.5 mm [Stöckli 1210-74.05 Bottle Crate](https://www.gebinde-technologie.ch/index.cfm?tem=1&spr=1&hpn=1&sbn=1&ssn=9)\n\ncrate cover.stp / 18 mm [Plywood Sperrapin, French maritime pine](https://www.zehnder-handel.ch/customer/files/73/A---Sperrholz-2025-05-01.pdf)\n",
-        "images": []
-      },
-      {
-        "title": "KEIN TITEL",
-        "content": "Plate System\n\nmain connector.stp [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971)\n\nINOX Screw M6 x 35 mm [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/)\n\nM6 Cross dowels type Q / ⌀ 10 x 14 mm [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n\nCrate System\n\nTie down with metal cam buckle / 25 mm x 5 m [Mamutec](https://www.hasler.ch/de/Umreifungsgurte-MAMUTEC_MM1114-25050-08-8?srsltid=AfmBOopbtGSV2zyQm9iJWdcs8MUNTJqbqmqrB_io2aVCuAV0Gx7-_8_A\n)\n",
-        "images": []
-      },
-      {
-        "title": "KEIN TITEL",
-        "content": "Library\n\nHere you find micro python libraries that are used throughout the project.\n",
-        "images": [
-          "../01 system/04 library/crate system connector & cover.jpg",
-          "../01 system/04 library/plate system & connector.jpg"
-        ]
       }
     ]
   },
