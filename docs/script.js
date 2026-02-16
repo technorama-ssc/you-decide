@@ -2,11 +2,25 @@ const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/content
 const container = document.getElementById("dynamic-content");
 
 // -------------------------
+// Helper: Base64 dekodieren
+// -------------------------
+function decodeBase64(encoded) {
+    try {
+        return decodeURIComponent(atob(encoded).split('').map((c) => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    } catch (e) {
+        console.error('Fehler beim Dekodieren:', e);
+        return null;
+    }
+}
+
+// -------------------------
 // GitHub API Header mit Token
 // -------------------------
 const getGithubHeaders = () => {
     if (typeof GITHUB_TOKEN === 'undefined') {
-        console.error('GITHUB_TOKEN ist nicht definiert!');
+        console.warn('GITHUB_TOKEN ist nicht definiert - verwende unauthentifizierte Requests');
         return {
             'Accept': 'application/vnd.github.v3+json'
         };
@@ -162,27 +176,40 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 // README aus Ordner laden
 // -------------------------
 async function loadReadmeFromFolder(url) {
-    const folderResponse = await fetch(url, { headers: getGithubHeaders() });
-    if (!folderResponse.ok) return null;
+    try {
+        console.log('📥 Laden README von:', url);
+        const folderResponse = await fetch(url, { headers: getGithubHeaders() });
+        if (!folderResponse.ok) {
+            console.warn(`⚠️ Fehler beim Laden: ${folderResponse.status} ${folderResponse.statusText}`);
+            return null;
+        }
 
-    const folderContent = await folderResponse.json();
-    if (!Array.isArray(folderContent)) return null;
+        const folderContent = await folderResponse.json();
+        if (!Array.isArray(folderContent)) return null;
 
-    const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
-    if (!readme) return null;
+        const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
+        if (!readme) return null;
 
-    const readmeResp = await fetch(readme.download_url, { headers: getGithubHeaders() });
-    if (!readmeResp.ok) return null;
+        // Nutze GitHub API um Inhalt zu fetchen (base64 kodiert)
+        const readmeResponse = await fetch(readme.url, { headers: getGithubHeaders() });
+        if (!readmeResponse.ok) return null;
 
-    const md = await readmeResp.text();
-    const lines = md.split("\n");
+        const readmeData = await readmeResponse.json();
+        const md = decodeBase64(readmeData.content);
+        if (!md) return null;
 
-    if (!lines[0].startsWith("#")) return null;
+        const lines = md.split("\n");
 
-    return {
-        title: lines[0].replace(/^#\s*/, ""),
-        content: lines.slice(1).join("\n")
-    };
+        if (!lines[0].startsWith("#")) return null;
+
+        return {
+            title: lines[0].replace(/^#\s*/, ""),
+            content: lines.slice(1).join("\n")
+        };
+    } catch (err) {
+        console.error('❌ Fehler in loadReadmeFromFolder:', err);
+        return null;
+    }
 }
 
 // -------------------------
@@ -204,8 +231,20 @@ async function loadImagesFromFolder(url) {
 // -------------------------
 async function loadFolders() {
     try {
+        console.log('🚀 Starte loadFolders()');
+        console.log('📍 repoBase:', repoBase);
+        console.log('🔑 Token definiert:', typeof GITHUB_TOKEN !== 'undefined');
+        
         const response = await fetch(repoBase, { headers: getGithubHeaders() });
+        
+        console.log('✅ Fetch erfolgreich, Status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const items = await response.json();
+        console.log('📦 Items gefunden:', items.length);
 
         for (const item of items) {
             if (item.type !== "dir") continue;
@@ -216,7 +255,14 @@ async function loadFolders() {
             const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
             if (!readme) continue;
 
-            const md = await (await fetch(readme.download_url, { headers: getGithubHeaders() })).text();
+            // Nutze GitHub API um Inhalt zu fetchen (base64 kodiert)
+            const readmeResponse = await fetch(readme.url, { headers: getGithubHeaders() });
+            if (!readmeResponse.ok) continue;
+            
+            const readmeData = await readmeResponse.json();
+            const md = decodeBase64(readmeData.content);
+            if (!md) continue;
+            
             const lines = md.split("\n");
 
             const titleLine = lines[0].startsWith("#")
@@ -258,9 +304,19 @@ async function loadFolders() {
         }
 
     } catch (err) {
-        console.error(err);
-        container.innerHTML = "<p style='color:red'>Fehler beim Laden der Inhalte</p>";
+        console.error('❌ Fehler beim Laden der Inhalte:');
+        console.error('Message:', err.message);
+        console.error('Stack:', err.stack);
+        console.error('Full Error:', err);
+        container.innerHTML = `<p style='color:red'>❌ Fehler beim Laden: ${err.message}</p>`;
     }
 }
 
-loadFolders();
+// Starte loadFolders() erst nach config.js Laden
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        console.log('🚀 Starting loadFolders...');
+        console.log('GITHUB_TOKEN defined?', typeof GITHUB_TOKEN !== 'undefined');
+        loadFolders();
+    }, 100);
+});
