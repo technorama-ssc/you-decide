@@ -191,6 +191,43 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             }
                         });
                     });
+                    
+                    // Verschachtelte Subfolder-Titel klickbar machen
+                    const nestedTitles = inner.querySelectorAll(".nested-subfolder-title");
+                    nestedTitles.forEach(title => {
+                        title.style.cursor = "pointer";
+                        title.style.marginLeft = "20px";
+                        title.style.fontSize = "0.9em";
+                        title.addEventListener("click", (e) => {
+                            e.stopPropagation();
+
+                            // Finde den Text-Block
+                            const textBlock = title.nextElementSibling;
+                            if (!textBlock) return;
+
+                            const isOpen = textBlock.style.display === "block";
+
+                            // Verstecke alle anderen nested blocks in diesem subfolder-block
+                            const subfolderBlock = title.closest(".subfolder-block");
+                            subfolderBlock.querySelectorAll(".nested-subfolder-text").forEach(b => {
+                                b.style.display = "none";
+                            });
+                            subfolderBlock.querySelectorAll(".nested-subfolder-img").forEach(img => {
+                                img.style.display = "none";
+                            });
+
+                            // Toggle diesen Block
+                            if (!isOpen) {
+                                textBlock.style.display = "block";
+                                // Zeige Bilder nach diesem Text-Block
+                                let next = textBlock.nextElementSibling;
+                                while (next && next.classList && next.classList.contains("nested-subfolder-img")) {
+                                    next.style.display = "block";
+                                    next = next.nextElementSibling;
+                                }
+                            }
+                        });
+                    });
                 }
 
                 if (subfolderImages) {
@@ -393,6 +430,29 @@ async function loadStaticContent() {
                             <h2 class="subfolder-title">${sub.title}</h2>
                             <div class="subfolder-text">
                                 ${marked.parse(sub.content)}
+                    `;
+                    
+                    // Wenn es verschachtelte Subsections gibt (z.B. Libet Experiment unter Do not Press)
+                    if (sub.subsections && Array.isArray(sub.subsections) && sub.subsections.length > 0) {
+                        for (const subsub of sub.subsections) {
+                            subHtml += `
+                                <div class="nested-subfolder-block">
+                                    <h3 class="nested-subfolder-title">${subsub.title}</h3>
+                                    <div class="nested-subfolder-text" style="display:none;">
+                                        ${marked.parse(subsub.content)}
+                                    </div>
+                                </div>
+                            `;
+                            // Bilder von nested subsections
+                            if (subsub.images && subsub.images.length > 0) {
+                                subsub.images.forEach(imgUrl => {
+                                    subHtml += `<img src="${imgUrl}" style="max-width:600px;height:auto;display:none;" class="nested-subfolder-img">`;
+                                });
+                            }
+                        }
+                    }
+                    
+                    subHtml += `
                             </div>
                         </div>
                     `;
