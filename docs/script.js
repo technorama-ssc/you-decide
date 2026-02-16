@@ -23,6 +23,8 @@ function decodeBase64(encoded) {
 // GitHub API Header mit Token
 // -------------------------
 const getGithubHeaders = () => {
+    if (isLocal) return {};
+
     if (typeof GITHUB_TOKEN === 'undefined') {
         console.warn('GITHUB_TOKEN ist nicht definiert - verwende unauthentifizierte Requests');
         return {

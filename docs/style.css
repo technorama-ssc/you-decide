@@ -163,11 +163,6 @@ body {
     padding-top: 0;
 }
 
-/* Abstand Lauftext Hauptordner → erste Linie */
-.panel-content>.subfolder-block:first-of-type {
-    margin-top: 60px;
-}
-
 /* Unterordner-Titel */
 .subfolder-title {
     font-family: 'RobotoMono', monospace;

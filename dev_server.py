@@ -64,36 +64,6 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
                         entry_path = os.path.join(full_path, entry)
                         is_dir = os.path.isdir(entry_path)
                         
-                        # Construct the download URL and API URL
-                        # Download URL should be accessible via this server if it's inside 'docs', or...
-                        # Wait, simpleHTTPRequestHandler only serves 'docs'.
-                        # If the content is outside 'docs' (like "00 you decide"), the browser can't fetch it via standard HTTP GET if we restrict root to 'docs'.
-                        
-                        # Fix: We should probably serve the Root of the repo via HTTP, but open the browser at /docs/index.html
-                        # OR, we implement a special handler that serves files from root if requested via specific path.
-                        
-                        # Actually, looking at the structure:
-                        # c:\Users\chene\Documents\you_decide\you-decide\
-                        #   docs\ (contains index.html, script.js)
-                        #   00 you decide\ (content)
-                        #   01 system\
-                        
-                        # Getting "download_url" right is crucial.
-                        # If I request API for "00 you decide", it returns list of files.
-                        # One file might be "intro.md".
-                        # script.js will try to fetch "download_url".
-                        # If download_url works, we are good.
-                        
-                        # Let's make the HTTP server serve the REPO ROOT (cwd), not just 'docs'.
-                        # But then we need to redirect / to /docs/index.html or just tell user to go to /docs/
-                        
-                        # Let's stick to serving directory=DIRECTORY ('docs') for the main handler? 
-                        # NO, because then we can't serve the content files which are siblings of docs.
-                        
-                        # CHANGED PLAN for DevRequestHandler:
-                        # We will serve from CURRENT DIRECTORY (Repo Root).
-                        # We will make sure accessing / goes to /docs/index.html
-                        
                         item = {
                             "name": entry,
                             "path": rel_path + "/" + entry if rel_path else entry,
@@ -111,11 +81,40 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
                             }
                         }
                         response_data.append(item)
+                    self.wfile.write(json.dumps(response_data).encode("utf-8"))
+                    return
                 except Exception as e:
                     print(f"Error listing directory {full_path}: {e}")
-            
-            self.wfile.write(json.dumps(response_data).encode("utf-8"))
-            return
+                    self.send_error(500, f"Error listing directory: {e}")
+                    return
+
+            elif os.path.isfile(full_path):
+                # Handle file API request -> return JSON with base64 content
+                try:
+                    import base64
+                    with open(full_path, "rb") as f:
+                        content = base64.b64encode(f.read()).decode("utf-8")
+                    
+                    response_data = {
+                        "name": os.path.basename(full_path),
+                        "path": rel_path,
+                        "sha": "fake-sha",
+                        "size": os.path.getsize(full_path),
+                        "url": self.path,
+                        "html_url": "",
+                        "git_url": "",
+                        "download_url": f"http://localhost:{PORT}/{rel_path}".replace("//", "/"),
+                        "type": "file",
+                        "content": content,
+                        "encoding": "base64",
+                        "_links": {}
+                    }
+                    self.wfile.write(json.dumps(response_data).encode("utf-8"))
+                    return
+                except Exception as e:
+                    print(f"Error reading file {full_path}: {e}")
+                    self.send_error(500, f"Error reading file: {e}")
+                    return
 
         # Handle normal file requests
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
