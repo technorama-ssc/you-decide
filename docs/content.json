@@ -1,0 +1,116 @@
+[
+  {
+    "title": "YOU DECIDE",
+    "content": "\nAn exhibition on decisions and how to save the World.\n\nThis is the new open-source platform for the “You Decide” exhibition.\nAll exhibits are modular. You can download the parts and info here, rebuild them, or improve them.\nThe exhibition — and this website — will keep changing with you and us.\n\nHere you find general information and materials on the exhibition \"You Decide\"\n",
+    "zipFile": {
+      "download_url": "../00 you decide/content_youdecide_exhibition.zip",
+      "name": "content_youdecide_exhibition.zip"
+    },
+    "images": [
+      "../00 you decide/youdecide_yes or no.jpg"
+    ],
+    "subsections": [
+      {
+        "title": "KEIN TITEL",
+        "content": "Paper \n[Paperdirekt / Clairefontaine](https://www.papierdirekt.ch/druckpapier/druckpapier-nach-marke/color-troph-e/clairefontaine-troph-e-fluo-neon-din-a4-gelb.html)\n\nTape\n[Masking Tape / Amazone](https://www.amazon.de/dp/B09HZVJXY6?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)\n",
+        "images": []
+      }
+    ]
+  },
+  {
+    "title": "SYSTEM",
+    "content": "\nHere you find the information and materials on the construciton system used througout the exhibition.\n",
+    "zipFile": {
+      "download_url": "../01 system/content_youdecide_system.zip",
+      "name": "content_youdecide_system.zip"
+    },
+    "images": [
+      "../01 system/youdecide_system_me and you.jpg"
+    ],
+    "subsections": [
+      {
+        "title": "GRID",
+        "content": "\nThe grid system is based on a modular design with a 157 mm grid and a 9 mm margin. The system panels are milled from 19 mm pine and feature Ø30 mm grid holes. They are compatible with the item D30 system for expansion.\n",
+        "images": [
+          "../01 system/00 grid system/youdecide_grid.jpg"
+        ]
+      },
+      {
+        "title": "CONNECTORS",
+        "content": "\nMain connector printet with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
+        "images": [
+          "../01 system/01 connectors/youdecide_plate connector.jpg"
+        ]
+      },
+      {
+        "title": "KEIN TITEL",
+        "content": "Documentation:\n\nModular System\n\nModule Connections\n",
+        "images": []
+      },
+      {
+        "title": "KEIN TITEL",
+        "content": "Plate System\n\nDifferent system plates based on the basic grid\n\nsystem plate 240 x 120.stp / 18 mm [Plywood Sperrapin, French maritime pine](https://www.zehnder-handel.ch/customer/files/73/A---Sperrholz-2025-05-01.pdf)\n\ndrilling jig plate system.stp [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?p=W3sicHJvcGVydHlLZXkiOiJGYXJiZSIsInByb3BlcnR5VmFsdWUiOiJNYXRjaGEtR3LDvG4gKDE0NTAwKSJ9LHsicHJvcGVydHlLZXkiOiJUeXAiLCJwcm9wZXJ0eVZhbHVlIjoiIn0seyJwcm9wZXJ0eUtleSI6Ikdyw7bDn2UiLCJwcm9wZXJ0eVZhbHVlIjoiMSBrZyJ9XQ%3D%3D\n)\n\n2 x 7 mm drill bushing [DIN 172 - A 7 x 20](https://www.maedler.de/Article/62210720)\n\n_\n\nSystem expansions [ITEM D30](https://www.item24.com/de-de/rohr-d30-natur-62856)\n\nCrate System\n\n12 x 1,0 l glass bottle crate / 400 x 300 x 384.5 mm [Stöckli 1210-74.05 Bottle Crate](https://www.gebinde-technologie.ch/index.cfm?tem=1&spr=1&hpn=1&sbn=1&ssn=9)\n\ncrate cover.stp / 18 mm [Plywood Sperrapin, French maritime pine](https://www.zehnder-handel.ch/customer/files/73/A---Sperrholz-2025-05-01.pdf)\n",
+        "images": []
+      },
+      {
+        "title": "KEIN TITEL",
+        "content": "Plate System\n\nmain connector.stp [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971)\n\nINOX Screw M6 x 35 mm [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/)\n\nM6 Cross dowels type Q / ⌀ 10 x 14 mm [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n\nCrate System\n\nTie down with metal cam buckle / 25 mm x 5 m [Mamutec](https://www.hasler.ch/de/Umreifungsgurte-MAMUTEC_MM1114-25050-08-8?srsltid=AfmBOopbtGSV2zyQm9iJWdcs8MUNTJqbqmqrB_io2aVCuAV0Gx7-_8_A\n)\n",
+        "images": []
+      },
+      {
+        "title": "KEIN TITEL",
+        "content": "Library\n\nHere you find micro python libraries that are used throughout the project.\n",
+        "images": [
+          "../01 system/04 library/crate system connector & cover.jpg",
+          "../01 system/04 library/plate system & connector.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "EXHIBITS",
+    "content": "\nHere you find information and materials for the single exhibits.\n",
+    "zipFile": null,
+    "images": [],
+    "subsections": [
+      {
+        "title": "Do not Press",
+        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
+        "images": [
+          "../03 exhibits/000_do not press/youdecide_do not press.jpg"
+        ]
+      },
+      {
+        "title": "Libet Experiment",
+        "content": "\nThe brain “presses the button” before you believe you have made the decision.\n\nIn the Libet experiment, it was shown that the brain’s motor system begins preparing a movement before a person becomes consciously aware that they have decided to execute that movement immediately. The time gap is about 0.35 seconds, and the actual movement then occurs roughly another 0.2 seconds later.\n\n[wikipedia.org/wiki/Libet-Experiment](https://de.wikipedia.org/wiki/Libet-Experiment)\n",
+        "images": [
+          "../03 exhibits/000_do not press_001_Rote Knopf Effekt/libet experiment.jpg"
+        ]
+      },
+      {
+        "title": "Click Click Click",
+        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
+        "images": []
+      },
+      {
+        "title": "Traffic Light Entrance",
+        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
+        "images": []
+      },
+      {
+        "title": "The coin",
+        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
+        "images": [
+          "../03 exhibits/023_the coin/youdecide_the coin 2.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "title": "Licencing",
+    "content": "\nAll Information and Materials are provided under the following licencses:\n\nMedia, Labels and Fonts [Creative Commons](https://creativecommons.org/licenses/by/4.0/) <br>\nSoftware [MIT License](https://opensource.org/license/mit) <br>\nHardware [CERN Open Hardware Licence](https://cern-ohl.web.cern.ch/) <br>\nMade by [Technorama](https://www.technorama.ch) <br>\n",
+    "zipFile": null,
+    "images": [],
+    "subsections": []
+  }
+]

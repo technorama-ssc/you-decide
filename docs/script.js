@@ -358,11 +358,73 @@ async function loadFolders() {
     }
 }
 
-// Starte loadFolders() erst nach config.js Laden
+// -------------------------
+// Statischen Content laden (Fallback für GitHub 403)
+// -------------------------
+async function loadStaticContent() {
+    try {
+        console.log('📄 Versuche content.json zu laden...');
+        const response = await fetch('content.json');
+
+        if (!response.ok) {
+            console.warn('⚠️ content.json nicht gefunden oder Fehler:', response.status);
+            return false;
+        }
+
+        const data = await response.json();
+        if (!Array.isArray(data) || data.length === 0) {
+            console.warn('⚠️ content.json ist leer oder ungültig');
+            return false;
+        }
+
+        console.log('✅ Statischen Content geladen:', data.length, 'Einträge');
+
+        for (const item of data) {
+            const { title, content, zipFile, images, subsections } = item;
+
+            // Subsections HTML bauen
+            let subHtml = "";
+            let subfolderImages = [];
+
+            if (subsections && Array.isArray(subsections)) {
+                for (const sub of subsections) {
+                    subHtml += `
+                        <div class="subfolder-block">
+                            <h2 class="subfolder-title">${sub.title}</h2>
+                            <div class="subfolder-text">
+                                ${marked.parse(sub.content)}
+                            </div>
+                        </div>
+                    `;
+                    subfolderImages.push(sub.images || []);
+                }
+            }
+
+            createAccordion(title, content, zipFile, subHtml, images, subfolderImages);
+        }
+        return true;
+
+    } catch (err) {
+        console.error('❌ Fehler in loadStaticContent:', err);
+        return false;
+    }
+}
+
+// Starte Ladevorgang
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        console.log('🚀 Starting loadFolders...');
-        console.log('GITHUB_TOKEN defined?', typeof GITHUB_TOKEN !== 'undefined');
-        loadFolders();
+    setTimeout(async () => {
+        console.log('🚀 Starting App...');
+
+        // 1. Versuch: Statisch laden
+        const success = await loadStaticContent();
+
+        // 2. Versuch: GitHub API (Fallback)
+        if (!success) {
+            console.log('🔄 Fallback auf GitHub API...');
+            console.log('GITHUB_TOKEN defined?', typeof GITHUB_TOKEN !== 'undefined');
+            loadFolders();
+        } else {
+            console.log('✨ App gestartet mit statischem Content.');
+        }
     }, 100);
 });
