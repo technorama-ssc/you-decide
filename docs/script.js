@@ -165,7 +165,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 
                 // EXHIBITS: Unterordner-Titel klickbar machen
                 if (wrapper.classList.contains("exhibits")) {
-                    const subfolderTitles = inner.querySelectorAll(".subfolder-block:not(.nested-subfolder-always-open) > .subfolder-title");
+                    const subfolderTitles = inner.querySelectorAll(".subfolder-title");
                     subfolderTitles.forEach(title => {
                         title.style.cursor = "pointer";
                         title.addEventListener("click", (e) => {
@@ -177,17 +177,19 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             const isOpen = block.classList.contains("open");
 
                             // Verstecke / entferne open-Klasse von allen anderen Blöcken
-                            inner.querySelectorAll(".subfolder-block:not(.nested-subfolder-always-open)").forEach(b => {
+                            inner.querySelectorAll(".subfolder-block").forEach(b => {
                                 b.classList.remove("open");
                                 b.querySelector(".subfolder-text").style.display = "none";
-                                b.querySelectorAll("img").forEach(img => img.style.display = "none");
+                                b.querySelectorAll("img:not(.nested-subfolder-img)").forEach(img => img.style.display = "none");
                             });
 
                             // Toggle diesen Block
                             if (!isOpen && textBlock) {
                                 block.classList.add("open");
                                 textBlock.style.display = "block";
-                                block.querySelectorAll("img").forEach(img => img.style.display = "block");
+                                block.querySelectorAll("img:not(.nested-subfolder-img)").forEach(img => img.style.display = "block");
+                                // Nested subfolder imgs bleiben immer sichtbar
+                                block.querySelectorAll(".nested-subfolder-img").forEach(img => img.style.display = "block");
                             }
                         });
                     });
@@ -396,23 +398,21 @@ async function loadStaticContent() {
                             <h2 class="subfolder-title">${sub.title}</h2>
                             <div class="subfolder-text">
                                 ${marked.parse(sub.content)}
-                            </div>
-                        </div>
                     `;
                     
                     // Wenn es verschachtelte Subsections gibt (z.B. Libet Experiment unter Do not Press)
                     if (sub.subsections && Array.isArray(sub.subsections) && sub.subsections.length > 0) {
                         for (const subsub of sub.subsections) {
                             subHtml += `
-                                <div class="subfolder-block nested-subfolder-always-open">
-                                    <h2 class="subfolder-title">${subsub.title}</h2>
-                                    <div class="subfolder-text">
+                                <div class="nested-subfolder-block">
+                                    <h2 class="nested-subfolder-title">${subsub.title}</h2>
+                                    <div class="nested-subfolder-content">
                                         ${marked.parse(subsub.content)}
                             `;
                             // Bilder von nested subsections
                             if (subsub.images && subsub.images.length > 0) {
                                 subsub.images.forEach(imgUrl => {
-                                    subHtml += `<img src="${imgUrl}" style="max-width:600px;height:auto;">`;
+                                    subHtml += `<img src="${imgUrl}" style="max-width:600px;height:auto;" class="nested-subfolder-img">`;
                                 });
                             }
                             subHtml += `
@@ -421,6 +421,11 @@ async function loadStaticContent() {
                             `;
                         }
                     }
+                    
+                    subHtml += `
+                            </div>
+                        </div>
+                    `;
                     subfolderImages.push(sub.images || []);
                 }
             }

@@ -217,24 +217,33 @@ body {
 }
 
 /* =============================
-   Nested Subfolder - Immer offen, nicht anklickbar
+   Nested Subfolder - Innerhalb von subfolder-text
 ============================= */
-.nested-subfolder-always-open .subfolder-title {
+.nested-subfolder-block {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid #000000;
+}
+
+.nested-subfolder-title {
+    font-family: 'RobotoMono', monospace;
+    font-size: 80px;
+    text-transform: uppercase;
+    margin: 0 0 20px -5px;
+    color: #000000;
     cursor: default;
     /* Nicht klickbar */
 }
 
-.nested-subfolder-always-open .subfolder-title:hover {
-    color: #000000;
-    /* Kein Hover-Effekt */
+.nested-subfolder-content {
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+    margin: 0;
 }
 
-.exhibits .nested-subfolder-always-open .subfolder-title {
-    color: #000000;
+.nested-subfolder-img {
+    display: block;
+    margin: 20px 0;
 }
 
-.exhibits .nested-subfolder-always-open .subfolder-title:hover {
-    color: #000000;
-    /* Bleibt schwarz */
-}
 
