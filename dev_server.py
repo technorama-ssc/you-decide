@@ -35,26 +35,11 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
             # Remove query parameters if any
             if "?" in rel_path:
                 rel_path = rel_path.split("?")[0]
+            
+            # Unquote the path to handle spaces etc (e.g. %20 -> " ")
+            from urllib.parse import unquote
+            rel_path = unquote(rel_path)
 
-            # Map to local file system path
-            # The API path is relative to the repo root. 
-            # Our local server serves from 'docs', but the repo root contains 'docs'.
-            # However, the website content (markdowns, images) seems to be organized within the repo.
-            # Let's check where the content actually is.
-            # Based on script.js: repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
-            # This implies the content is at the root of the repo.
-            # But we are serving from 'docs'.
-            # So if we request "", we are looking at the repo root.
-            # If we request "docs", we are looking at 'docs'.
-            
-            # The current script.js fetches repoBase ("") to list folders like "00 you decide".
-            # These folders are siblings of "docs" in the repo root.
-            # So we need to access directories UP one level from "docs" if we want to serve the whole repo content via API.
-            
-            # Let's verify where 'dev_server.py' is located. It is in 'you-decide' (repo root).
-            # But the http server serves 'docs' directory for the website html/js.
-            # The API needs to serve files from the repo root (current directory of this script).
-            
             full_path = os.path.join(os.getcwd(), rel_path)
             
             # Security check: ensure we don't escape the repo directory
@@ -72,15 +57,24 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
                         entry_path = os.path.join(full_path, entry)
                         is_dir = os.path.isdir(entry_path)
                         
+                        # Construct clean path relative to repo root
+                        clean_path = f"{rel_path}/{entry}" if rel_path else entry
+                        while "//" in clean_path:
+                             clean_path = clean_path.replace("//", "/")
+                        
+                        # Safe URL construction
+                        # Note: We must NOT replace // in http://
+                        base_url = f"http://localhost:{PORT}"
+                        
                         item = {
                             "name": entry,
-                            "path": rel_path + "/" + entry if rel_path else entry,
+                            "path": clean_path,
                             "sha": "fake-sha",
                             "size": os.path.getsize(entry_path) if not is_dir else 0,
-                            "url": f"http://localhost:{PORT}/repos/technorama-ssc/you-decide/contents/{rel_path}/{entry}".replace("//", "/"),
-                            "html_url": f"http://localhost:{PORT}/blob/main/{rel_path}/{entry}".replace("//", "/"),
+                            "url": f"{base_url}/repos/technorama-ssc/you-decide/contents/{clean_path}",
+                            "html_url": f"{base_url}/blob/main/{clean_path}",
                             "git_url": "",
-                            "download_url": f"http://localhost:{PORT}/{rel_path}/{entry}".replace("//", "/"),
+                            "download_url": f"{base_url}/{clean_path}",
                             "type": "dir" if is_dir else "file",
                             "_links": {
                                 "self": "",
@@ -103,6 +97,9 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
                     with open(full_path, "rb") as f:
                         content = base64.b64encode(f.read()).decode("utf-8")
                     
+                    # Clean path for download url (remove leading slash if any)
+                    clean_download_path = rel_path.lstrip("/")
+                    
                     response_data = {
                         "name": os.path.basename(full_path),
                         "path": rel_path,
@@ -111,7 +108,7 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
                         "url": self.path,
                         "html_url": "",
                         "git_url": "",
-                        "download_url": f"http://localhost:{PORT}/{rel_path}".replace("//", "/"),
+                        "download_url": f"http://localhost:{PORT}/{clean_download_path}",
                         "type": "file",
                         "content": content,
                         "encoding": "base64",
