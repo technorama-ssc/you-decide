@@ -104,11 +104,36 @@ def scan_repository():
                 
             sub_images = find_images(sub_full_path)
             
+            # Scan für Unter-Subsections (z.B. 01_libet experiment unter 000_do not press)
+            sub_subsections = []
+            sub_sub_dirs = sorted([ssd for ssd in os.listdir(sub_full_path) if os.path.isdir(os.path.join(sub_full_path, ssd))])
+            
+            for ssd in sub_sub_dirs:
+                if not re.match(r'^\d', ssd):
+                    continue
+                
+                sub_sub_full_path = os.path.join(sub_full_path, ssd)
+                sub_sub_readme = os.path.join(sub_sub_full_path, "README.md")
+                
+                sub_sub_title, sub_sub_content = parse_readme(sub_sub_readme)
+                if not sub_sub_title:
+                    continue
+                
+                sub_sub_images = find_images(sub_sub_full_path)
+                
+                sub_sub_item = {
+                    "title": sub_sub_title,
+                    "content": sub_sub_content,
+                    "images": sub_sub_images
+                }
+                sub_subsections.append(sub_sub_item)
+            
             # Wir speichern die Rohdaten, das JS baut das HTML
             sub_item = {
                 "title": sub_title,
                 "content": sub_content,
-                "images": sub_images
+                "images": sub_images,
+                "subsections": sub_subsections
             }
             sub_items.append(sub_item)
 

@@ -13,7 +13,8 @@
       {
         "title": "KEIN TITEL",
         "content": "Paper \n[Paperdirekt / Clairefontaine](https://www.papierdirekt.ch/druckpapier/druckpapier-nach-marke/color-troph-e/clairefontaine-troph-e-fluo-neon-din-a4-gelb.html)\n\nTape\n[Masking Tape / Amazone](https://www.amazon.de/dp/B09HZVJXY6?ref=ppx_yo2ov_dt_b_fed_asin_title&th=1)\n",
-        "images": []
+        "images": [],
+        "subsections": []
       }
     ]
   },
@@ -33,14 +34,16 @@
         "content": "\nThe grid system is based on a modular design with a 157 mm grid and a 9 mm margin. The system panels are milled from 19 mm pine and feature Ø30 mm grid holes. They are compatible with the item D30 system for expansion.\n",
         "images": [
           "../01 system/00 grid system/youdecide_grid.jpg"
-        ]
+        ],
+        "subsections": []
       },
       {
         "title": "CONNECTORS",
         "content": "\nMain connector printet with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
         "images": [
           "../01 system/01 connectors/youdecide_plate connector.jpg"
-        ]
+        ],
+        "subsections": []
       }
     ]
   },
@@ -55,31 +58,36 @@
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [
           "../03 exhibits/000_do not press/youdecide_do not press.jpg"
-        ]
-      },
-      {
-        "title": "Libet Experiment",
-        "content": "\nThe brain “presses the button” before you believe you have made the decision.\n\nIn the Libet experiment, it was shown that the brain’s motor system begins preparing a movement before a person becomes consciously aware that they have decided to execute that movement immediately. The time gap is about 0.35 seconds, and the actual movement then occurs roughly another 0.2 seconds later.\n\n[wikipedia.org/wiki/Libet-Experiment](https://de.wikipedia.org/wiki/Libet-Experiment)\n",
-        "images": [
-          "../03 exhibits/000_do not press_001_Rote Knopf Effekt/libet experiment.jpg"
+        ],
+        "subsections": [
+          {
+            "title": "Libet Experiment",
+            "content": "\nThe brain “presses the button” before you believe you have made the decision.\n\nIn the Libet experiment, it was shown that the brain’s motor system begins preparing a movement before a person becomes consciously aware that they have decided to execute that movement immediately. The time gap is about 0.35 seconds, and the actual movement then occurs roughly another 0.2 seconds later.\n\n[wikipedia.org/wiki/Libet-Experiment](https://de.wikipedia.org/wiki/Libet-Experiment)\n",
+            "images": [
+              "../03 exhibits/000_do not press/01_libet experiment/libet experiment.jpg"
+            ]
+          }
         ]
       },
       {
         "title": "Click Click Click",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
-        "images": []
+        "images": [],
+        "subsections": []
       },
       {
         "title": "Traffic Light Entrance",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
-        "images": []
+        "images": [],
+        "subsections": []
       },
       {
         "title": "The coin",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [
           "../03 exhibits/023_the coin/youdecide_the coin 2.jpg"
-        ]
+        ],
+        "subsections": []
       }
     ]
   },
