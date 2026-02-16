@@ -17,26 +17,30 @@ body {
     transition: background-color 0.3s;
     padding: 60px 62px;
     box-sizing: border-box;
+    background-color: transparent;
+    /* Startseite: schwarz */
 }
 
 /* =============================
    Haupttitel
 ============================= */
 .accordion {
-    font-family: 'Pixel2', sans-serif;
+    font-family: 'RobotoMono', monospace;
     font-size: 80px;
     text-transform: uppercase;
     cursor: pointer;
     background: none;
     border: none;
     color: #666666;
-    transition: color 0.3s;
+    /* graue Titel */
+    transition: color 0.3s, background-color 0.3s;
     margin: 0;
     padding: 0;
 }
 
-.accordion:hover {
-    color: #ffffff;
+/* Hover auf allen Hauptordnern, auch wenn andere geöffnet */
+.accordion-wrapper .accordion:hover {
+    color: #eaff00;
 }
 
 /* =============================
@@ -49,8 +53,14 @@ body {
     line-height: 1.5;
     color: #000000;
     background-color: #eaff00;
+    /* gelber Hintergrund (Standard) */
     margin: 10px 0 0 0;
     padding: 20px 0 20px 0;
+}
+
+/* EXHIBITS: Grauer Hintergrund (wie Titel-Grau) */
+.exhibits .panel {
+    background-color: #666666;
 }
 
 /* Panel-Content bündig zum Titel */
@@ -126,22 +136,87 @@ body {
     padding-top: 0;
 }
 
-/* ⭐ WICHTIGE KORREKTUR ⭐
-   Abstand Lauftext Hauptordner → erste Linie */
+/* Abstand Lauftext Hauptordner → erste Linie */
+.panel-content>.subfolder-block:first-of-type {
+    margin-top: 60px;
+}
+
+/* Unterordner Block */
+.subfolder-block {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #000000;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin: 0;
+}
+
+/* EXHIBITS: Unterordner Block geöffnet = gelb */
+.exhibits .subfolder-block.open {
+    background-color: #eaff00;
+    padding-left: 5px;
+}
+
+/* Erste Linie nicht anzeigen */
+.subfolder-block:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* Abstand Lauftext Hauptordner → erste Linie */
 .panel-content>.subfolder-block:first-of-type {
     margin-top: 60px;
 }
 
 /* Unterordner-Titel */
 .subfolder-title {
-    font-family: 'Pixel2', sans-serif;
+    font-family: 'RobotoMono', monospace;
     font-size: 80px;
     text-transform: uppercase;
     margin: 0 0 20px -5px;
+    color: #000000;
+    /* Standard: schwarz */
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+/* Standard Hover */
+.subfolder-title:hover {
+    color: #eaff00;
+}
+
+/* EXHIBITS: Unterordner-Titel schwarz, Hover gelb */
+.exhibits .subfolder-title {
+    color: #000000;
+}
+
+.exhibits .subfolder-title:hover {
+    color: #eaff00;
+}
+
+/* EXHIBITS: Geöffneter Titel - kein Hover */
+.exhibits .subfolder-block.open .subfolder-title {
+    color: #000000;
+}
+
+.exhibits .subfolder-block.open .subfolder-title:hover {
+    color: #000000;
+    /* Bleibt schwarz */
 }
 
 /* Unterordner-Text */
 .subfolder-text {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
+    display: block;
+    /* Standard: sichtbar */
+}
+
+/* EXHIBITS: Unterordner-Text versteckt, Bilder versteckt */
+.exhibits .subfolder-text {
+    display: none;
+}
+
+.exhibits .subfolder-block img {
+    display: none;
 }
