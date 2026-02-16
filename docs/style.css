@@ -217,9 +217,24 @@ body {
 }
 
 /* =============================
-   Nested Subfolder - verwende normale subfolder-Stiles
+   Nested Subfolder - Immer offen, nicht anklickbar
 ============================= */
-.nested-subfolder {
-    /* Verwende normale subfolder-Stiles */
+.nested-subfolder-always-open .subfolder-title {
+    cursor: default;
+    /* Nicht klickbar */
+}
+
+.nested-subfolder-always-open .subfolder-title:hover {
+    color: #000000;
+    /* Kein Hover-Effekt */
+}
+
+.exhibits .nested-subfolder-always-open .subfolder-title {
+    color: #000000;
+}
+
+.exhibits .nested-subfolder-always-open .subfolder-title:hover {
+    color: #000000;
+    /* Bleibt schwarz */
 }
 
