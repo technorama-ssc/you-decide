@@ -160,11 +160,21 @@ body {
 /* EXHIBITS: Unterordner Block schwarz ueber volle Breite */
 .exhibits .subfolder-block {
     background-color: #000000;
+    color: #666666;
     margin-left: -62px;
     margin-right: -62px;
     padding-left: 62px;
     padding-right: 62px;
     width: calc(100% + 124px);
+}
+
+/* EXHIBITS: Links im Unterordner grau, Hover gelb */
+.exhibits .subfolder-block a {
+    color: #666666;
+}
+
+.exhibits .subfolder-block a:hover {
+    color: #eaff00;
 }
 
 /* EXHIBITS: Letzter Unterordner Block geöffnet - bis zum unteren Rand */
