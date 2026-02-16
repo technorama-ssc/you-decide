@@ -15,7 +15,7 @@ body {
 .accordion-wrapper {
     width: 100%;
     transition: background-color 0.3s;
-    padding: 60px 62px;
+    padding: 60px 0;
     box-sizing: border-box;
     background-color: transparent;
     /* Startseite: schwarz */
@@ -35,7 +35,7 @@ body {
     /* graue Titel */
     transition: color 0.3s, background-color 0.3s;
     margin: 0;
-    padding: 0;
+    padding: 0 62px;
 }
 
 /* Hover auf allen Hauptordnern, auch wenn andere geöffnet */
@@ -67,7 +67,8 @@ body {
 .panel .panel-content {
     max-width: 800px;
     margin-left: 0;
-    padding-left: 5px;
+    padding-left: 62px;
+    padding-right: 62px;
 }
 
 /* Lauftext */
