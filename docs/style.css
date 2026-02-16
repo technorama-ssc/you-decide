@@ -169,8 +169,8 @@ body {
 
 /* EXHIBITS: Letzter Unterordner Block geöffnet - bis zum unteren Rand */
 .exhibits .subfolder-block.open:last-child {
-    margin-bottom: -20px;
-    padding-bottom: 80px;
+    margin-bottom: -60px;
+    padding-bottom: 120px;
 }
 
 /* Erste Linie nicht anzeigen */
