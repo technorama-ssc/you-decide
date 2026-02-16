@@ -152,10 +152,14 @@ body {
     margin: 0;
 }
 
-/* EXHIBITS: Unterordner Block geöffnet = gelb */
+/* EXHIBITS: Unterordner Block geöffnet = gelb über volle Breite */
 .exhibits .subfolder-block.open {
-    background-color: transparent;
-    padding-left: 0;
+    background-color: #eaff00;
+    margin-left: -62px;
+    margin-right: -62px;
+    padding-left: 62px;
+    padding-right: 62px;
+    width: calc(100% + 124px);
 }
 
 /* Erste Linie nicht anzeigen */
