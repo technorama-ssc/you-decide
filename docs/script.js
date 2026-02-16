@@ -203,12 +203,22 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                     subfolderBlocks.forEach((block, index) => {
                         const imgs = subfolderImages[index];
                         if (imgs && imgs.length > 0) {
+                            // Finde den ersten nested-subfolder-block
+                            const firstNestedBlock = block.querySelector(".nested-subfolder-block");
+                            
                             imgs.forEach(url => {
                                 const imgEl = document.createElement("img");
                                 imgEl.src = url;
                                 imgEl.style.maxWidth = "600px";
                                 imgEl.style.height = "auto";
-                                block.appendChild(imgEl);
+                                
+                                // Wenn es einen nested-subfolder-block gibt, füge das Bild davor ein
+                                if (firstNestedBlock) {
+                                    block.querySelector(".subfolder-text").insertBefore(imgEl, firstNestedBlock);
+                                } else {
+                                    // Ansonsten am Ende anfügen
+                                    block.appendChild(imgEl);
+                                }
                             });
                         }
                     });
