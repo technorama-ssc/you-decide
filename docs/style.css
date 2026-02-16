@@ -167,6 +167,12 @@ body {
     width: calc(100% + 124px);
 }
 
+/* EXHIBITS: Letzter Unterordner Block geöffnet - bis zum unteren Rand */
+.exhibits .subfolder-block.open:last-child {
+    margin-bottom: -20px;
+    padding-bottom: 80px;
+}
+
 /* Erste Linie nicht anzeigen */
 .subfolder-block:first-child {
     border-top: none;
