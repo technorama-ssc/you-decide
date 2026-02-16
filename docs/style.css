@@ -58,9 +58,9 @@ body {
     padding: 20px 0 20px 0;
 }
 
-/* EXHIBITS: Grauer Hintergrund (wie Titel-Grau) */
+/* EXHIBITS: Panel transparent, Hintergrund kommt vom Wrapper */
 .exhibits .panel {
-    background-color: #666666;
+    background-color: transparent;
 }
 
 /* Panel-Content bündig zum Titel */
@@ -157,9 +157,9 @@ body {
     margin: 0;
 }
 
-/* EXHIBITS: Unterordner Block geöffnet = gelb über volle Breite */
-.exhibits .subfolder-block.open {
-    background-color: #eaff00;
+/* EXHIBITS: Unterordner Block schwarz ueber volle Breite */
+.exhibits .subfolder-block {
+    background-color: #000000;
     margin-left: -62px;
     margin-right: -62px;
     padding-left: 62px;
@@ -196,23 +196,22 @@ body {
     color: #eaff00;
 }
 
-/* EXHIBITS: Unterordner-Titel schwarz, Hover gelb */
+/* EXHIBITS: Unterordner-Titel grau, Hover gelb */
 .exhibits .subfolder-title {
-    color: #000000;
+    color: #666666;
 }
 
 .exhibits .subfolder-title:hover {
     color: #eaff00;
 }
 
-/* EXHIBITS: Geöffneter Titel - kein Hover */
+/* EXHIBITS: Geoeffneter Titel bleibt grau */
 .exhibits .subfolder-block.open .subfolder-title {
-    color: #000000;
+    color: #666666;
 }
 
 .exhibits .subfolder-block.open .subfolder-title:hover {
-    color: #000000;
-    /* Bleibt schwarz */
+    color: #eaff00;
 }
 
 /* Unterordner-Text */
@@ -226,6 +225,7 @@ body {
 /* EXHIBITS: Unterordner-Text versteckt, Bilder versteckt */
 .exhibits .subfolder-text {
     display: none;
+    color: #666666;
 }
 
 .exhibits .subfolder-block img {

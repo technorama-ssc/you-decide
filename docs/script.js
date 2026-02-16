@@ -102,8 +102,8 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             title.style.color = "#666";
         } else {
             panel.style.display = "block";
-            // EXHIBITS: grauer Hintergrund, sonst gelb
-            wrapper.style.backgroundColor = isExhibits ? "#666666" : "#eaff00";
+            // EXHIBITS: gelber Hintergrund wie gewuenscht
+            wrapper.style.backgroundColor = isExhibits ? "#eaff00" : "#eaff00";
             title.style.color = "#000";
             panel.style.color = "#000";
 
