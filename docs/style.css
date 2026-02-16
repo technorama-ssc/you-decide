@@ -216,41 +216,5 @@ body {
     display: none;
 }
 
-/* =============================
-   Verschachtelte Subfolder (z.B. Libet Experiment unter Do not Press)
-============================= */
-.nested-subfolder-block {
-    margin: 30px 0 0 0;
-    padding: 20px 0 0 0;
-    border-top: 2px solid #eaff00;
-}
-
-.nested-subfolder-line {
-    height: 2px;
-    background-color: #eaff00;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.nested-subfolder-title {
-    font-family: 'RobotoMono', monospace;
-    font-size: 32px;
-    text-transform: uppercase;
-    margin: 0 0 15px 0;
-    color: #eaff00;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.nested-subfolder-title:hover {
-    color: #ffffff;
-}
-
-.nested-subfolder-text {
-    font-family: 'RobotoMono', monospace;
-    font-size: 14px;
-    color: #cccccc;
-    margin: 15px 0;
-    padding: 15px 0;
-}
+/* Keine speziellen nested-subfolder Stiles - verwende normale subfolder-Stiles */
 
