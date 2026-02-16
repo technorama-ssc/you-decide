@@ -196,23 +196,21 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                     const nestedTitles = inner.querySelectorAll(".nested-subfolder-title");
                     nestedTitles.forEach(title => {
                         title.style.cursor = "pointer";
-                        title.style.marginLeft = "20px";
-                        title.style.fontSize = "0.9em";
                         title.addEventListener("click", (e) => {
                             e.stopPropagation();
 
                             // Finde den Text-Block
-                            const textBlock = title.nextElementSibling;
+                            const block = title.closest(".nested-subfolder-block");
+                            const textBlock = block.querySelector(".nested-subfolder-text");
                             if (!textBlock) return;
 
                             const isOpen = textBlock.style.display === "block";
 
-                            // Verstecke alle anderen nested blocks in diesem subfolder-block
-                            const subfolderBlock = title.closest(".subfolder-block");
-                            subfolderBlock.querySelectorAll(".nested-subfolder-text").forEach(b => {
+                            // Verstecke alle anderen nested blocks
+                            inner.querySelectorAll(".nested-subfolder-text").forEach(b => {
                                 b.style.display = "none";
                             });
-                            subfolderBlock.querySelectorAll(".nested-subfolder-img").forEach(img => {
+                            inner.querySelectorAll(".nested-subfolder-img").forEach(img => {
                                 img.style.display = "none";
                             });
 
@@ -430,6 +428,8 @@ async function loadStaticContent() {
                             <h2 class="subfolder-title">${sub.title}</h2>
                             <div class="subfolder-text">
                                 ${marked.parse(sub.content)}
+                            </div>
+                        </div>
                     `;
                     
                     // Wenn es verschachtelte Subsections gibt (z.B. Libet Experiment unter Do not Press)
@@ -437,11 +437,11 @@ async function loadStaticContent() {
                         for (const subsub of sub.subsections) {
                             subHtml += `
                                 <div class="nested-subfolder-block">
+                                    <div class="nested-subfolder-line"></div>
                                     <h3 class="nested-subfolder-title">${subsub.title}</h3>
                                     <div class="nested-subfolder-text" style="display:none;">
                                         ${marked.parse(subsub.content)}
                                     </div>
-                                </div>
                             `;
                             // Bilder von nested subsections
                             if (subsub.images && subsub.images.length > 0) {
@@ -449,13 +449,11 @@ async function loadStaticContent() {
                                     subHtml += `<img src="${imgUrl}" style="max-width:600px;height:auto;display:none;" class="nested-subfolder-img">`;
                                 });
                             }
+                            subHtml += `
+                                </div>
+                            `;
                         }
                     }
-                    
-                    subHtml += `
-                            </div>
-                        </div>
-                    `;
                     subfolderImages.push(sub.images || []);
                 }
             }
