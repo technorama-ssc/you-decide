@@ -9,9 +9,17 @@ DIRECTORY = "docs"
 
 class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=DIRECTORY, **kwargs)
+        # Serve from current directory (Repo Root)
+        super().__init__(*args, directory=os.getcwd(), **kwargs)
 
     def do_GET(self):
+        # Redirect root to /docs/
+        if self.path == "/":
+            self.send_response(301)
+            self.send_header("Location", "/docs/")
+            self.end_headers()
+            return
+
         # Handle API requests (Mocking GitHub API)
         if self.path.startswith("/repos/technorama-ssc/you-decide/contents/"):
             self.send_response(200)
