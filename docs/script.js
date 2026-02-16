@@ -2,6 +2,14 @@ const repoBase = "https://api.github.com/repos/technorama-ssc/you-decide/content
 const container = document.getElementById("dynamic-content");
 
 // -------------------------
+// GitHub API Header mit Token
+// -------------------------
+const githubHeaders = {
+    'Authorization': `token ${GITHUB_TOKEN}`,
+    'Accept': 'application/vnd.github.v3+json'
+};
+
+// -------------------------
 // Akkordeon erstellen
 // -------------------------
 function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images, subfolderImages) {
@@ -146,7 +154,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 // README aus Ordner laden
 // -------------------------
 async function loadReadmeFromFolder(url) {
-    const folderResponse = await fetch(url);
+    const folderResponse = await fetch(url, { headers: githubHeaders });
     if (!folderResponse.ok) return null;
 
     const folderContent = await folderResponse.json();
@@ -155,7 +163,7 @@ async function loadReadmeFromFolder(url) {
     const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
     if (!readme) return null;
 
-    const readmeResp = await fetch(readme.download_url);
+    const readmeResp = await fetch(readme.download_url, { headers: githubHeaders });
     if (!readmeResp.ok) return null;
 
     const md = await readmeResp.text();
@@ -172,7 +180,7 @@ async function loadReadmeFromFolder(url) {
 // -------------------------
 // Bilder aus Ordner laden (nur JPG)
 async function loadImagesFromFolder(url) {
-    const folderResponse = await fetch(url);
+    const folderResponse = await fetch(url, { headers: githubHeaders });
     if (!folderResponse.ok) return [];
 
     const folderContent = await folderResponse.json();
@@ -188,19 +196,19 @@ async function loadImagesFromFolder(url) {
 // -------------------------
 async function loadFolders() {
     try {
-        const response = await fetch(repoBase);
+        const response = await fetch(repoBase, { headers: githubHeaders });
         const items = await response.json();
 
         for (const item of items) {
             if (item.type !== "dir") continue;
 
-            const folderResp = await fetch(item.url);
+            const folderResp = await fetch(item.url, { headers: githubHeaders });
             const folderContent = await folderResp.json();
 
             const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
             if (!readme) continue;
 
-            const md = await (await fetch(readme.download_url)).text();
+            const md = await (await fetch(readme.download_url, { headers: githubHeaders })).text();
             const lines = md.split("\n");
 
             const titleLine = lines[0].startsWith("#")
