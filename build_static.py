@@ -1,11 +1,13 @@
 import os
 import json
 import re
+import shutil
 from urllib.parse import quote
 
 # Konfiguration
 ROOT_DIR = os.getcwd()
 DOCS_DIR = os.path.join(ROOT_DIR, "docs")
+ASSETS_DIR = os.path.join(DOCS_DIR, "assets")
 OUTPUT_FILE = os.path.join(DOCS_DIR, "content.json")
 
 # Bild-Endungen
@@ -39,11 +41,19 @@ def find_images(directory):
         
     for f in os.listdir(directory):
         if f.lower().endswith(IMAGE_EXTENSIONS):
-            # Relativer Pfad von docs aus gesehen für die Webseite
-            rel_path_from_root = os.path.relpath(os.path.join(directory, f), ROOT_DIR)
-            # Web path: ../00_folder/image.jpg (URL-encoded for spaces)
-            web_path = "../" + quote(rel_path_from_root.replace("\\", "/"), safe="/")
-            images.append(web_path)
+                source_path = os.path.join(directory, f)
+                rel_path_from_root = os.path.relpath(source_path, ROOT_DIR)
+                rel_path_normalized = rel_path_from_root.replace("\\", "/")
+
+                # Copy into docs/assets so GitHub Pages can serve it
+                dest_path = os.path.join(ASSETS_DIR, rel_path_normalized)
+                dest_dir = os.path.dirname(dest_path)
+                os.makedirs(dest_dir, exist_ok=True)
+                shutil.copy2(source_path, dest_path)
+
+                # Web path: assets/<relative-path> (URL-encoded for spaces)
+                web_path = "assets/" + quote(rel_path_normalized, safe="/")
+                images.append(web_path)
     return sorted(images)
 
 def scan_repository():
@@ -151,6 +161,7 @@ def scan_repository():
 
 if __name__ == "__main__":
     print("Starte Scan...")
+    os.makedirs(ASSETS_DIR, exist_ok=True)
     content_data = scan_repository()
     
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:

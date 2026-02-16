@@ -7,7 +7,7 @@
       "name": "content_youdecide_exhibition.zip"
     },
     "images": [
-      "../00%20you%20decide/youdecide_yes%20or%20no.jpg"
+      "assets/00%20you%20decide/youdecide_yes%20or%20no.jpg"
     ],
     "subsections": []
   },
@@ -19,14 +19,14 @@
       "name": "content_youdecide_system.zip"
     },
     "images": [
-      "../01%20system/youdecide_system_me%20and%20you.jpg"
+      "assets/01%20system/youdecide_system_me%20and%20you.jpg"
     ],
     "subsections": [
       {
         "title": "GRID",
         "content": "\nThe grid system is based on a modular design with a 157 mm grid and a 9 mm margin. The system panels are milled from 19 mm pine and feature Ø30 mm grid holes. They are compatible with the item D30 system for expansion.\n",
         "images": [
-          "../01%20system/00%20grid%20system/youdecide_grid.jpg"
+          "assets/01%20system/00%20grid%20system/youdecide_grid.jpg"
         ],
         "subsections": []
       },
@@ -34,7 +34,7 @@
         "title": "CONNECTORS",
         "content": "\nMain connector printet with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
         "images": [
-          "../01%20system/01%20connectors/youdecide_plate%20connector.jpg"
+          "assets/01%20system/01%20connectors/youdecide_plate%20connector.jpg"
         ],
         "subsections": []
       }
@@ -50,14 +50,14 @@
         "title": "Do not Press",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [
-          "../03%20exhibits/000_do%20not%20press/youdecide_do%20not%20press.jpg"
+          "assets/03%20exhibits/000_do%20not%20press/youdecide_do%20not%20press.jpg"
         ],
         "subsections": [
           {
             "title": "Libet Experiment",
             "content": "\nThe brain “presses the button” before you believe you have made the decision.\n\nIn the Libet experiment, it was shown that the brain’s motor system begins preparing a movement before a person becomes consciously aware that they have decided to execute that movement immediately. The time gap is about 0.35 seconds, and the actual movement then occurs roughly another 0.2 seconds later.\n\n[wikipedia.org/wiki/Libet-Experiment](https://de.wikipedia.org/wiki/Libet-Experiment)\n",
             "images": [
-              "../03%20exhibits/000_do%20not%20press/01_libet%20experiment/libet%20experiment.jpg"
+              "assets/03%20exhibits/000_do%20not%20press/01_libet%20experiment/libet%20experiment.jpg"
             ]
           }
         ]
@@ -78,7 +78,7 @@
         "title": "The coin",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [
-          "../03%20exhibits/023_the%20coin/youdecide_the%20coin%202.jpg"
+          "assets/03%20exhibits/023_the%20coin/youdecide_the%20coin%202.jpg"
         ],
         "subsections": []
       }
