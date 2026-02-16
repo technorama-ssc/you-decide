@@ -3,6 +3,7 @@ import socketserver
 import json
 import os
 import mimetypes
+import re
 
 PORT = 8000
 DIRECTORY = "docs"
@@ -53,6 +54,10 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
                 try:
                     for entry in os.listdir(full_path):
                         if entry.startswith("."): continue # Skip hidden files
+                        
+                        # Only include folders/files that start with a number
+                        if not re.match(r'^\d', entry):
+                            continue
                         
                         entry_path = os.path.join(full_path, entry)
                         is_dir = os.path.isdir(entry_path)
