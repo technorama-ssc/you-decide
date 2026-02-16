@@ -37,6 +37,12 @@ const getGithubHeaders = () => {
 function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, images, subfolderImages) {
     const wrapper = document.createElement("div");
     wrapper.className = "accordion-wrapper";
+    
+    // Spezielle Klasse für EXHIBITS
+    const isExhibits = titleText.toUpperCase().includes("EXHIBITS");
+    if (isExhibits) {
+        wrapper.classList.add("exhibits");
+    }
 
     const title = document.createElement("h1");
     title.className = "accordion";
@@ -90,7 +96,8 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             title.style.color = "#666";
         } else {
             panel.style.display = "block";
-            wrapper.style.backgroundColor = "#eaff00";
+            // EXHIBITS: grauer Hintergrund, sonst gelb
+            wrapper.style.backgroundColor = isExhibits ? "#666666" : "#eaff00";
             title.style.color = "#000";
             panel.style.color = "#000";
 
@@ -149,6 +156,36 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             // Unterordner HTML + Bilder
             if (subfoldersHtml) {
                 inner.insertAdjacentHTML("beforeend", subfoldersHtml);
+
+                // EXHIBITS: Unterordner-Titel klickbar machen
+                if (wrapper.classList.contains("exhibits")) {
+                    const subfolderTitles = inner.querySelectorAll(".subfolder-title");
+                    subfolderTitles.forEach(title => {
+                        title.style.cursor = "pointer";
+                        title.addEventListener("click", (e) => {
+                            e.stopPropagation();
+                            
+                            // Finde den nächsten Text-Block
+                            const block = title.closest(".subfolder-block");
+                            const textBlock = block.querySelector(".subfolder-text");
+                            const isOpen = block.classList.contains("open");
+                            
+                            // Verstecke / entferne open-Klasse von allen anderen Blöcken
+                            inner.querySelectorAll(".subfolder-block").forEach(b => {
+                                b.classList.remove("open");
+                                b.querySelector(".subfolder-text").style.display = "none";
+                                b.querySelectorAll("img").forEach(img => img.style.display = "none");
+                            });
+                            
+                            // Toggle diesen Block
+                            if (!isOpen && textBlock) {
+                                block.classList.add("open");
+                                textBlock.style.display = "block";
+                                block.querySelectorAll("img").forEach(img => img.style.display = "block");
+                            }
+                        });
+                    });
+                }
 
                 if (subfolderImages) {
                     const subfolderBlocks = inner.querySelectorAll(".subfolder-block");
@@ -250,7 +287,10 @@ async function loadFolders() {
             if (item.type !== "dir") continue;
 
             const folderResp = await fetch(item.url, { headers: getGithubHeaders() });
+            if (!folderResp.ok) continue;
+            
             const folderContent = await folderResp.json();
+            if (!Array.isArray(folderContent)) continue;
 
             const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
             if (!readme) continue;
