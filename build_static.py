@@ -1,6 +1,7 @@
 import os
 import json
 import re
+from urllib.parse import quote
 
 # Konfiguration
 ROOT_DIR = os.getcwd()
@@ -40,8 +41,8 @@ def find_images(directory):
         if f.lower().endswith(IMAGE_EXTENSIONS):
             # Relativer Pfad von docs aus gesehen für die Webseite
             rel_path_from_root = os.path.relpath(os.path.join(directory, f), ROOT_DIR)
-            # Web path: ../00_folder/image.jpg
-            web_path = "../" + rel_path_from_root.replace("\\", "/")
+            # Web path: ../00_folder/image.jpg (URL-encoded for spaces)
+            web_path = "../" + quote(rel_path_from_root.replace("\\", "/"), safe="/")
             images.append(web_path)
     return sorted(images)
 
@@ -71,7 +72,7 @@ def scan_repository():
         for f in os.listdir(full_path):
             if f.lower().endswith('.zip'):
                 rel_path_from_root = os.path.relpath(os.path.join(full_path, f), ROOT_DIR)
-                web_path = "../" + rel_path_from_root.replace("\\", "/")
+                web_path = "../" + quote(rel_path_from_root.replace("\\", "/"), safe="/")
                 
                 zip_file = {
                     "download_url": web_path,
