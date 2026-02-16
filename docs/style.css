@@ -168,9 +168,9 @@ body {
     margin: 0;
 }
 
-/* EXHIBITS: Unterordner Block gelb ueber volle Breite */
+/* EXHIBITS: Unterordner Block grau ueber volle Breite */
 .exhibits .subfolder-block {
-    background-color: #eaff00;
+    background-color: #666666;
     color: #000000;
     margin-left: -62px;
     margin-right: -62px;
@@ -179,10 +179,10 @@ body {
     width: calc(100% + 124px);
 }
 
-/* EXHIBITS: Unterordner Block Hover = schwarzer Hintergrund ueber volle Breite */
+/* EXHIBITS: Unterordner Block Hover = gelb ueber volle Breite */
 .exhibits .subfolder-block:hover {
-    background-color: #000000;
-    color: #666666;
+    background-color: #eaff00;
+    color: #000000;
 }
 
 /* EXHIBITS: Geoeffneter Unterordner bleibt gelb, ohne Hover-Wechsel */
@@ -196,13 +196,9 @@ body {
     color: #000000;
 }
 
-/* EXHIBITS: Links im Unterordner schwarz (werden grau beim Hover) */
+/* EXHIBITS: Links im Unterordner schwarz */
 .exhibits .subfolder-block a {
     color: #000000;
-}
-
-.exhibits .subfolder-block:hover a {
-    color: #666666;
 }
 
 .exhibits .subfolder-block.open a {
@@ -233,13 +229,9 @@ body {
     transition: color 0.3s;
 }
 
-/* EXHIBITS: Unterordner-Titel schwarze Schrift */
+/* EXHIBITS: Unterordner-Titel schwarz */
 .exhibits .subfolder-title {
     color: #000000;
-}
-
-.exhibits .subfolder-block:hover .subfolder-title {
-    color: #666666;
 }
 
 /* EXHIBITS: Geoeffneter Titel bleibt schwarz */
