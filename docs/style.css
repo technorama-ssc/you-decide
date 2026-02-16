@@ -71,6 +71,11 @@ body {
     padding-right: 62px;
 }
 
+/* EXHIBITS: Keine max-width für volle Breite */
+.exhibits .panel .panel-content {
+    max-width: none;
+}
+
 /* Lauftext */
 .panel p,
 .panel li,
