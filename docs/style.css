@@ -21,6 +21,11 @@ body {
     /* Startseite: schwarz */
 }
 
+/* EXHIBITS: kein extra Gelb unten, wenn offen */
+.accordion-wrapper.exhibits.open {
+    padding-bottom: 0;
+}
+
 /* =============================
    Haupttitel
 ============================= */
@@ -38,9 +43,13 @@ body {
     padding: 0 62px;
 }
 
-/* Hover auf allen Hauptordnern, auch wenn andere geöffnet */
-.accordion-wrapper .accordion:hover {
-    color: #eaff00;
+/* Hover: ganzer Block gelb, Titel bleibt schwarz */
+.accordion-wrapper:hover {
+    background-color: #eaff00;
+}
+
+.accordion-wrapper:hover .accordion {
+    color: #000000;
 }
 
 /* =============================
@@ -61,6 +70,8 @@ body {
 /* EXHIBITS: Panel transparent, Hintergrund kommt vom Wrapper */
 .exhibits .panel {
     background-color: transparent;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 /* Panel-Content bündig zum Titel */
@@ -173,19 +184,24 @@ body {
     background-color: #eaff00;
 }
 
-/* EXHIBITS: Links im Unterordner schwarz, Hover gelb */
+/* EXHIBITS: Geoeffneter Unterordner bleibt gelb, ohne Hover-Wechsel */
+.exhibits .subfolder-block.open {
+    background-color: #eaff00;
+}
+
+.exhibits .subfolder-block.open:hover {
+    background-color: #eaff00;
+}
+
+/* EXHIBITS: Links im Unterordner schwarz */
 .exhibits .subfolder-block a {
     color: #000000;
 }
 
-.exhibits .subfolder-block a:hover {
-    color: #eaff00;
-}
-
-/* EXHIBITS: Letzter Unterordner Block geöffnet - bis zum unteren Rand */
+/* EXHIBITS: Letzter Unterordner Block geöffnet - kein extra Balken */
 .exhibits .subfolder-block.open:last-child {
-    margin-bottom: -80px;
-    padding-bottom: 140px;
+    margin-bottom: 0;
+    padding-bottom: 60px;
 }
 
 /* Erste Linie nicht anzeigen */
@@ -206,18 +222,9 @@ body {
     transition: color 0.3s;
 }
 
-/* Standard Hover */
-.subfolder-title:hover {
-    color: #eaff00;
-}
-
-/* EXHIBITS: Unterordner-Titel schwarz, Hover gelb */
+/* EXHIBITS: Unterordner-Titel schwarz */
 .exhibits .subfolder-title {
     color: #000000;
-}
-
-.exhibits .subfolder-title:hover {
-    color: #eaff00;
 }
 
 /* EXHIBITS: Geoeffneter Titel bleibt schwarz */
@@ -225,9 +232,6 @@ body {
     color: #000000;
 }
 
-.exhibits .subfolder-block.open .subfolder-title:hover {
-    color: #eaff00;
-}
 
 /* Unterordner-Text */
 .subfolder-text {

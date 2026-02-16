@@ -66,21 +66,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     wrapper.appendChild(panel);
 
     // -----------------------
-    // Mouseover Effekt immer aktiv
-    // -----------------------
-    title.addEventListener("mouseenter", () => {
-        if (panel.style.display !== "block") {
-            title.style.color = "#eaff00"; // Hover-Farbe
-        }
-    });
-
-    title.addEventListener("mouseleave", () => {
-        if (panel.style.display !== "block") {
-            title.style.color = "#666"; // Standardfarbe
-        }
-    });
-
-    // -----------------------
     // Klick-Funktion
     // -----------------------
     title.addEventListener("click", () => {
@@ -89,21 +74,26 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
         });
 
         document.querySelectorAll(".accordion-wrapper").forEach(w => {
-            if (w !== wrapper) w.style.backgroundColor = "transparent";
+            if (w !== wrapper) {
+                w.style.removeProperty("background-color");
+                w.classList.remove("open");
+            }
         });
 
         document.querySelectorAll(".accordion").forEach(a => {
-            if (a !== title) a.style.color = "#666";
+            if (a !== title) a.style.removeProperty("color");
         });
 
         if (panel.style.display === "block") {
             panel.style.display = "none";
-            wrapper.style.backgroundColor = "transparent";
-            title.style.color = "#666";
+            wrapper.style.removeProperty("background-color");
+            wrapper.classList.remove("open");
+            title.style.removeProperty("color");
         } else {
             panel.style.display = "block";
             // EXHIBITS: gelber Hintergrund wie gewuenscht
             wrapper.style.backgroundColor = isExhibits ? "#eaff00" : "#eaff00";
+            wrapper.classList.add("open");
             title.style.color = "#000";
             panel.style.color = "#000";
 
@@ -166,13 +156,17 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 // EXHIBITS: Unterordner-Titel klickbar machen
                 if (wrapper.classList.contains("exhibits")) {
                     const subfolderTitles = inner.querySelectorAll(".subfolder-title");
-                    subfolderTitles.forEach(title => {
-                        title.style.cursor = "pointer";
-                        title.addEventListener("click", (e) => {
+                    subfolderTitles.forEach(subfolderTitle => {
+                        subfolderTitle.style.cursor = "pointer";
+                        subfolderTitle.addEventListener("click", (e) => {
                             e.stopPropagation();
 
+                            // When a subfolder opens, return the main EXHIBITS header to gray.
+                            wrapper.style.backgroundColor = "#666666";
+                            title.style.color = "#000";
+
                             // Finde den nächsten Text-Block
-                            const block = title.closest(".subfolder-block");
+                            const block = subfolderTitle.closest(".subfolder-block");
                             const textBlock = block.querySelector(".subfolder-text");
                             const isOpen = block.classList.contains("open");
 
@@ -190,6 +184,8 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                                 block.querySelectorAll("img:not(.nested-subfolder-img)").forEach(img => img.style.display = "block");
                                 // Nested subfolder imgs bleiben immer sichtbar
                                 block.querySelectorAll(".nested-subfolder-img").forEach(img => img.style.display = "block");
+                            } else if (isOpen) {
+                                wrapper.style.backgroundColor = "#eaff00";
                             }
                         });
                     });
