@@ -168,6 +168,11 @@ body {
     width: calc(100% + 124px);
 }
 
+/* EXHIBITS: Unterordner Block Hover = gelb ueber volle Breite */
+.exhibits .subfolder-block:hover {
+    background-color: #eaff00;
+}
+
 /* EXHIBITS: Links im Unterordner schwarz, Hover gelb */
 .exhibits .subfolder-block a {
     color: #000000;
