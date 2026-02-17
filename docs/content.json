@@ -64,23 +64,39 @@
       },
       {
         "title": "Click Click Click",
+        "content": "\nWork in progress ... <br>\nContent coming soon.",
+        "images": [],
+        "subsections": []
+      },
+      {
+        "title": "Traffic Light",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [],
         "subsections": []
       },
       {
-        "title": "Traffic Light Entrance",
-        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
-        "images": [],
-        "subsections": []
-      },
-      {
-        "title": "The coin",
-        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
+        "title": "Die Münze",
+        "content": "\nWöchentlich legen wir eine Spielmünze in ein Schmucketui. Die Gäste können entscheiden, ob sie die Münze liegen lassen oder mitnehmen. Bleibt die Münze bis zum Ende der Woche da, spenden wir CHF 50.- an ein Hilfsprojekt – andernfalls nicht.",
         "images": [
           "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/023_the%20coin/youdecide_the%20coin%202.jpg"
         ],
-        "subsections": []
+        "subsections": [
+          {
+            "title": "Die Münze",
+            "content": "\n- Die Spielmünze bleibt nie bis zum Ende der Woche\n- Sobald die Spielmünze weg ist, legen die Gäste eigene, echte Münzen in die Schatulle\n- Diese Münzen entfernen wir jeweils. Es werden jedoch andauernd wieder neue hineingelegt\n- Einige Gäste verstecken sogar Münzen unter dem Polster im Etui ",
+            "images": []
+          },
+          {
+            "title": "Der Reiz",
+            "content": "\n...",
+            "images": []
+          },
+          {
+            "title": "Das Gewissen",
+            "content": "\n...",
+            "images": []
+          }
+        ]
       }
     ]
   },
