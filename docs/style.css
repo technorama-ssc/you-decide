@@ -137,6 +137,16 @@ body {
 /* =============================
    Unterordner-Titel & Linien
 ============================= */
+.subfolder-block {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #000000;
+
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin: 0;
+}
+
 /* Erste Linie nicht anzeigen */
 .subfolder-block:first-child {
     border-top: none;
