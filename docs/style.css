@@ -168,9 +168,9 @@ body {
     margin: 0;
 }
 
-/* EXHIBITS: Unterordner Block gelb ueber volle Breite, schwarze Schrift */
+/* EXHIBITS: Unterordner Block grau ueber volle Breite */
 .exhibits .subfolder-block {
-    background-color: #eaff00;
+    background-color: #666666;
     color: #000000;
     margin-left: -62px;
     margin-right: -62px;
@@ -179,13 +179,13 @@ body {
     width: calc(100% + 124px);
 }
 
-/* EXHIBITS: Unterordner Block Hover = gleich wie Standard, kein Mouseover-Effekt */
+/* EXHIBITS: Unterordner Block Hover = gelb ueber volle Breite */
 .exhibits .subfolder-block:hover {
     background-color: #eaff00;
     color: #000000;
 }
 
-/* EXHIBITS: Geoeffneter Unterordner bleibt gleich */
+/* EXHIBITS: Geoeffneter Unterordner bleibt gelb, ohne Hover-Wechsel */
 .exhibits .subfolder-block.open {
     background-color: #eaff00;
     color: #000000;
