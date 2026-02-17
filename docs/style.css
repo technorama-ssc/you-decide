@@ -245,6 +245,7 @@ body {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     display: block;
+    max-width: 600px;
     /* Standard: sichtbar */
 }
 
@@ -285,6 +286,7 @@ body {
     font-family: 'RobotoMono', monospace;
     font-size: 16px;
     margin: 0;
+    max-width: 600px;
 }
 
 .nested-subfolder-img {
