@@ -175,6 +175,8 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                                 b.classList.remove("open");
                                 b.querySelector(".subfolder-text").style.display = "none";
                                 b.querySelectorAll("img:not(.nested-subfolder-img)").forEach(img => img.style.display = "none");
+                                b.querySelectorAll(".nested-subfolder-title").forEach(el => el.style.display = "none");
+                                b.querySelectorAll(".nested-subfolder-content").forEach(el => el.style.display = "none");
                             });
 
                             // Toggle diesen Block
@@ -184,6 +186,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                                 block.querySelectorAll("img:not(.nested-subfolder-img)").forEach(img => img.style.display = "block");
                                 // Nested subfolder imgs bleiben immer sichtbar
                                 block.querySelectorAll(".nested-subfolder-img").forEach(img => img.style.display = "block");
+                                // Nested Subfolder Titel und Content anzeigen
+                                block.querySelectorAll(".nested-subfolder-title").forEach(el => el.style.display = "block");
+                                block.querySelectorAll(".nested-subfolder-content").forEach(el => el.style.display = "block");
                             } else if (isOpen) {
                                 wrapper.style.backgroundColor = "#eaff00";
                             }
