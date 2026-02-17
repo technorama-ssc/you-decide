@@ -281,7 +281,7 @@ body {
     color: #000000;
     cursor: default;
     /* Nicht klickbar */
-    display: none;
+    display: block;
 }
 
 .nested-subfolder-content {
@@ -289,7 +289,7 @@ body {
     font-size: 16px;
     margin: 0;
     max-width: 800px;
-    display: none;
+    display: block;
 }
 
 .nested-subfolder-img {
