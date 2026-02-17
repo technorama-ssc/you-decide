@@ -137,16 +137,6 @@ body {
 /* =============================
    Unterordner-Titel & Linien
 ============================= */
-.subfolder-block {
-    width: 100%;
-    box-sizing: border-box;
-    border-top: 1px solid #000000;
-
-    padding-top: 60px;
-    padding-bottom: 60px;
-    margin: 0;
-}
-
 /* Erste Linie nicht anzeigen */
 .subfolder-block:first-child {
     border-top: none;
@@ -160,23 +150,22 @@ body {
 
 /* Unterordner Block */
 .subfolder-block {
-    width: 100%;
+    width: calc(100% + 124px);
     box-sizing: border-box;
     border-top: 1px solid #000000;
+    margin-left: -62px;
+    margin-right: -62px;
     padding-top: 60px;
     padding-bottom: 60px;
-    margin: 0;
+    margin-bottom: 0;
 }
 
 /* EXHIBITS: Unterordner Block grau ueber volle Breite */
 .exhibits .subfolder-block {
     background-color: #666666;
     color: #000000;
-    margin-left: -62px;
-    margin-right: -62px;
     padding-left: 62px;
     padding-right: 62px;
-    width: calc(100% + 124px);
 }
 
 /* EXHIBITS: Unterordner Block Hover = gelb ueber volle Breite */
@@ -227,6 +216,8 @@ body {
     /* Standard: schwarz */
     cursor: pointer;
     transition: color 0.3s;
+    padding-left: 62px;
+    padding-right: 62px;
 }
 
 /* EXHIBITS: Unterordner-Titel schwarz */
@@ -246,6 +237,8 @@ body {
     font-size: 16px;
     display: block;
     max-width: 800px;
+    padding-left: 62px;
+    padding-right: 62px;
     /* Standard: sichtbar */
 }
 
