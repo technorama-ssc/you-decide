@@ -1,4 +1,4 @@
-# Die Münze
+# Erkenntnisse
 
 - Die Spielmünze bleibt nie bis zum Ende der Woche
 - Sobald die Spielmünze weg ist, legen die Gäste eigene, echte Münzen in die Schatulle
