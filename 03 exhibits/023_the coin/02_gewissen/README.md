@@ -1,3 +1,0 @@
-# Das Gewissen
-
-...
