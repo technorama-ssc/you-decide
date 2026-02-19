@@ -7,6 +7,8 @@ body {
     padding: 0;
     background-color: #000000;
     font-family: 'RobotoMono', monospace;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 /* =============================
