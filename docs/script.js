@@ -98,7 +98,15 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             panel.style.color = "#000";
 
             // Haupttext
-            inner.innerHTML = marked.parse(contentMarkdown);
+            inner.innerHTML = "";
+            if (isExhibits) {
+                const intro = document.createElement("div");
+                intro.className = "exhibits-intro";
+                intro.innerHTML = marked.parse(contentMarkdown);
+                inner.appendChild(intro);
+            } else {
+                inner.innerHTML = marked.parse(contentMarkdown);
+            }
 
             // ZIP Download
             let lastMainContentNode = null;

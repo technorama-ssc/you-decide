@@ -89,6 +89,11 @@ body {
     max-width: none;
 }
 
+/* EXHIBITS: Haupt-Lauftext wie andere Sektionen begrenzen */
+.exhibits-intro {
+    max-width: 800px;
+}
+
 /* Lauftext */
 .panel p,
 .panel li,
