@@ -92,6 +92,7 @@ body {
 /* EXHIBITS: Haupt-Lauftext wie andere Sektionen begrenzen */
 .exhibits-intro {
     max-width: 800px;
+    margin-bottom: 60px;
 }
 
 /* Lauftext */
