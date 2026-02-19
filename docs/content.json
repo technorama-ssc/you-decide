@@ -11,8 +11,8 @@
     ],
     "subsections": [
       {
-        "title": "Prototype Workshop",
-        "content": "\nA prototype workshop in the exhibition ...",
+        "title": "Prototype Lab",
+        "content": "\nA prototype Development Lab in the exhibition ...",
         "images": [],
         "subsections": []
       }
@@ -73,8 +73,8 @@
         ]
       },
       {
-        "title": "Die Münze",
-        "content": "\nWöchentlich legen wir eine Spielmünze in ein Schmucketui. Die Gäste können entscheiden, ob sie die Münze liegen lassen oder mitnehmen. Bleibt die Münze bis zum Ende der Woche da, spenden wir CHF 50.- an ein Hilfsprojekt – andernfalls nicht.",
+        "title": "The Coin",
+        "content": "\nEach week, we place a game coin in a jewelry case. Guests can choose whether to leave the coin or take it with them. If the coin remains until the end of the week, we donate CHF 50 to a charitable project – otherwise, we do not.",
         "images": [
           "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/023_the%20coin/youdecide_the%20coin%202.jpg"
         ],
