@@ -9,7 +9,14 @@
     "images": [
       "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/00%20you%20decide/youdecide_yes%20or%20no.jpg"
     ],
-    "subsections": []
+    "subsections": [
+      {
+        "title": "Prototype Workshop",
+        "content": "\nA prototype workshop in the exhibition ...",
+        "images": [],
+        "subsections": []
+      }
+    ]
   },
   {
     "title": "SYSTEM",
