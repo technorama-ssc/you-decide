@@ -1,3 +1,3 @@
-# Die Münze
+# The Coin
 
-Wöchentlich legen wir eine Spielmünze in ein Schmucketui. Die Gäste können entscheiden, ob sie die Münze liegen lassen oder mitnehmen. Bleibt die Münze bis zum Ende der Woche da, spenden wir CHF 50.- an ein Hilfsprojekt – andernfalls nicht.
+Each week, we place a game coin in a jewelry case. Guests can choose whether to leave the coin or take it with them. If the coin remains until the end of the week, we donate CHF 50 to a charitable project – otherwise, we do not.
