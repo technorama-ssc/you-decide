@@ -5,11 +5,11 @@ This is the new open-source platform for the “You Decide” exhibition. All ex
 
 Here you find general information and materials on the exhibition "You Decide"
 
-# 01 System
-Here you find the information and materials on the construciton system used througout the exhibition.
-
-# 03 Exhibits
+# 01 Exhibits
 Here you find information and materials for the single exhibits.
+
+# 02 System
+Here you find the information and materials on the construciton system used througout the exhibition.
 
 # Licencing
 All Information and Materials are provided under the following licencses:

@@ -12,35 +12,6 @@
     "subsections": []
   },
   {
-    "title": "SYSTEM",
-    "content": "\nHere you find the information and materials on the construciton system used througout the exhibition.\n",
-    "zipFile": {
-      "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/content_youdecide_system.zip",
-      "name": "content_youdecide_system.zip"
-    },
-    "images": [
-      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/youdecide_system_me%20and%20you.jpg"
-    ],
-    "subsections": [
-      {
-        "title": "GRID",
-        "content": "\nThe grid system is based on a modular design with a 157 mm grid and a 9 mm margin. The system panels are milled from 19 mm pine and feature Ø30 mm grid holes. They are compatible with the item D30 system for expansion.\n",
-        "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/00%20grid%20system/youdecide_grid.jpg"
-        ],
-        "subsections": []
-      },
-      {
-        "title": "CONNECTORS",
-        "content": "\nMain connector printet with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
-        "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20system/01%20connectors/youdecide_plate%20connector.jpg"
-        ],
-        "subsections": []
-      }
-    ]
-  },
-  {
     "title": "EXHIBITS",
     "content": "\nHere you'll find information and materials for each exhibit. All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.",
     "zipFile": null,
@@ -50,7 +21,7 @@
         "title": "Do not Press",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/000_do%20not%20press/youdecide_do%20not%20press.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/000_do%20not%20press/youdecide_do%20not%20press.jpg"
         ],
         "subsections": [
           {
@@ -69,7 +40,7 @@
         "title": "The Coin",
         "content": "\nEach week, we place a game coin in a jewelry case. Guests can choose whether to leave the coin or take it with them. If the coin remains until the end of the week, we donate CHF 50 to a charitable project – otherwise, we do not.",
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/03%20exhibits/023_the%20coin/youdecide_the%20coin%202.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/023_the%20coin/youdecide_the%20coin%202.jpg"
         ],
         "subsections": [
           {
@@ -78,6 +49,35 @@
             "images": []
           }
         ]
+      }
+    ]
+  },
+  {
+    "title": "SYSTEM",
+    "content": "\nHere you find the information and materials on the construciton system used througout the exhibition.\n",
+    "zipFile": {
+      "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/content_youdecide_system.zip",
+      "name": "content_youdecide_system.zip"
+    },
+    "images": [
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_me%20and%20you.jpg"
+    ],
+    "subsections": [
+      {
+        "title": "GRID",
+        "content": "\nThe grid system is based on a modular design with a 157 mm grid and a 9 mm margin. The system panels are milled from 19 mm pine and feature Ø30 mm grid holes. They are compatible with the item D30 system for expansion.\n",
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/00%20grid%20system/youdecide_grid.jpg"
+        ],
+        "subsections": []
+      },
+      {
+        "title": "CONNECTORS",
+        "content": "\nMain connector printet with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/01%20connectors/youdecide_plate%20connector.jpg"
+        ],
+        "subsections": []
       }
     ]
   },
