@@ -7,6 +7,10 @@ import re
 
 PORT = 8000
 DIRECTORY = "docs"
+EXCLUDED_DIRS = {"00 prototype workshop"}
+
+def is_numbered_visible_entry(name):
+    return re.match(r'^\d', name) and name.lower() not in EXCLUDED_DIRS
 
 class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
@@ -56,7 +60,7 @@ class DevRequestHandler(http.server.SimpleHTTPRequestHandler):
                         if entry.startswith("."): continue # Skip hidden files
                         
                         # Only include folders/files that start with a number
-                        if not re.match(r'^\d', entry):
+                        if not is_numbered_visible_entry(entry):
                             continue
                         
                         entry_path = os.path.join(full_path, entry)

@@ -4,6 +4,11 @@ const repoBase = isLocal
     : "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
 
 const container = document.getElementById("dynamic-content");
+const excludedDirs = new Set(["00 prototype workshop"]);
+
+function isVisibleNumberedDir(name) {
+    return /^\d/.test(name) && !excludedDirs.has(name.toLowerCase());
+}
 
 // -------------------------
 // Helper: Base64 dekodieren
@@ -315,6 +320,7 @@ async function loadFolders() {
 
         for (const item of items) {
             if (item.type !== "dir") continue;
+            if (!isVisibleNumberedDir(item.name)) continue;
 
             const folderResp = await fetch(item.url, { headers: getGithubHeaders() });
             if (!folderResp.ok) continue;
@@ -351,7 +357,7 @@ async function loadFolders() {
 
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
-                if (!/^\d/.test(sub.name)) continue;
+                if (!isVisibleNumberedDir(sub.name)) continue;
 
                 const subData = await loadReadmeFromFolder(sub.url);
                 if (!subData) continue;

@@ -13,6 +13,10 @@ RAW_BASE_URL = "https://raw.githubusercontent.com/technorama-ssc/you-decide/main
 
 # Bild-Endungen
 IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png')
+EXCLUDED_DIRS = {'00 prototype workshop'}
+
+def is_numbered_visible_dir(name):
+    return re.match(r'^\d', name) and name.lower() not in EXCLUDED_DIRS
 
 def parse_readme(path):
     """Liest eine README.md und gibt Titel und Inhalt zurück."""
@@ -59,7 +63,7 @@ def scan_repository():
     
     for d in dirs:
         # Nur Ordner die mit Ziffern starten (z.B. "00 you decide")
-        if not re.match(r'^\d', d):
+        if not is_numbered_visible_dir(d):
             continue
             
         full_path = os.path.join(ROOT_DIR, d)
@@ -98,7 +102,7 @@ def scan_repository():
         for sd in sub_dirs:
             # Auch Unterordner sollten mit Ziffern starten oder relevant sein? 
             # Im Script war Logic: if (!/^\d/.test(sub.name)) continue;
-            if not re.match(r'^\d', sd):
+            if not is_numbered_visible_dir(sd):
                 continue
 
             sub_full_path = os.path.join(full_path, sd)
@@ -115,7 +119,7 @@ def scan_repository():
             sub_sub_dirs = sorted([ssd for ssd in os.listdir(sub_full_path) if os.path.isdir(os.path.join(sub_full_path, ssd))])
             
             for ssd in sub_sub_dirs:
-                if not re.match(r'^\d', ssd):
+                if not is_numbered_visible_dir(ssd):
                     continue
                 
                 sub_sub_full_path = os.path.join(sub_full_path, ssd)

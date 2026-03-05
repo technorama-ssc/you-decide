@@ -1,3 +1,0 @@
-# Prototype Lab
-
-A prototype Development Lab in the exhibition ...
