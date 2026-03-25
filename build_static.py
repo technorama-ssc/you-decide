@@ -39,13 +39,17 @@ def parse_readme(path):
     return title, content
 
 def find_images(directory):
-    """Findet Bilder im Verzeichnis (nicht rekursiv)."""
+    """Findet Bilder im Verzeichnis (nicht rekursiv). Filtert Bilder, deren Namen mit Ziffern beginnen."""
     images = []
     if not os.path.exists(directory):
         return []
         
     for f in os.listdir(directory):
         if f.lower().endswith(IMAGE_EXTENSIONS):
+            # Skip images that start with numbers
+            if f[0].isdigit():
+                continue
+                
             source_path = os.path.join(directory, f)
             rel_path_from_root = os.path.relpath(source_path, ROOT_DIR)
             rel_path_normalized = rel_path_from_root.replace("\\", "/")
