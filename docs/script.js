@@ -11,6 +11,31 @@ function isVisibleNumberedDir(name) {
 }
 
 // -------------------------
+// Helper: Bildpfade korrigieren
+// -------------------------
+function normalizeImageUrl(url) {
+    if (isLocal) {
+        // Lokal: Konvertiere GitHub URLs zu relativen Pfaden
+        if (url.includes("raw.githubusercontent.com")) {
+            // Extrahiere den Pfad aus der GitHub URL
+            // https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/...
+            const match = url.match(/main\/(.*)/);
+            if (match) {
+                return decodeURIComponent(match[1]);
+            }
+        }
+        // Schon ein relativer Pfad - behalte ihn bei
+        return url;
+    } else {
+        // Production: Konvertiere relative Pfade zu GitHub URLs
+        if (!url.startsWith("http")) {
+            return `https://raw.githubusercontent.com/technorama-ssc/you-decide/main/${url}`;
+        }
+        return url;
+    }
+}
+
+// -------------------------
 // Helper: Base64 dekodieren
 // -------------------------
 function decodeBase64(encoded) {
@@ -148,7 +173,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             if (images && images.length > 0) {
                 images.forEach(imgUrl => {
                     const imgEl = document.createElement("img");
-                    imgEl.src = imgUrl;
+                    imgEl.src = normalizeImageUrl(imgUrl);
                     imgEl.style.maxWidth = "600px";
                     imgEl.style.height = "auto";
 
