@@ -1,7 +1,7 @@
 [
   {
     "title": "YOU DECIDE",
-    "content": "\nAn exhibition on decisions and how to save the World.\n\nThis is the new open-source platform for the \"You Decide\" exhibition.\nAll exhibits are modular. You can download the parts and info here, rebuild them, or improve them.\nThe exhibition — and this website — will keep changing with you and us.\n\nHere you find general information and materials on the exhibition \"You Decide\"\n",
+    "content": "\nAn exhibition on decisions and how to save the World.\n\nThis is the new open-source platform for the “You Decide” exhibition.\nAll exhibits are modular. You can download the parts and info here, rebuild them, or improve them.\nThe exhibition — and this website — will keep changing with you and us.\n\nHere you find general information and materials on the exhibition \"You Decide\"\n",
     "zipFile": {
       "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/00%20you%20decide/content_youdecide_exhibition.zip",
       "name": "content_youdecide_exhibition.zip"
@@ -21,7 +21,7 @@
         "title": "Do not Press",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [
-          "../01 exhibits/000_do not press/youdecide_do-not-push_technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/000_do%20not%20press/youdecide_do-not-push_technorama.jpg"
         ],
         "subsections": [
           {
@@ -31,7 +31,7 @@
           },
           {
             "title": "Libet Experiment",
-            "content": "\nThe brain \"presses the button\" before you believe you have made the decision.\n\nIn the Libet experiment, it was shown that the brain's motor system begins preparing a movement before a person becomes consciously aware that they have decided to execute that movement immediately. The time gap is about 0.35 seconds, and the actual movement then occurs roughly another 0.2 seconds later.\n\n[wikipedia.org/wiki/Libet-Experiment](https://de.wikipedia.org/wiki/Libet-Experiment)\n",
+            "content": "\nThe brain “presses the button” before you believe you have made the decision.\n\nIn the Libet experiment, it was shown that the brain’s motor system begins preparing a movement before a person becomes consciously aware that they have decided to execute that movement immediately. The time gap is about 0.35 seconds, and the actual movement then occurs roughly another 0.2 seconds later.\n\n[wikipedia.org/wiki/Libet-Experiment](https://de.wikipedia.org/wiki/Libet-Experiment)\n",
             "images": []
           }
         ]
@@ -40,7 +40,7 @@
         "title": "The Coin",
         "content": "\nEach week, we place a game coin in a jewelry case. Guests can choose whether to leave the coin or take it with them. If the coin remains until the end of the week, we donate CHF 50 to a charitable project – otherwise, we do not.",
         "images": [
-          "../01 exhibits/023_the coin/youdecide_the-coin_technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/023_the%20coin/youdecide_the-coin_technorama.jpg"
         ],
         "subsections": [
           {
@@ -54,15 +54,9 @@
         "title": "The Circle",
         "content": "\nWork in progress ... <br>\nContent coming soon.\n",
         "images": [
-          "../01 exhibits/033_the circle/youdecide_the-circle_technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/033_the%20circle/youdecide_the-circle_technorama.jpg"
         ],
-        "subsections": [
-          {
-            "title": "Findings",
-            "content": "\n...",
-            "images": []
-          }
-        ]
+        "subsections": []
       }
     ]
   },
