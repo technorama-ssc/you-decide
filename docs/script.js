@@ -275,6 +275,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     });
 
     container.appendChild(wrapper);
+    return wrapper;
 }
 
 // -------------------------
@@ -410,7 +411,10 @@ async function loadFolders() {
                 subfolderImages.push(imgs);
             }
 
-            createAccordion(titleLine, content, zipFile, subHtml, images, subfolderImages);
+            const wrapper = createAccordion(titleLine, content, zipFile, subHtml, images, subfolderImages);
+            if (container.children.length === 1) {
+                wrapper.querySelector('.accordion').click();
+            }
         }
 
     } catch (err) {
@@ -489,7 +493,10 @@ async function loadStaticContent() {
                 }
             }
 
-            createAccordion(title, content, zipFile, subHtml, images, subfolderImages);
+            const wrapper = createAccordion(title, content, zipFile, subHtml, images, subfolderImages);
+            if (container.children.length === 1) {
+                wrapper.querySelector('.accordion').click();
+            }
         }
         return true;
 
