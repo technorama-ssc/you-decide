@@ -145,18 +145,23 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 dl.className = "download-link";
 
                 const textSpan = document.createElement("span");
-                textSpan.textContent = "Download";
+                textSpan.textContent = "Download:";
 
                 const link = document.createElement("a");
                 link.href = zipFile.download_url;
                 link.target = "_blank";
 
-                let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
-                let displayName =
-                    parts.length >= 2
-                        ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
-                        parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
-                        : zipFile.name.replace(/\.zip$/i, "");
+                let displayName;
+                if (zipFile.name.toLowerCase() === "content_youdecide_exhibition.zip") {
+                    displayName = "Exhibition Graphics Kit";
+                } else {
+                    let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
+                    displayName =
+                        parts.length >= 2
+                            ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
+                            parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
+                            : zipFile.name.replace(/\.zip$/i, "");
+                }
 
                 link.textContent = displayName;
 
