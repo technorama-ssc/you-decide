@@ -19,9 +19,9 @@
     "subsections": [
       {
         "title": "Do not Press",
-        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
+        "content": "\nA red button with the words “Do not press.” Behind it is a mechanism that you cannot see, but you can reach it. After pressing, a stuffed toy is destroyed.",
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/000_do%20not%20press/youdecide_do-not-push_technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/000_do%20not%20press/You%20Decide_Do%20not%20press_Technorama.jpg"
         ],
         "subsections": [
           {
@@ -40,7 +40,7 @@
         "title": "The Coin",
         "content": "\nEach week, we place a game coin in a jewelry case. Guests can choose whether to leave the coin or take it with them. If the coin remains until the end of the week, we donate CHF 50 to a charitable project – otherwise, we do not.",
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/023_the%20coin/youdecide_the-coin_technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/023_the%20coin/You%20Decide_The%20Coin_Technorama.jpg"
         ],
         "subsections": [
           {
@@ -52,9 +52,17 @@
       },
       {
         "title": "The Circle",
-        "content": "\nWork in progress ... <br>\nContent coming soon.\n",
+        "content": "\nThe visitors decide together who may enter the circle. Once someone is inside, the rule is:\n\n“No going back – convince another person to enter the circle, then you may leave.”",
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/033_the%20circle/youdecide_the-circle_technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/033_the%20circle/You%20Decide_The%20Circle_Technorama.jpg"
+        ],
+        "subsections": []
+      },
+      {
+        "title": "Bim Bam Bum",
+        "content": "\nA bicycle pump stands in the room. Above it floats a red balloon. The balloon cannot burst. You pump towards a goal that is actually pointless – but you don’t know it.\n\nHow long will you keep pumping?",
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
         ],
         "subsections": []
       }
