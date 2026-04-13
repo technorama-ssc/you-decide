@@ -67,6 +67,30 @@ const getGithubHeaders = () => {
     };
 };
 
+function getDownloadDisplayName(zipFileName) {
+    const lowerName = zipFileName.toLowerCase();
+    if (lowerName === "content_youdecide_exhibition.zip") {
+        return "Exhibition Graphics Kit";
+    }
+    if (lowerName.startsWith("content_")) {
+        return "Exhibit Build Kit";
+    }
+    const parts = zipFileName.replace(/\.zip$/i, "").split("_");
+    return parts.length >= 2
+        ? `${parts[0].charAt(0).toUpperCase() + parts[0].slice(1)} ${parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)}`
+        : zipFileName.replace(/\.zip$/i, "");
+}
+
+function getDownloadHtml(zipFile) {
+    const displayName = getDownloadDisplayName(zipFile.name);
+    return `
+        <div class="download-link">
+            <span>Download:</span>
+            <a href="${zipFile.download_url}" target="_blank">${displayName}</a>
+        </div>
+    `;
+}
+
 // -------------------------
 // Akkordeon erstellen
 // -------------------------
@@ -151,20 +175,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 link.href = zipFile.download_url;
                 link.target = "_blank";
 
-                let displayName;
-                if (zipFile.name.toLowerCase() === "content_youdecide_exhibition.zip") {
-                    displayName = "Exhibition Graphics Kit";
-                } else if (zipFile.name.toLowerCase().startsWith("content_")) {
-                    displayName = "Exhibit Build Kit";
-                } else {
-                    let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
-                    displayName =
-                        parts.length >= 2
-                            ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
-                              parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
-                            : zipFile.name.replace(/\.zip$/i, "");
-                }
-
+                const displayName = getDownloadDisplayName(zipFile.name);
                 link.textContent = displayName;
                 dl.style.marginTop = "1em";
 
@@ -397,11 +408,18 @@ async function loadFolders() {
                 const subData = await loadReadmeFromFolder(sub.url);
                 if (!subData) continue;
 
+                const subFolderResp = await fetch(sub.url, { headers: getGithubHeaders() });
+                const subFolderContent = subFolderResp.ok ? await subFolderResp.json() : [];
+                const subZipFile = Array.isArray(subFolderContent)
+                    ? subFolderContent.find(f => f.name.toLowerCase().endsWith(".zip"))
+                    : null;
+
                 subHtml += `
                     <div class="subfolder-block">
                         <h2 class="subfolder-title">${subData.title}</h2>
                         <div class="subfolder-text">
                             ${marked.parse(subData.content)}
+                            ${subZipFile ? getDownloadHtml(subZipFile) : ""}
                         </div>
                     </div>
                 `;
@@ -461,6 +479,7 @@ async function loadStaticContent() {
                             <h2 class="subfolder-title">${sub.title}</h2>
                             <div class="subfolder-text">
                                 ${marked.parse(sub.content)}
+                                ${sub.zipFile ? getDownloadHtml(sub.zipFile) : ""}
                     `;
                     
                     // Wenn es verschachtelte Subsections gibt (z.B. Libet Experiment unter Do not Press)
@@ -471,6 +490,7 @@ async function loadStaticContent() {
                                     <h2 class="nested-subfolder-title">${subsub.title}</h2>
                                     <div class="nested-subfolder-content">
                                         ${marked.parse(subsub.content)}
+                                        ${subsub.zipFile ? getDownloadHtml(subsub.zipFile) : ""}
                             `;
                             // Bilder von nested subsections
                             if (subsub.images && subsub.images.length > 0) {
