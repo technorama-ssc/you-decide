@@ -122,7 +122,14 @@ def scan_repository():
             sub_subsections = []
             sub_sub_dirs = sorted([ssd for ssd in os.listdir(sub_full_path) if os.path.isdir(os.path.join(sub_full_path, ssd))])
             
+            excluded_subfolders = set()
+            parent_relative = os.path.relpath(sub_full_path, ROOT_DIR).replace("\\", "/")
+            if parent_relative == "01 exhibits/000_do not press":
+                excluded_subfolders = {"00_findings", "01_libet experiment"}
+            
             for ssd in sub_sub_dirs:
+                if ssd in excluded_subfolders:
+                    continue
                 if not is_numbered_visible_dir(ssd):
                     continue
                 

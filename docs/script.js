@@ -383,6 +383,7 @@ async function loadFolders() {
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
                 if (!isVisibleNumberedDir(sub.name)) continue;
+                if (item.name.toLowerCase() === "000_do not press" && ["00_findings", "01_libet experiment"].includes(sub.name)) continue;
 
                 const subData = await loadReadmeFromFolder(sub.url);
                 if (!subData) continue;
