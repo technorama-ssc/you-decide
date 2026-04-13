@@ -118,7 +118,18 @@ def scan_repository():
                 
             sub_images = find_images(sub_full_path)
             
-            # Scan für Unter-Subsections (z.B. 01_libet experiment unter 000_do not press)
+            # ZIP für Unterordner finden
+            sub_zip_file = None
+            for f in os.listdir(sub_full_path):
+                if f.lower().endswith('.zip'):
+                    rel_path_from_root = os.path.relpath(os.path.join(sub_full_path, f), ROOT_DIR)
+                    web_path = RAW_BASE_URL + quote(rel_path_from_root.replace("\\", "/"), safe="/")
+                    
+                    sub_zip_file = {
+                        "download_url": web_path,
+                        "name": f
+                    }
+                    break
             sub_subsections = []
             sub_sub_dirs = sorted([ssd for ssd in os.listdir(sub_full_path) if os.path.isdir(os.path.join(sub_full_path, ssd))])
             
@@ -153,6 +164,7 @@ def scan_repository():
             sub_item = {
                 "title": sub_title,
                 "content": sub_content,
+                "zipFile": sub_zip_file,
                 "images": sub_images,
                 "subsections": sub_subsections
             }
