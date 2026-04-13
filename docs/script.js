@@ -425,7 +425,7 @@ async function loadFolders() {
 async function loadStaticContent() {
     try {
         console.log('📄 Versuche content.json zu laden...');
-        const response = await fetch('content.json');
+        const response = await fetch(`content.json?cb=${Date.now()}`);
 
         if (!response.ok) {
             console.warn('⚠️ content.json nicht gefunden oder Fehler:', response.status);

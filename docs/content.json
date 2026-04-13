@@ -1,7 +1,7 @@
 [
   {
     "title": "YOU DECIDE",
-    "content": "\nAn exhibition on decisions and how to save the World.\n\nThis is the new open-source platform for the “You Decide” exhibition.\nAll exhibits are modular. You can download the parts and info here, rebuild them, or improve them.\nThe exhibition — and this website — will keep changing with you and us.\n\nHere you find general information and materials on the exhibition \"You Decide\"\n",
+    "content": "\nAn exhibition about decisions—and how to save the world.\n\nWith over 20,000 decisions a day, we shape our future. Left or right, bike or bus, red or green gummy bear – do you know how you decide? In “You Decide”, you can experience yourself making decisions. How do you make decisions? What influences you? When do you take mental shortcuts?\n\nThis is the open-source platform for the “You Decide” exhibition. The exhibition—and this website—will never be finished—they keep changing with you.",
     "zipFile": {
       "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/00%20you%20decide/content_youdecide_exhibition.zip",
       "name": "content_youdecide_exhibition.zip"
@@ -13,7 +13,7 @@
   },
   {
     "title": "EXHIBITS",
-    "content": "\nHere you'll find information and materials for each exhibit. All exhibits are modular. You can download the parts and info here, rebuild them, or improve them.",
+    "content": "\nWe continuously develop new ideas. In our exhibition, we test prototypes and keep improving them. You are our test subject: How do you make decisions?\n\nHere we present a selection of our most advanced exhibits. You can download the parts and information for each exhibit here, rebuild them, or improve them.",
     "zipFile": null,
     "images": [],
     "subsections": [
@@ -59,7 +59,7 @@
   },
   {
     "title": "SYSTEM",
-    "content": "\nHere you find the information and materials on the construciton system used througout the exhibition.\n",
+    "content": "\nAll exhibits are based on a modular system. We have developed a range of connection solutions for 3D printing. The system is also compatible with the ITEM D30 system and can be expanded.\n\nHere you can find information and materials about the construction system used throughout the exhibition.",
     "zipFile": {
       "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/content_youdecide_system.zip",
       "name": "content_youdecide_system.zip"
@@ -78,9 +78,9 @@
       },
       {
         "title": "CONNECTORS",
-        "content": "\nMain connector printet with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
+        "content": "\nMain connector printed with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/01%20connectors/youdecide_plate%20connector.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/01%20connectors/You%20Decide_Main%20Connector_Technorama.jpg"
         ],
         "subsections": []
       }
