@@ -154,15 +154,14 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 let displayName;
                 if (zipFile.name.toLowerCase() === "content_youdecide_exhibition.zip") {
                     displayName = "Exhibition Graphics Kit";
+                } else if (zipFile.name.toLowerCase().startsWith("content_")) {
+                    displayName = "Exhibit Build Kit";
                 } else {
                     let parts = zipFile.name.replace(/\.zip$/i, "").split("_");
                     displayName =
                         parts.length >= 2
                             ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
                             parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
-                            : zipFile.name.replace(/\.zip$/i, "");
-                }
-
                 link.textContent = displayName;
 
                 dl.appendChild(textSpan);
