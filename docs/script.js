@@ -161,8 +161,12 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                     displayName =
                         parts.length >= 2
                             ? parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + " " +
-                            parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
+                              parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)
+                            : zipFile.name.replace(/\.zip$/i, "");
+                }
+
                 link.textContent = displayName;
+                dl.style.marginTop = "1em";
 
                 dl.appendChild(textSpan);
                 dl.appendChild(link);
