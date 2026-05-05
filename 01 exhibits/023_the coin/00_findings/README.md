@@ -1,6 +1,6 @@
 # Findings
 
-- The play coin never remains in the box until the end of the week.
-- As soon as the play coin is gone, visitors place their own real coins into the casket.
-- We remove these coins each time; however, new ones are continually placed inside.
-- Some visitors even hide coins under the padding in the case.
+- The game coin usually is taken before the week is over.
+- When the game coin is gone, a visitor will donate a real coin by placing it in the box.
+- We collect the real coins for a charitable donation.
+- We have discovered that whenever there is an empty box, visitors will again donate a real coin, some even hiding the coins under the velvet pad of the box.
