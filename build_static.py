@@ -18,6 +18,11 @@ EXCLUDED_DIRS = {'00 prototype workshop'}
 def is_numbered_visible_dir(name):
     return re.match(r'^\d', name) and name.lower() not in EXCLUDED_DIRS
 
+
+def is_three_digit_dir(name):
+    """Returns True if the folder name starts with three digits."""
+    return re.match(r'^\d{3}', name) is not None
+
 def parse_readme(path):
     """Liest eine README.md und gibt Titel und Inhalt zurück."""
     if not os.path.exists(path):
@@ -104,10 +109,14 @@ def scan_repository():
         subfolders_html = ""
         
         for sd in sub_dirs:
-            # Auch Unterordner sollten mit Ziffern starten oder relevant sein? 
-            # Im Script war Logic: if (!/^\d/.test(sub.name)) continue;
-            if not is_numbered_visible_dir(sd):
-                continue
+            # Unterordner-Regel: In "01 exhibits" nur dreistellige Ordner veröffentlichen
+            if d.lower() == "01 exhibits":
+                if not is_three_digit_dir(sd):
+                    continue
+            else:
+                # Für andere Kategorien weiterhin die alte Regel verwenden
+                if not is_numbered_visible_dir(sd):
+                    continue
 
             sub_full_path = os.path.join(full_path, sd)
             sub_readme = os.path.join(sub_full_path, "README.md")

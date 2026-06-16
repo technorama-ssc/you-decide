@@ -402,7 +402,12 @@ async function loadFolders() {
 
             for (const sub of folderContent) {
                 if (sub.type !== "dir") continue;
-                if (!isVisibleNumberedDir(sub.name)) continue;
+                // In the EXHIBITS folder only publish three-digit numbered subfolders
+                if (item.name.toLowerCase() === "01 exhibits") {
+                    if (!/^\d{3}/.test(sub.name)) continue;
+                } else {
+                    if (!isVisibleNumberedDir(sub.name)) continue;
+                }
                 if (item.name.toLowerCase() === "000_do not press" && ["00_findings", "01_libet experiment"].includes(sub.name)) continue;
 
                 const subData = await loadReadmeFromFolder(sub.url);
