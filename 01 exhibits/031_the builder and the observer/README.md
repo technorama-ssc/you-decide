@@ -1,5 +1,3 @@
-# Ball in a box
+﻿# the builder and the observer
 
-This is a game about deception for two players. Two boxes are placed on a table. One box contains a ball; the other is empty.
-The objective is to identify the box containing the ball. However, only one player is allowed to look inside a box, while the other player can decide whether to keep their box or exchange it with the other player's box.
-The winner earns the right to assign a punishment to the loser.
+Wooden blocks are placed on a table so that visitors can build a tower. A rope is attached to the table, runs along the ceiling, and then hangs down approximately four meters away. Pulling the rope downward lifts the table, causing the structure built on it to collapse.

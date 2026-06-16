@@ -1,5 +1,6 @@
 ﻿# Findings
 
-- Visitors are willing to lie regardless of their age.
-- Not all visitors read the instructions before looking inside the box.
-- Male teenagers often assign physical punishments, such as running laps or doing push-ups.
+- Visitors often build a tower and then deliberately make it collapse by pulling the rope. 
+- Younger visitors particularly enjoy destroying towers. regardless of whether they were built by strangers or by family members.
+- Visitors pull the rope even when no tower has been built. 
+- Many visitors pull the rope directly from the table. 
