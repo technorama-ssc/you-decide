@@ -34,6 +34,10 @@ def parse_readme(path):
     if not lines:
         return None, None
 
+    # Remove UTF-8 BOM if present on first line so headings are detected correctly
+    if lines and lines[0].startswith('\ufeff'):
+        lines[0] = lines[0].lstrip('\ufeff')
+
     title = "KEIN TITEL"
     if lines[0].startswith('#'):
         title = lines[0].strip('#').strip()
