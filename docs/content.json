@@ -13,7 +13,7 @@
   },
   {
     "title": "EXHIBITS",
-    "content": "\nWe continuously develop new ideas. In our exhibition, we test prototypes and keep improving them. You are our test subject: How do you make decisions?\n\nHere we present a selection of our most advanced exhibits. You can download the parts and information for each exhibit here, rebuild them, or improve them.",
+    "content": "\nWe continuously develop new ideas. In our exhibition, we test prototypes and keep improving them. Technorama guests are the test subjects. We want to prompt the question \"How do I make decisions?\"\n\nHere we present a selection of our most advanced exhibits. You can download the parts lists and information for each exhibit here, rebuild them, or improve them.",
     "zipFile": null,
     "images": [],
     "subsections": [
@@ -30,6 +30,13 @@
         "subsections": []
       },
       {
+        "title": "Who's First On Top",
+        "content": "\nInformation to follow...",
+        "zipFile": null,
+        "images": [],
+        "subsections": []
+      },
+      {
         "title": "The Coin",
         "content": "\nEach week, we place a game coin in a jewelry case. Guests can choose whether to leave the coin or take it with them. If the coin remains until the end of the week, we donate CHF 50 to a charitable project – otherwise, we do not.",
         "zipFile": {
@@ -42,7 +49,7 @@
         "subsections": [
           {
             "title": "Findings",
-            "content": "\n- The play coin never remains in the box until the end of the week.\n- As soon as the play coin is gone, visitors place their own real coins into the casket.\n- We remove these coins each time; however, new ones are continually placed inside.\n- Some visitors even hide coins under the padding in the case.",
+            "content": "\n- The game coin usually is taken before the week is over.\n- When the game coin is gone, a visitor will donate a real coin by placing it in the box.\n- We collect the real coins for a charitable donation.\n- We have discovered that whenever there is an empty box, visitors will again donate a real coin, some even hiding the coins under the velvet pad of the box.",
             "images": []
           }
         ]
