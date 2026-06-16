@@ -55,6 +55,32 @@
         ]
       },
       {
+        "title": "Ball in a box",
+        "content": "\nThis is a game about deception for two players. Two boxes are placed on a table. One box contains a ball; the other is empty.\nThe objective is to identify the box containing the ball. However, only one player is allowed to look inside a box, while the other player can decide whether to keep their box or exchange it with the other player's box.\nThe winner earns the right to assign a punishment to the loser.",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Visitors are willing to lie regardless of their age.\n- Not all visitors read the instructions before looking inside the box.\n- Male teenagers often assign physical punishments, such as running laps or doing push-ups.\n",
+            "images": []
+          }
+        ]
+      },
+      {
+        "title": "Ball in a box",
+        "content": "\nThis is a game about deception for two players. Two boxes are placed on a table. One box contains a ball; the other is empty.\nThe objective is to identify the box containing the ball. However, only one player is allowed to look inside a box, while the other player can decide whether to keep their box or exchange it with the other player's box.\nThe winner earns the right to assign a punishment to the loser.",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Visitors are willing to lie regardless of their age.\n- Not all visitors read the instructions before looking inside the box.\n- Male teenagers often assign physical punishments, such as running laps or doing push-ups.\n",
+            "images": []
+          }
+        ]
+      },
+      {
         "title": "The Circle",
         "content": "\nThe visitors decide together who may enter the circle. Once someone is inside, the rule is:\n\n“No going back – convince another person to enter the circle, then you may leave.”",
         "zipFile": {
@@ -74,9 +100,22 @@
           "name": "content_you decide_041_Bim Bam Bum.zip"
         },
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_bim%20bam%20bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
         ],
         "subsections": []
+      },
+      {
+        "title": "Ball in a box",
+        "content": "\nThis is a game about deception for two players. Two boxes are placed on a table. One box contains a ball; the other is empty.\nThe objective is to identify the box containing the ball. However, only one player is allowed to look inside a box, while the other player can decide whether to keep their box or exchange it with the other player's box.\nThe winner earns the right to assign a punishment to the loser.",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Visitors are willing to lie regardless of their age.\n- Not all visitors read the instructions before looking inside the box.\n- Male teenagers often assign physical punishments, such as running laps or doing push-ups.\n",
+            "images": []
+          }
+        ]
       },
       {
         "title": "Ball in a box",
