@@ -19,9 +19,13 @@ function normalizeImageUrl(url) {
         if (url.includes("raw.githubusercontent.com")) {
             // Extrahiere den Pfad aus der GitHub URL
             // https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/...
+            // Wenn die Seite aus dem `docs`-Ordner serviert wird, liegt das Repo-Root eine Ebene darüber,
+            // daher prefixed mit "../" damit der relative Pfad korrekt aufgelöst wird.
             const match = url.match(/main\/(.*)/);
             if (match) {
-                return decodeURIComponent(match[1]);
+                // decode then re-encode to ensure spaces and special chars are percent-encoded
+                const decoded = decodeURIComponent(match[1]);
+                return "../" + encodeURI(decoded);
             }
         }
         // Schon ein relativer Pfad - behalte ihn bei
@@ -266,7 +270,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             
                             imgs.forEach(url => {
                                 const imgEl = document.createElement("img");
-                                imgEl.src = url;
+                                imgEl.src = normalizeImageUrl(url);
                                 imgEl.style.maxWidth = "600px";
                                 imgEl.style.height = "auto";
                                 
@@ -500,7 +504,7 @@ async function loadStaticContent() {
                             // Bilder von nested subsections
                             if (subsub.images && subsub.images.length > 0) {
                                 subsub.images.forEach(imgUrl => {
-                                    subHtml += `<img src="${imgUrl}" style="max-width:600px;height:auto;" class="nested-subfolder-img">`;
+                                    subHtml += `<img src="${normalizeImageUrl(imgUrl)}" style="max-width:600px;height:auto;" class="nested-subfolder-img">`;
                                 });
                             }
                             subHtml += `
