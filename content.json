@@ -1,0 +1,173 @@
+[
+  {
+    "title": "YOU DECIDE",
+    "content": "\nAn exhibition about decisions—and how to save the world.\n\nWith over 20,000 decisions a day, we shape our future. Left or right, bike or bus, red or green gummy bear – do you know how you decide? In “You Decide”, you can experience yourself making decisions. How do you make decisions? What influences you? When do you take mental shortcuts?\n\nThis is the open-source platform for the “You Decide” exhibition. The exhibition—and this website—will never be finished—they keep changing with you.",
+    "zipFile": {
+      "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/00%20you%20decide/content_youdecide_exhibition.zip",
+      "name": "content_youdecide_exhibition.zip"
+    },
+    "images": [
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/00%20you%20decide/youdecide_yes%20or%20no.jpg"
+    ],
+    "subsections": []
+  },
+  {
+    "title": "EXHIBITS",
+    "content": "\nWe continuously develop new ideas. In our exhibition, we test prototypes and keep improving them. Technorama guests are the test subjects. We want to prompt the question \"How do I make decisions?\"\n\nHere we present a selection of our most advanced exhibits. You can download the parts lists and information for each exhibit here, rebuild them, or improve them.",
+    "zipFile": null,
+    "images": [],
+    "subsections": [
+      {
+        "title": "Do not Press",
+        "content": "\nA red button with the words “Do not press.” Behind it is a mechanism that you cannot see, but you can reach it. After pressing, a stuffed toy is destroyed.",
+        "zipFile": {
+          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/000_do%20not%20press/content_you%20decide_000_do%20not%20press.zip",
+          "name": "content_you decide_000_do not press.zip"
+        },
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/000_do%20not%20press/You%20Decide_Do%20not%20press_Technorama.jpg"
+        ],
+        "subsections": []
+      },
+      {
+        "title": "Who's First On Top",
+        "content": "\nInformation to follow...",
+        "zipFile": null,
+        "images": [],
+        "subsections": []
+      },
+      {
+        "title": "The Coin",
+        "content": "\nEach week, we place a game coin in a jewelry case. Guests can choose whether to leave the coin or take it with them. If the coin remains until the end of the week, we donate CHF 50 to a charitable project – otherwise, we do not.",
+        "zipFile": {
+          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/023_the%20coin/content_you%20decide_023_the%20coin.zip",
+          "name": "content_you decide_023_the coin.zip"
+        },
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/023_the%20coin/You%20Decide_The%20Coin_Technorama.jpg"
+        ],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- The game coin usually is taken before the week is over.\n- When the game coin is gone, a visitor will donate a real coin by placing it in the box.\n- We collect the real coins for a charitable donation.\n- We have discovered that whenever there is an empty box, visitors will again donate a real coin, some even hiding the coins under the velvet pad of the box.",
+            "images": []
+          }
+        ]
+      },
+      {
+        "title": "the tower",
+        "content": "\nOn a table there are wooden cubes with magnets and screws. At the four corners there are supports with cords that allow 4 players to cooperate in building a tower.\n",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Visitors enjoy playing and cooperate to build a tower.\n- It can be frustrating when the cubes fall.\n",
+            "images": []
+          }
+        ]
+      },
+      {
+        "title": "the builder and the observer",
+        "content": "\nWooden blocks are placed on a table so that visitors can build a tower. A rope is attached to the table, runs along the ceiling, and then hangs down approximately four meters away. Pulling the rope downward lifts the table, causing the structure built on it to collapse.\n",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Visitors often build a tower and then deliberately make it collapse by pulling the rope. \n- Younger visitors particularly enjoy destroying towers. regardless of whether they were built by strangers or by family members.\n- Visitors pull the rope even when no tower has been built. \n- Many visitors pull the rope directly from the table. \n",
+            "images": []
+          }
+        ]
+      },
+      {
+        "title": "The Circle",
+        "content": "\nThe visitors decide together who may enter the circle. Once someone is inside, the rule is:\n\n“No going back – convince another person to enter the circle, then you may leave.”",
+        "zipFile": {
+          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/033_the%20circle/content_you%20decide_033_the%20circle.zip",
+          "name": "content_you decide_033_the circle.zip"
+        },
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/033_the%20circle/You%20Decide_The%20Circle_Technorama.jpg"
+        ],
+        "subsections": []
+      },
+      {
+        "title": "Bim Bam Bum",
+        "content": "\nA bicycle pump stands in the room. Above it floats a red balloon. The balloon cannot burst. You pump towards a goal that is actually pointless – but you don’t know it.\n\nHow long will you keep pumping?",
+        "zipFile": {
+          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/content_you%20decide_041_Bim%20Bam%20Bum.zip",
+          "name": "content_you decide_041_Bim Bam Bum.zip"
+        },
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
+        ],
+        "subsections": []
+      },
+      {
+        "title": "Ball in a box",
+        "content": "\nThis is a game about deception for two players. Two boxes are placed on a table. One box contains a ball; the other is empty.\nThe objective is to identify the box containing the ball. However, only one player is allowed to look inside a box, while the other player can decide whether to keep their box or exchange it with the other player's box.\nThe winner earns the right to assign a punishment to the loser.",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Visitors are willing to lie regardless of their age.\n- Not all visitors read the instructions before looking inside the box.\n- Male teenagers often assign physical punishments, such as running laps or doing push-ups.\n",
+            "images": []
+          }
+        ]
+      },
+      {
+        "title": "know yourself",
+        "content": "\nA vertical mirror, approximately 50 cm high and 90 cm wide, is placed on the floor against a wall. In front of it, a 5 CHF coin is glued to the floor.\nWhen visitors bend down to pick up the coin, they realize that it is fixed in place and unexpectedly find themselves looking at their own reflection in the mirror.\n",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Many visitors see the mirror before noticing the coin. \n- Visitors often smile or laugh when they realize the coin is glued to the floor. \n- Some visitors make repeated attempts to pick up the coin despite realizing it is fixed.\n",
+            "images": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "title": "SYSTEM",
+    "content": "\nAll exhibits are based on a modular system. We have developed a range of connection solutions for 3D printing. The system is also compatible with the ITEM D30 system and can be expanded.\n\nHere you can find information and materials about the construction system used throughout the exhibition.",
+    "zipFile": {
+      "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/content_youdecide_system.zip",
+      "name": "content_youdecide_system.zip"
+    },
+    "images": [
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_me%20and%20you.jpg"
+    ],
+    "subsections": [
+      {
+        "title": "GRID",
+        "content": "\nThe grid system is based on a modular design with a 157 mm grid and a 9 mm margin. The system panels are milled from 19 mm pine and feature Ø30 mm grid holes. They are compatible with the item D30 system for expansion.\n",
+        "zipFile": null,
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/00%20grid%20system/youdecide_grid.jpg"
+        ],
+        "subsections": []
+      },
+      {
+        "title": "CONNECTORS",
+        "content": "\nMain connector printed with: [Bambu Lab X1](https://eu.store.bambulab.com/de/products/pla-cf?id=43944001994971) <br> \nINOX screw M6x35 mm available at: [Bossard](https://www.bossard.com/eshop/ch-de/schrauben/schrauben-mit-innenantrieb/senkschrauben-mit-innensechskant-ohne-schaft/p/2104/) <br> \nM6 cross dowels type Q ⌀10x14 mm available at: [Rampa](https://www.rampa.com/eu/de/Onlineshop/Produkte/Quergewindebolzen/?etcc_med=SEA&etcc_par=GoogleAds&etcc_cmp=ET-DSA%20%28%2Feu%2Fde%2F%29&etcc_grp=167116995070&etcc_bky=&etcc_mty=&etcc_plc=&etcc_ctv=701647771396&etcc_bde=c&etcc_var=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE&gad_source=1&gad_campaignid=21361975325&gclid=EAIaIQobChMI0Mzsj4HVjQMVoa-DBx3n9whuEAAYASAAEgL7gfD_BwE)\n",
+        "zipFile": null,
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/01%20connectors/You%20Decide_Main%20Connector_Technorama.jpg"
+        ],
+        "subsections": []
+      }
+    ]
+  },
+  {
+    "title": "Licencing",
+    "content": "\nAll Information and Materials are provided under the following licencses:\n\nMedia, Labels and Fonts [Creative Commons](https://creativecommons.org/licenses/by/4.0/) <br>\nSoftware [MIT License](https://opensource.org/license/mit) <br>\nHardware [CERN Open Hardware Licence](https://cern-ohl.web.cern.ch/) <br>\nMade by [Technorama](https://www.technorama.ch) <br>\n",
+    "zipFile": null,
+    "images": [],
+    "subsections": []
+  }
+]

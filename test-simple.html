@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+    <style>
+        body {
+            background: white;
+            color: black;
+            font-family: monospace;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test 1: HTML funktioniert</h1>
+    <div id="test"></div>
+
+    <script>
+        document.getElementById('test').innerHTML = '<p style="color: green; font-size: 24px;">✓ JavaScript funktioniert!</p>';
+
+        // Test config.js
+        const script = document.createElement('script');
+        script.src = 'config.js';
+        script.onload = () => {
+            const div = document.createElement('div');
+            div.innerHTML = '<p style="color: blue; font-size: 20px;">✓ config.js geladen. Token-Länge: ' +
+                (typeof GITHUB_TOKEN !== 'undefined' ? GITHUB_TOKEN.length : 'NICHT DEFINIERT') + '</p>';
+            document.body.appendChild(div);
+        };
+        script.onerror = () => {
+            const div = document.createElement('div');
+            div.innerHTML = '<p style="color: red; font-size: 20px;">✗ config.js FEHLER beim Laden</p>';
+            document.body.appendChild(div);
+        };
+        document.head.appendChild(script);
+    </script>
+</body>
+
+</html>

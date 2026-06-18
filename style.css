@@ -1,0 +1,308 @@
+/* =============================
+   Grundlayout / Startseite
+============================= */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    font-family: 'RobotoMono', monospace;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+/* =============================
+   Akkordeon Wrapper
+============================= */
+.accordion-wrapper {
+    width: 100%;
+    transition: background-color 0.3s;
+    padding: 60px 0;
+    box-sizing: border-box;
+    background-color: transparent;
+    /* Startseite: schwarz */
+}
+
+/* EXHIBITS: kein extra Gelb unten, wenn offen */
+.accordion-wrapper.exhibits.open {
+    padding-bottom: 0;
+}
+
+/* =============================
+   Haupttitel
+============================= */
+.accordion {
+    font-family: 'RobotoMono', monospace;
+    font-size: 80px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #666666;
+    /* graue Titel */
+    transition: color 0.3s, background-color 0.3s;
+    margin: 0;
+    padding: 0 62px;
+}
+
+/* Hover: ganzer Block gelb, Titel bleibt schwarz */
+.accordion-wrapper:hover {
+    background-color: #eaff00;
+}
+
+.accordion-wrapper:hover .accordion {
+    color: #000000;
+}
+
+/* =============================
+   Panel / Text
+============================= */
+.panel {
+    display: none;
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #000000;
+    background-color: #eaff00;
+    /* gelber Hintergrund (Standard) */
+    margin: 10px 0 0 0;
+    padding: 20px 0 20px 0;
+}
+
+/* EXHIBITS: Panel transparent, Hintergrund kommt vom Wrapper */
+.exhibits .panel {
+    background-color: transparent;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* Panel-Content bündig zum Titel */
+.panel .panel-content {
+    max-width: 800px;
+    margin-left: 0;
+    padding-left: 62px;
+    padding-right: 62px;
+}
+
+/* EXHIBITS: Keine max-width für volle Breite */
+.exhibits .panel .panel-content {
+    max-width: none;
+}
+
+/* EXHIBITS: Haupt-Lauftext wie andere Sektionen begrenzen */
+.exhibits-intro {
+    max-width: 800px;
+    margin-bottom: 60px;
+}
+
+/* Lauftext */
+.panel p,
+.panel li,
+.panel a {
+    color: inherit;
+}
+
+/* Bilder */
+.panel img {
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin: 40px 0 0 0;
+}
+
+/* Links */
+.panel a {
+    color: #000000;
+    text-decoration: underline;
+}
+
+.panel a:hover {
+    color: #333333;
+}
+
+/* Download-Link */
+.download-link {
+    display: block;
+    margin-top: 20px;
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+}
+
+.download-link span {
+    font-weight: normal !important;
+    margin-right: 5px;
+}
+
+.download-link a {
+    text-decoration: underline;
+    color: #000000;
+}
+
+.download-link a:hover {
+    color: #333333;
+}
+
+/* =============================
+   Unterordner-Titel & Linien
+============================= */
+.subfolder-block {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #000000;
+
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin: 0;
+}
+
+/* Erste Linie nicht anzeigen */
+.subfolder-block:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* Abstand Lauftext Hauptordner → erste Linie */
+.panel-content>.subfolder-block:first-of-type {
+    margin-top: 60px;
+}
+
+/* Unterordner Block */
+.subfolder-block {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #000000;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin: 0;
+}
+
+/* EXHIBITS: Unterordner Block grau ueber volle Breite */
+.exhibits .subfolder-block {
+    background-color: #666666;
+    color: #000000;
+    margin-left: -62px;
+    margin-right: -62px;
+    padding-left: 62px;
+    padding-right: 62px;
+    width: calc(100% + 124px);
+}
+
+/* EXHIBITS: Unterordner Block Hover = gelb ueber volle Breite */
+.exhibits .subfolder-block:hover {
+    background-color: #eaff00;
+    color: #000000;
+}
+
+/* EXHIBITS: Geoeffneter Unterordner bleibt gelb, ohne Hover-Wechsel */
+.exhibits .subfolder-block.open {
+    background-color: #eaff00;
+    color: #000000;
+}
+
+.exhibits .subfolder-block.open:hover {
+    background-color: #eaff00;
+    color: #000000;
+}
+
+/* EXHIBITS: Links im Unterordner schwarz */
+.exhibits .subfolder-block a {
+    color: #000000;
+}
+
+.exhibits .subfolder-block.open a {
+    color: #000000;
+}
+
+/* EXHIBITS: Letzter Unterordner Block geöffnet - kein extra Balken */
+.exhibits .subfolder-block.open:last-child {
+    margin-bottom: 0;
+    padding-bottom: 60px;
+}
+
+/* Erste Linie nicht anzeigen */
+.subfolder-block:first-child {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* Unterordner-Titel */
+.subfolder-title {
+    font-family: 'RobotoMono', monospace;
+    font-size: 80px;
+    text-transform: uppercase;
+    margin: 0 0 20px -5px;
+    color: #000000;
+    /* Standard: schwarz */
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+/* EXHIBITS: Unterordner-Titel schwarz */
+.exhibits .subfolder-title {
+    color: #000000;
+}
+
+/* EXHIBITS: Geoeffneter Titel bleibt schwarz */
+.exhibits .subfolder-block.open .subfolder-title {
+    color: #000000;
+}
+
+
+/* Unterordner-Text */
+.subfolder-text {
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+    display: block;
+    max-width: 800px;
+    /* Standard: sichtbar */
+}
+
+/* EXHIBITS: Unterordner-Text versteckt, Bilder versteckt */
+.exhibits .subfolder-text {
+    display: none;
+    color: #000000;
+}
+
+.exhibits .subfolder-block.open .subfolder-text {
+    display: block;
+    color: #000000;
+}
+
+.exhibits .subfolder-block img {
+    display: none;
+}
+
+/* =============================
+   Nested Subfolder - Innerhalb von subfolder-text
+============================= */
+.nested-subfolder-block {
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid #000000;
+}
+
+.nested-subfolder-title {
+    font-family: 'RobotoMono', monospace;
+    font-size: 80px;
+    text-transform: uppercase;
+    margin: 0 0 20px -5px;
+    color: #000000;
+    cursor: default;
+    /* Nicht klickbar */
+    display: block;
+}
+
+.nested-subfolder-content {
+    font-family: 'RobotoMono', monospace;
+    font-size: 16px;
+    margin: 0;
+    max-width: 800px;
+    display: block;
+}
+
+.nested-subfolder-img {
+    display: block;
+    margin: 20px 0;
+}
+
+
