@@ -96,23 +96,23 @@
         "title": "Bim Bam Bum",
         "content": "\nA bicycle pump stands in the room. Above it floats a red balloon. The balloon cannot burst. You pump towards a goal that is actually pointless – but you don’t know it.\n\nHow long will you keep pumping?",
         "zipFile": {
-          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/content_you%20decide_041_Bim%20Bam%20Bum.zip",
+          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_bim%20bam%20bum/content_you%20decide_041_Bim%20Bam%20Bum.zip",
           "name": "content_you decide_041_Bim Bam Bum.zip"
         },
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_bim%20bam%20bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
         ],
         "subsections": []
       },
       {
-        "title": "yesterday, today, tomorrow",
-        "content": "\nThe exhibition features a large Post-it wall titled \"Share Your Decisions: Yesterday, Today, Tomorrow.\" Visitors are invited to write down three decisions: one they made yesterday, one they made today, and one they think they will make tomorrow.\n\nAs the wall fills up, it reveals the wide range of decisions people make across different moments in time.\n",
+        "title": "know yourself",
+        "content": "\nA vertical mirror, approximately 50 cm high and 90 cm wide, is placed on the floor against a wall. In front of it, a 5 CHF coin is glued to the floor.\nWhen visitors bend down to pick up the coin, they realize that it is fixed in place and unexpectedly find themselves looking at their own reflection in the mirror.\n",
         "zipFile": null,
         "images": [],
         "subsections": [
           {
             "title": "Findings",
-            "content": "\n- Visitors contribute a wide variety of decisions.\n- The wall displays temporal differences in choices (past vs. present vs. future).\n",
+            "content": "\n- Many visitors see the mirror before noticing the coin. \n- Visitors often smile or laugh when they realize the coin is glued to the floor. \n- Some visitors make repeated attempts to pick up the coin despite realizing it is fixed.\n",
             "images": []
           }
         ]
