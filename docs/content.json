@@ -105,6 +105,19 @@
         "subsections": []
       },
       {
+        "title": "yesterday, today, tomorrow",
+        "content": "\nThe exhibition features a large Post-it wall titled \"Share Your Decisions: Yesterday, Today, Tomorrow.\" Visitors are invited to write down three decisions: one they made yesterday, one they made today, and one they think they will make tomorrow.\n\nAs the wall fills up, it reveals the wide range of decisions people make across different moments in time.\n",
+        "zipFile": null,
+        "images": [],
+        "subsections": [
+          {
+            "title": "Findings",
+            "content": "\n- Visitors contribute a wide variety of decisions.\n- The wall displays temporal differences in choices (past vs. present vs. future).\n",
+            "images": []
+          }
+        ]
+      },
+      {
         "title": "Ball in a box",
         "content": "\nThis is a game about deception for two players. Two boxes are placed on a table. One box contains a ball; the other is empty.\nThe objective is to identify the box containing the ball. However, only one player is allowed to look inside a box, while the other player can decide whether to keep their box or exchange it with the other player's box.\nThe winner earns the right to assign a punishment to the loser.",
         "zipFile": null,
