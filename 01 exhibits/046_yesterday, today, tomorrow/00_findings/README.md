@@ -1,5 +1,5 @@
-﻿# Findings
+# Findings
 
-- Many visitors see the mirror before noticing the coin. 
-- Visitors often smile or laugh when they realize the coin is glued to the floor. 
-- Some visitors make repeated attempts to pick up the coin despite realizing it is fixed.
+- People tend to think about the future more in terms of desired outcomes than concrete decisions.
+- The further into the future they project themselves, the less they describe decisions and the more they express wishes.
+- Past = Memory / Present = Action / Future = Desire
