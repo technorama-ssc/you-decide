@@ -253,61 +253,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             }
                         }
 
-                        // Wenn ein GitHub-Token vorhanden ist, versuche die Stats als Datei ins Repo zu schreiben
-                        async function pushStatsToGitHub(name, stats, imageUrl) {
-                            try {
-                                if (isLocal) return false;
-                                if (typeof GITHUB_TOKEN === 'undefined') return false;
-
-                                // Versuche den relativen Pfad des Bildes im Repo zu ermitteln
-                                // raw.githubusercontent.com/.../main/<path>
-                                let relPath = null;
-                                try {
-                                    const m = normalizeImageUrl(imageUrl).match(/main\/(.*)$/);
-                                    if (m && m[1]) relPath = decodeURIComponent(m[1]);
-                                } catch (e) {
-                                    // ignore
-                                }
-
-                                // Falls kein Pfad, lege die Datei im Repo-Root an
-                                const statsFileName = `${name.replace(/\.[^.]+$/, '')}.stats.json`;
-                                const statsPath = relPath ? `${relPath.replace(/\/g, '/').replace(/\/[^/]*$/, '')}/${statsFileName}` : statsFileName;
-
-                                const apiUrl = repoBase + encodeURI(statsPath);
-
-                                // Prüfe, ob Datei bereits existiert, um sha zu bekommen
-                                let sha = null;
-                                const headResp = await fetch(apiUrl, { headers: getGithubHeaders() });
-                                if (headResp.ok) {
-                                    const data = await headResp.json();
-                                    if (data && data.sha) sha = data.sha;
-                                }
-
-                                const content = btoa(unescape(encodeURIComponent(JSON.stringify(stats))));
-                                const body = {
-                                    message: `Update stats for ${statsFileName}`,
-                                    content: content
-                                };
-                                if (sha) body.sha = sha;
-
-                                const putResp = await fetch(apiUrl, {
-                                    method: 'PUT',
-                                    headers: Object.assign({}, getGithubHeaders(), { 'Content-Type': 'application/json' }),
-                                    body: JSON.stringify(body)
-                                });
-
-                                if (!putResp.ok) {
-                                    const txt = await putResp.text();
-                                    console.warn('GitHub push failed', putResp.status, txt);
-                                    return false;
-                                }
-                                return true;
-                            } catch (e) {
-                                console.warn('pushStatsToGitHub error', e);
-                                return false;
-                            }
-                        }
-
                         function renderStats(wrapper, stats) {
                             let statsEl = wrapper.querySelector('.two-side-stats');
                             const total = (stats.yes || 0) + (stats.no || 0);
