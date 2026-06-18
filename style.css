@@ -305,4 +305,52 @@ body {
     margin: 20px 0;
 }
 
+/* =============================
+   Zwei-Seiten Bild (You Decide)
+   Linke Hälfte = YES, Rechte Hälfte = NO
+   einmaliges Klicken
+============================= */
+.two-side-image {
+    position: relative;
+    display: inline-block;
+    margin: 40px 0 0 0;
+}
+.two-side-image .two-side-main-img {
+    display: block;
+    max-width: 600px;
+    height: auto;
+}
+.two-side-image .two-side-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    cursor: pointer;
+}
+.two-side-image .two-side-overlay.left { left: 0; }
+.two-side-image .two-side-overlay.right { right: 0; }
+.two-side-image .two-side-overlay:hover {
+    background: rgba(0,0,0,0.12);
+}
+.two-side-image .two-side-label {
+    position: absolute;
+    top: 8px;
+    font-family: 'RobotoMono', monospace;
+    font-size: 18px;
+    padding: 6px 10px;
+    color: #000;
+    background: rgba(255,255,255,0.8);
+    border-radius: 4px;
+}
+.two-side-image .two-side-label.left { left: 8px; }
+.two-side-image .two-side-label.right { right: 8px; }
+
+.two-side-image.chosen-left .two-side-overlay.left {
+    background: rgba(0,200,0,0.25);
+}
+.two-side-image.chosen-right .two-side-overlay.right {
+    background: rgba(200,0,0,0.25);
+}
+
+
 

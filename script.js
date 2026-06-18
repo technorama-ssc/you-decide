@@ -195,17 +195,81 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             // Bilder Hauptordner
             if (images && images.length > 0) {
                 images.forEach(imgUrl => {
-                    const imgEl = document.createElement("img");
-                    imgEl.src = normalizeImageUrl(imgUrl);
-                    imgEl.style.maxWidth = "600px";
-                    imgEl.style.height = "auto";
+                    const normalized = normalizeImageUrl(imgUrl);
 
-                    if (lastMainContentNode && lastMainContentNode.parentNode) {
-                        inner.insertBefore(imgEl, lastMainContentNode.nextSibling);
-                        lastMainContentNode = imgEl;
+                    // Special: detect the you-decide image and render as two clickable halves
+                    const baseName = decodeURIComponent(normalized.split('/').pop() || '').toLowerCase();
+                    const isYouDecide = /youdecide[_\s\-]*.*yes.*no|youdecide.*yes.*no/i.test(baseName);
+
+                    if (isYouDecide) {
+                        const wrapperDiv = document.createElement('div');
+                        wrapperDiv.className = 'two-side-image';
+
+                        const imgEl = document.createElement('img');
+                        imgEl.src = normalized;
+                        imgEl.alt = 'You decide';
+                        imgEl.className = 'two-side-main-img';
+
+                        const leftOverlay = document.createElement('div');
+                        leftOverlay.className = 'two-side-overlay left';
+                        leftOverlay.dataset.choice = 'yes';
+
+                        const rightOverlay = document.createElement('div');
+                        rightOverlay.className = 'two-side-overlay right';
+                        rightOverlay.dataset.choice = 'no';
+
+                        const labelLeft = document.createElement('div');
+                        labelLeft.className = 'two-side-label left';
+                        labelLeft.textContent = 'YES';
+
+                        const labelRight = document.createElement('div');
+                        labelRight.className = 'two-side-label right';
+                        labelRight.textContent = 'NO';
+
+                        wrapperDiv.appendChild(imgEl);
+                        wrapperDiv.appendChild(leftOverlay);
+                        wrapperDiv.appendChild(rightOverlay);
+                        wrapperDiv.appendChild(labelLeft);
+                        wrapperDiv.appendChild(labelRight);
+
+                        let clicked = false;
+                        function handleChoice(e) {
+                            if (clicked) return;
+                            clicked = true;
+                            const choice = e.currentTarget.dataset.choice;
+                            wrapperDiv.classList.add(choice === 'yes' ? 'chosen-left' : 'chosen-right');
+
+                            // disable overlays
+                            leftOverlay.style.pointerEvents = 'none';
+                            rightOverlay.style.pointerEvents = 'none';
+
+                            // optional: emit an event or console log
+                            console.log('YouDecide choice:', choice);
+                        }
+
+                        leftOverlay.addEventListener('click', handleChoice);
+                        rightOverlay.addEventListener('click', handleChoice);
+
+                        if (lastMainContentNode && lastMainContentNode.parentNode) {
+                            inner.insertBefore(wrapperDiv, lastMainContentNode.nextSibling);
+                            lastMainContentNode = wrapperDiv;
+                        } else {
+                            inner.appendChild(wrapperDiv);
+                            lastMainContentNode = wrapperDiv;
+                        }
                     } else {
-                        inner.appendChild(imgEl);
-                        lastMainContentNode = imgEl;
+                        const imgEl = document.createElement("img");
+                        imgEl.src = normalized;
+                        imgEl.style.maxWidth = "600px";
+                        imgEl.style.height = "auto";
+
+                        if (lastMainContentNode && lastMainContentNode.parentNode) {
+                            inner.insertBefore(imgEl, lastMainContentNode.nextSibling);
+                            lastMainContentNode = imgEl;
+                        } else {
+                            inner.appendChild(imgEl);
+                            lastMainContentNode = imgEl;
+                        }
                     }
                 });
             }
