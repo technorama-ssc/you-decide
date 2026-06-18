@@ -232,46 +232,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                         wrapperDiv.appendChild(labelLeft);
                         wrapperDiv.appendChild(labelRight);
 
-                        // Helpers for persistent stats
-                        const statsKey = (name) => `youdecide-stats-${name.replace(/[^a-z0-9_\-]/gi, '_')}`;
-
-                        function loadStats(name) {
-                            try {
-                                const raw = localStorage.getItem(statsKey(name));
-                                if (!raw) return { yes: 0, no: 0 };
-                                return JSON.parse(raw);
-                            } catch (e) {
-                                return { yes: 0, no: 0 };
-                            }
-                        }
-
-                        function saveStats(name, stats) {
-                            try {
-                                localStorage.setItem(statsKey(name), JSON.stringify(stats));
-                            } catch (e) {
-                                console.warn('Could not save stats', e);
-                            }
-                        }
-
-                        function renderStats(wrapper, stats) {
-                            let statsEl = wrapper.querySelector('.two-side-stats');
-                            const total = (stats.yes || 0) + (stats.no || 0);
-                            const yesPct = total === 0 ? 0 : Math.round((stats.yes / total) * 100);
-                            const noPct = total === 0 ? 0 : 100 - yesPct;
-
-                            const html = `
-                                <div class="stats-row"><span class="stats-label">YES:</span> <span class="stats-value">${stats.yes}</span> <span class="stats-pct">(${yesPct}%)</span></div>
-                                <div class="stats-row"><span class="stats-label">NO:</span> <span class="stats-value">${stats.no}</span> <span class="stats-pct">(${noPct}%)</span></div>
-                            `;
-
-                            if (!statsEl) {
-                                statsEl = document.createElement('div');
-                                statsEl.className = 'two-side-stats';
-                                wrapper.appendChild(statsEl);
-                            }
-                            statsEl.innerHTML = html;
-                        }
-
                         let clicked = false;
                         function handleChoice(e) {
                             if (clicked) return;
@@ -283,33 +243,12 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             leftOverlay.style.pointerEvents = 'none';
                             rightOverlay.style.pointerEvents = 'none';
 
-                            // update persistent counts
-                            const keyName = baseName.replace(/\.[^.]+$/, '');
-                            const stats = loadStats(keyName);
-                            if (choice === 'yes') stats.yes = (stats.yes || 0) + 1;
-                            else stats.no = (stats.no || 0) + 1;
-                            saveStats(keyName, stats);
-
-                            // show updated stats
-                            renderStats(wrapperDiv, stats);
-
-                            console.log('YouDecide choice:', choice, stats);
+                            // optional: emit an event or console log
+                            console.log('YouDecide choice:', choice);
                         }
 
                         leftOverlay.addEventListener('click', handleChoice);
                         rightOverlay.addEventListener('click', handleChoice);
-
-                        // On load: render existing stats (if any)
-                        try {
-                            const keyNameInit = baseName.replace(/\.[^.]+$/, '');
-                            const existing = loadStats(keyNameInit);
-                            const totalExisting = (existing.yes || 0) + (existing.no || 0);
-                            if (totalExisting > 0) {
-                                renderStats(wrapperDiv, existing);
-                            }
-                        } catch (e) {
-                            // ignore
-                        }
 
                         if (lastMainContentNode && lastMainContentNode.parentNode) {
                             inner.insertBefore(wrapperDiv, lastMainContentNode.nextSibling);
