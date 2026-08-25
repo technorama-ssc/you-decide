@@ -15,7 +15,9 @@
     "title": "EXHIBITS",
     "content": "\nWe continuously develop new ideas. In our exhibition, we test prototypes and keep improving them. Technorama guests are the test subjects. We want to prompt the question \"How do I make decisions?\"\n\nHere we present a selection of our most advanced exhibits. You can download the parts lists and information for each exhibit here, rebuild them, or improve them.",
     "zipFile": null,
-    "images": [],
+    "images": [
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/youdecide_system_text%20stand.jpg"
+    ],
     "subsections": [
       {
         "title": "Do not Press",
@@ -153,7 +155,7 @@
       "name": "content_youdecide_system.zip"
     },
     "images": [
-      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_connectors%202.jpg"
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_connectors.jpg"
     ],
     "subsections": [
       {

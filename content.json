@@ -15,7 +15,9 @@
     "title": "EXHIBITS",
     "content": "\nWe continuously develop new ideas. In our exhibition, we test prototypes and keep improving them. Technorama guests are the test subjects. We want to prompt the question \"How do I make decisions?\"\n\nHere we present a selection of our most advanced exhibits. You can download the parts lists and information for each exhibit here, rebuild them, or improve them.",
     "zipFile": null,
-    "images": [],
+    "images": [
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/youdecide_system_text%20stand.jpg"
+    ],
     "subsections": [
       {
         "title": "Do not Press",
@@ -50,9 +52,9 @@
           {
             "title": "Findings",
             "content": "\n- The game coin usually is taken before the week is over.\n- When the game coin is gone, a visitor will donate a real coin by placing it in the box.\n- We collect the real coins for a charitable donation.\n- We have discovered that whenever there is an empty box, visitors will again donate a real coin, some even hiding the coins under the velvet pad of the box.",
-            "images": []
-          }
-        ]
+            "images": [
+              "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_connectors.jpg"
+            ],
       },
       {
         "title": "the tower",
