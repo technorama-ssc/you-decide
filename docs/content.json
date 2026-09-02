@@ -35,7 +35,9 @@
         "title": "Who's First On Top",
         "content": "\nInformation to follow...",
         "zipFile": null,
-        "images": [],
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/004_who%27s%20first%20on%20top/You%20Decide_Hwo%27s%20first%20on%20top_Technorama.jpg"
+        ],
         "subsections": []
       },
       {
@@ -98,11 +100,11 @@
         "title": "Bim Bam Bum",
         "content": "\nA bicycle pump stands in the room. Above it floats a red balloon. The balloon cannot burst. You pump towards a goal that is actually pointless – but you don’t know it.\n\nHow long will you keep pumping?",
         "zipFile": {
-          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_bim%20bam%20bum/content_you%20decide_041_Bim%20Bam%20Bum.zip",
+          "download_url": "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/content_you%20decide_041_Bim%20Bam%20Bum.zip",
           "name": "content_you decide_041_Bim Bam Bum.zip"
         },
         "images": [
-          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_bim%20bam%20bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/041_Bim%20Bam%20Bum/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg"
         ],
         "subsections": []
       },
@@ -155,7 +157,8 @@
       "name": "content_youdecide_system.zip"
     },
     "images": [
-      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_connectors.jpg"
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_connectors.jpg",
+      "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/02%20system/youdecide_system_me%20and%20you.jpg"
     ],
     "subsections": [
       {

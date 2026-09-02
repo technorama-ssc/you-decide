@@ -35,7 +35,9 @@
         "title": "Who's First On Top",
         "content": "\nInformation to follow...",
         "zipFile": null,
-        "images": [],
+        "images": [
+          "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/004_who%27s%20first%20on%20top/You%20Decide_Hwo%27s%20first%20on%20top_Technorama.jpg"
+        ],
         "subsections": []
       },
       {
