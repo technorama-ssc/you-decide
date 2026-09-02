@@ -1,3 +1,11 @@
+---
+sections:
+  - 00 you decide
+  - 01 exhibits
+  - 02 system
+  - LICENSE.md
+---
+
 # You Decide
 
 An exhibition on decisions and how to save the world.
@@ -18,34 +26,32 @@ Website: https://technorama-ssc.github.io/you-decide/
 
 ## How the website is built
 
-A folder appears on the website when it contains a `youdecide.json`. The numbering of the folders is for people browsing the repo; the website only reads the JSON:
+Every `README.md` does two jobs: GitHub shows it when you browse the folder, and the website is built from it. A folder is part of the website when its `README.md` starts with a front matter block between two `---` lines. The heading and the text below become the section on the site:
 
-```json
-{
-  "id": "000",
-  "title": "Do not Press",
-  "published": true,
-  "content": [
-    "A red button with the words “Do not press.” Behind it is a mechanism that you cannot see, but you can reach it."
-  ],
-  "images": ["You Decide_Do not press_Technorama.jpg"],
-  "download": { "label": "Exhibit Build Kit" },
-  "sections": ["01 docs/00_findings"]
-}
+```markdown
+---
+id: "000"
+images:
+  - You Decide_Do not press_Technorama.jpg
+download: Exhibit Build Kit
+sections:
+  - 01 docs/00_findings
+---
+
+# Do not Press
+
+A red button with the words “Do not press.” Behind it is a mechanism that you cannot see, but you can reach it.
 ```
 
 | Key | Meaning |
 |---|---|
 | `id` | Exhibit number, used for ordering (optional) |
-| `title` | Title on the website |
-| `published` | `false` keeps a draft in the repo but off the website (default `true`) |
-| `content` | The text shown on the website, in Markdown. A string, or a list of lines for longer texts |
-| `text` | Alternative to `content`: a Markdown file to render, for example a `README.md` |
+| `published` | `published: false` keeps a draft in the repo but off the website |
 | `images` | Images shown with the text, paths relative to the folder |
-| `download` | `true` or `{ "label": "…" }` zips the whole folder as a download |
-| `sections` | Sub folders shown as nested entries, or `"*"` for every sub folder that has a `youdecide.json` |
+| `download` | Zips the whole folder as a download; the value is the link text |
+| `sections` | Sub folders (or `.md` files) nested below this entry, or `"*"` for every sub folder whose README has a front matter block |
 
-The root `youdecide.json` lists the top-level sections in order.
+The title is the first `#` heading. The numbering of the folders is for people browsing the repo; the website only follows `sections`. This root README lists the top-level sections.
 
 Every push to `main` runs `.site/build.py` in GitHub Actions and deploys the result to GitHub Pages. Zips, `content.json` and the media copies are build outputs and are not committed.
 
@@ -61,7 +67,7 @@ This builds the site into `.site/dist/` and serves it at http://localhost:8000/.
 
 1. Copy `01 exhibits/_Template/` to `01 exhibits/NNN_<exhibit name>/`.
 2. Put files into `01 docs/`, `02 code/`, `03 hardware/` and `04 media/`.
-3. Edit `youdecide.json`: set `id`, `title`, `content` and the hero image. Leave `"published": false` while it is a draft; set it to `true` to put it on the website.
+3. Edit `README.md`: set the `id`, the heading, the text and the hero image. Remove `published: false` when the exhibit should go on the website.
 4. Run `python .site/build.py` to check that everything referenced exists.
 
 ## Licencing
