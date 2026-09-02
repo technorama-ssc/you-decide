@@ -1,0 +1,27 @@
+module main
+author unknown
+version 1 0 
+description ''
+variables count zufall 
+
+script 222 92 {
+whenStarted
+forever {
+  digitalWriteOp 1 true
+  setUserLED true
+  waitMillis (random 2000 20000)
+  repeat (random 1 10) {
+    digitalWriteOp 1 false
+    waitMillis (random 50 200)
+    digitalWriteOp 1 true
+    waitMillis (random 50 200)
+  }
+}
+}
+
+script 730 266 {
+digitalWriteOp 1 false
+setUserLED false
+waitMillis 100
+}
+

@@ -1,0 +1,29 @@
+import machine
+import time
+import random
+
+# Initialisiere den Pin für die LED (z.B. Pin 25 für die integrierte LED)
+led = machine.Pin(25, machine.Pin.OUT)
+
+def main():
+while True:
+# Setze die LED auf ein
+led.value(1)
+# Warte, bis eine zufällige Zeit zwischen 5 und 45 Sekunden vergangen ist
+wait_time = random.randint(5, 45)
+time.sleep(wait_time)
+
+# Setze die LED auf aus
+led.value(0)
+# Setze die Benutzer-LED (hier auch die integrierte LED) auf aus
+time.sleep(0.01)
+
+# Starte das Hauptprogramm
+if __name__ == "__main__":
+main()
+```
+
+### Erläuterungen:
+- Pin 25: Dies ist der Standard-Pin für die integrierte LED auf dem Raspberry Pi Pico. Du kannst diesen Pin anpassen, wenn du eine externe LED verwendest.
+- random.randint(5, 45): Dies generiert eine zufällige Zahl zwischen 5 und 45, die als Wartezeit verwendet wird.
+- time.sleep(): Diese Funktion pausiert das Programm für die angegebene Anzahl von Sekunden.
