@@ -1,0 +1,13 @@
+{
+  "id": "000",
+  "title": "Do not Press",
+  "published": true,
+  "content": "A red button with the words “Do not press.” Behind it is a mechanism that you cannot see, but you can reach it. After pressing, a stuffed toy is destroyed.",
+  "images": [
+    "You Decide_Do not press_Technorama.jpg"
+  ],
+  "download": {
+    "label": "Exhibit Build Kit"
+  },
+  "sections": []
+}

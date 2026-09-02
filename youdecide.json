@@ -1,8 +1,8 @@
 {
   "sections": [
-    "you decide",
-    "exhibits",
-    "system",
+    "00 you decide",
+    "01 exhibits",
+    "02 system",
     {
       "title": "Licencing",
       "text": "LICENSE.md"

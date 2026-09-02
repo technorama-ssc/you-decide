@@ -1,4 +1,0 @@
-﻿# know yourself
-
-A vertical mirror, approximately 50 cm high and 90 cm wide, is placed on the floor against a wall. In front of it, a 5 CHF coin is glued to the floor.
-When visitors bend down to pick up the coin, they realize that it is fixed in place and unexpectedly find themselves looking at their own reflection in the mirror.

@@ -6,10 +6,11 @@ Every folder that should appear on the website contains a `youdecide.json`:
       "id": "000",                      optional, used for ordering
       "title": "Do not Press",          optional, falls back to the README heading
       "published": true,                optional, false = draft, left out of the site
-      "text": "README.md",              optional, markdown file to render
+      "content": ["Markdown ...", ""],  the text shown on the site (string or list of lines)
+      "text": "README.md",              alternative to content: markdown file to render
       "images": ["hero.jpg"],           optional, paths relative to the folder
       "download": true,                 optional, true / {"label": "..."} zips the folder
-      "sections": ["docs/findings"]     optional, list of sub folders, or "*" for all
+      "sections": ["01 docs/00_findings"]   optional, sub folders to nest, or "*" for all
     }
 
 The root `youdecide.json` lists the top-level sections. Output goes to
@@ -51,7 +52,10 @@ def load_meta(folder):
 
 
 def read_text(folder, meta):
-    """Return (heading, markdown body) of the text file named in meta."""
+    """Return (heading, markdown body): inline `content` or the file named in `text`."""
+    if "content" in meta:
+        content = meta["content"]
+        return None, "\n".join(content) if isinstance(content, list) else str(content)
     name = meta.get("text", "README.md")
     path = os.path.join(folder, name)
     if not os.path.isfile(path):

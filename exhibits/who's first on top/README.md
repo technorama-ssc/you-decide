@@ -1,3 +1,0 @@
-# Who's First On Top
-
-Information to follow...

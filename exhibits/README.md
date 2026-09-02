@@ -1,5 +1,0 @@
-# EXHIBITS
-
-We continuously develop new ideas. In our exhibition, we test prototypes and keep improving them. Technorama guests are the test subjects. We want to prompt the question "How do I make decisions?"
-
-Here we present a selection of our most advanced exhibits. You can download the parts lists and information for each exhibit here, rebuild them, or improve them.

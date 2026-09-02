@@ -1,5 +1,0 @@
-﻿# Findings
-
-- Many visitors see the mirror before noticing the coin. 
-- Visitors often smile or laugh when they realize the coin is glued to the floor. 
-- Some visitors make repeated attempts to pick up the coin despite realizing it is fixed.
