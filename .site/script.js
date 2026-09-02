@@ -68,6 +68,11 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             title.style.removeProperty("color");
         } else {
             panel.style.display = "block";
+            // Geoeffnete Sektion an den Seitenanfang scrollen (die anderen Panels sind gerade zugeklappt)
+            requestAnimationFrame(() => {
+                const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                wrapper.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+            });
             wrapper.style.backgroundColor = "#eaff00";
             wrapper.classList.add("open");
             title.style.color = "#000";
