@@ -1,5 +1,5 @@
-// The website is fully static: build.py renders every folder that has a
-// youdecide.json into content.json, copies the images into media/ and the
+// The website is fully static: build.py renders every README.md with a
+// front matter block into content.json, copies the images into media/ and the
 // download zips into downloads/. This script only turns content.json into
 // the accordion layout.
 
@@ -68,11 +68,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             title.style.removeProperty("color");
         } else {
             panel.style.display = "block";
-            // Geoeffnete Sektion an den Seitenanfang scrollen (die anderen Panels sind gerade zugeklappt)
-            requestAnimationFrame(() => {
-                const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-                wrapper.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
-            });
             wrapper.style.backgroundColor = "#eaff00";
             wrapper.classList.add("open");
             title.style.color = "#000";
@@ -203,6 +198,25 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                         }
                     });
                 }
+            }
+
+            // Geoeffnete Sektion an den Seitenanfang scrollen. Die anderen Panels sind gerade
+            // zugeklappt, sonst bliebe die Sektion irgendwo mitten auf der Seite stehen.
+            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            requestAnimationFrame(() => {
+                wrapper.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+            });
+            // Bilder, die erst noch laden, machen die Seite laenger: danach Position korrigieren.
+            const pending = [...inner.querySelectorAll("img")].filter(img => !img.complete);
+            if (pending.length) {
+                Promise.all(pending.map(img => new Promise(resolve => {
+                    img.addEventListener("load", resolve, { once: true });
+                    img.addEventListener("error", resolve, { once: true });
+                }))).then(() => {
+                    if (Math.abs(wrapper.getBoundingClientRect().top) > 2) {
+                        wrapper.scrollIntoView({ block: "start", behavior: "auto" });
+                    }
+                });
             }
         }
     });
