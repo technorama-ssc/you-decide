@@ -68,6 +68,8 @@ python .site/serve.py
 
 This builds the site into `.site/dist/` and serves it at http://localhost:8000/. Use `python .site/build.py` to only build; it lists what was published, what was skipped as a draft, and fails on missing files.
 
+The build needs Pillow (`pip install pillow`) to resize the images for the website to 1200 px; without it the originals are copied and a warning is printed. The fonts in `00 you decide/02 fonts` are served by the site itself, so no external font service is used.
+
 ## Adding an exhibit
 
 1. Copy `01 exhibits/_Template/` to `01 exhibits/NNN_<exhibit name>/`.

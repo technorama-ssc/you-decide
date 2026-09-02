@@ -1,4 +1,24 @@
 /* =============================
+   Schriften: werden von der Website selbst ausgeliefert
+   (Quelle: 00 you decide/02 fonts, vom Build nach fonts/ kopiert)
+============================= */
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('fonts/RobotoMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'RobotoMono';
+    src: url('fonts/RobotoMono-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 700;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* =============================
    Grundlayout / Startseite
 ============================= */
 /* Kein Scroll-Anchoring: beim Umschalten der Sektionen klappen Panels zu und wir

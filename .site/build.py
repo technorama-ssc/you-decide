@@ -22,7 +22,8 @@ renders the same file when browsing the repo:
     ## Background (draft)          "(draft)" at the end keeps it off the site
 
 The root README.md lists the top-level sections. Output goes to `.site/dist/`
-(content.json, media/, downloads/ and the static site files).
+(content.json, media/ with images resized to 1200 px, downloads/, fonts/ and the
+static site files). Needs Pillow for the image resizing: pip install pillow
 
     python .site/build.py
 """
@@ -38,11 +39,20 @@ SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SITE_DIR)
 DIST = os.path.join(SITE_DIR, "dist")
 README = "README.md"
-STATIC_FILES = ("index.html", "script.js", "style.css")
+STATIC_FILES = ("index.html", "script.js", "style.css", "marked.min.js", "favicon.svg")
+FONTS_DIR = os.path.join(ROOT, "00 you decide", "02 fonts")
+MAX_IMAGE_WIDTH = 1200          # images are shown at 600 px; 1200 px keeps them sharp on retina screens
+JPEG_QUALITY = 85
+
+try:
+    from PIL import Image, ImageOps
+except ImportError:             # pip install pillow
+    Image = None
 DRAFT_RE = re.compile(r"^(.*?)\s*\(draft\)\s*$", re.I)
 
 errors = []
 drafts = []
+warnings = set()
 
 
 def rel(path):
@@ -141,7 +151,18 @@ def copy_image(folder, name):
     target_rel = rel(src)
     dst = os.path.join(DIST, "media", target_rel)
     os.makedirs(os.path.dirname(dst), exist_ok=True)
-    shutil.copy2(src, dst)
+    if Image is None:
+        warnings.add("Pillow is not installed, images are copied at full size (pip install pillow)")
+        shutil.copy2(src, dst)
+    else:
+        with Image.open(src) as im:
+            im = ImageOps.exif_transpose(im)
+            if im.width > MAX_IMAGE_WIDTH:
+                im = im.resize((MAX_IMAGE_WIDTH, round(im.height * MAX_IMAGE_WIDTH / im.width)), Image.LANCZOS)
+            if dst.lower().endswith((".jpg", ".jpeg")):
+                im.convert("RGB").save(dst, "JPEG", quality=JPEG_QUALITY, optimize=True, progressive=True)
+            else:
+                im.save(dst, optimize=True)
     return "media/" + quote(target_rel)
 
 
@@ -237,6 +258,10 @@ def main():
     os.makedirs(DIST)
     for name in STATIC_FILES:
         shutil.copy2(os.path.join(SITE_DIR, name), DIST)
+    os.makedirs(os.path.join(DIST, "fonts"))
+    for name in sorted(os.listdir(FONTS_DIR)):
+        if name.lower().endswith((".ttf", ".woff2", ".woff")):
+            shutil.copy2(os.path.join(FONTS_DIR, name), os.path.join(DIST, "fonts", name))
 
     root_meta, _, _ = read_page(os.path.join(ROOT, README))
     if not root_meta or "sections" not in root_meta:
@@ -261,6 +286,10 @@ def main():
         print("\nSkipped (drafts):")
         for d in drafts:
             print(f"- {d}")
+    if warnings:
+        print("\nWarnings:")
+        for w in sorted(warnings):
+            print(f"- {w}")
     if errors:
         print("\nERRORS:")
         for e in errors:
