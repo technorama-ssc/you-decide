@@ -339,4 +339,82 @@ body {
     margin: 20px 0;
 }
 
+/* =============================
+   Bedienung per Tastatur: Titel enthalten Buttons
+============================= */
+.accordion button,
+.subfolder-title button {
+    all: unset;
+    display: inline;
+    font: inherit;
+    color: inherit;
+    text-transform: inherit;
+    cursor: pointer;
+}
 
+.accordion button:focus-visible,
+.subfolder-title button:focus-visible {
+    outline: 3px solid currentColor;
+    outline-offset: 6px;
+}
+
+/* Bilder nie breiter als der Inhalt */
+.panel img {
+    max-width: min(600px, 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .accordion-wrapper,
+    .accordion,
+    .subfolder-title {
+        transition: none;
+    }
+}
+
+/* =============================
+   Kleine Bildschirme
+============================= */
+@media (max-width: 900px) {
+    .accordion,
+    .subfolder-title,
+    .nested-subfolder-title {
+        font-size: clamp(32px, 9vw, 80px);
+        overflow-wrap: anywhere;
+    }
+
+    .accordion {
+        padding: 0 24px;
+    }
+
+    .accordion-wrapper {
+        padding: 40px 0;
+    }
+
+    .panel .panel-content {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .exhibits .subfolder-block {
+        margin-left: -24px;
+        margin-right: -24px;
+        padding-left: 24px;
+        padding-right: 24px;
+        width: calc(100% + 48px);
+    }
+
+    .subfolder-block,
+    .exhibits .subfolder-block.open:last-child {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .subfolder-block:first-child {
+        padding-top: 0;
+    }
+
+    .exhibits-intro,
+    .exhibits .panel-content > img {
+        margin-bottom: 40px;
+    }
+}

@@ -4,14 +4,44 @@
 // the accordion layout.
 
 const container = document.getElementById("dynamic-content");
+let idCounter = 0;
+
+function slugify(text) {
+    const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    idCounter += 1;
+    return `${slug || "section"}-${idCounter}`;
+}
 
 function getDownloadHtml(zipFile) {
     return `
         <div class="download-link">
             <span>Download:</span>
-            <a href="${zipFile.download_url}" target="_blank">${zipFile.label || zipFile.name}</a>
+            <a href="${zipFile.download_url}" target="_blank" rel="noopener">${zipFile.label || zipFile.name}</a>
         </div>
     `;
+}
+
+// content.json liefert Bilder als {src, alt}; aeltere Builds als reine URL
+function imageData(image) {
+    return typeof image === "string" ? { src: image, alt: "" } : image;
+}
+
+function createImage(image) {
+    const { src, alt } = imageData(image);
+    const imgEl = document.createElement("img");
+    imgEl.src = src;
+    imgEl.alt = alt;
+    imgEl.loading = "lazy";
+    return imgEl;
+}
+
+function imageHtml(image, className) {
+    const { src, alt } = imageData(image);
+    return `<img src="${src}" alt="${alt.replace(/"/g, "&quot;")}" loading="lazy" class="${className}">`;
+}
+
+function setExpanded(button, expanded) {
+    button.setAttribute("aria-expanded", expanded ? "true" : "false");
 }
 
 // -------------------------
@@ -27,13 +57,27 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
         wrapper.classList.add("exhibits");
     }
 
+    const id = slugify(titleText);
+
+    // Titel: die Ueberschrift enthaelt einen Button, damit die Sektion auch per
+    // Tastatur und mit Screenreadern bedienbar ist.
     const title = document.createElement("h1");
     title.className = "accordion";
-    title.textContent = titleText.toUpperCase();
     title.title = titleText;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.id = `title-${id}`;
+    button.textContent = titleText.toUpperCase();
+    button.setAttribute("aria-controls", `panel-${id}`);
+    setExpanded(button, false);
+    title.appendChild(button);
 
     const panel = document.createElement("div");
     panel.className = "panel";
+    panel.id = `panel-${id}`;
+    panel.setAttribute("role", "region");
+    panel.setAttribute("aria-labelledby", button.id);
 
     const inner = document.createElement("div");
     inner.className = "panel-content";
@@ -45,7 +89,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     // -----------------------
     // Klick-Funktion
     // -----------------------
-    title.addEventListener("click", () => {
+    button.addEventListener("click", () => {
         document.querySelectorAll(".panel").forEach(p => {
             if (p !== panel) p.style.display = "none";
         });
@@ -61,17 +105,23 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             if (a !== title) a.style.removeProperty("color");
         });
 
+        document.querySelectorAll(".accordion button").forEach(b => {
+            if (b !== button) setExpanded(b, false);
+        });
+
         if (panel.style.display === "block") {
             panel.style.display = "none";
             wrapper.style.removeProperty("background-color");
             wrapper.classList.remove("open");
             title.style.removeProperty("color");
+            setExpanded(button, false);
         } else {
             panel.style.display = "block";
             wrapper.style.backgroundColor = "#eaff00";
             wrapper.classList.add("open");
             title.style.color = "#000";
             panel.style.color = "#000";
+            setExpanded(button, true);
 
             // Haupttext
             inner.innerHTML = "";
@@ -96,6 +146,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 const link = document.createElement("a");
                 link.href = zipFile.download_url;
                 link.target = "_blank";
+                link.rel = "noopener";
                 link.textContent = zipFile.label || zipFile.name;
                 dl.style.marginTop = "1em";
 
@@ -109,22 +160,15 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             }
 
             // Bilder Hauptordner
-            if (images && images.length > 0) {
-                images.forEach(imgUrl => {
-                    const imgEl = document.createElement("img");
-                    imgEl.src = imgUrl;
-                    imgEl.style.maxWidth = "600px";
-                    imgEl.style.height = "auto";
-
-                    if (lastMainContentNode && lastMainContentNode.parentNode) {
-                        inner.insertBefore(imgEl, lastMainContentNode.nextSibling);
-                        lastMainContentNode = imgEl;
-                    } else {
-                        inner.appendChild(imgEl);
-                        lastMainContentNode = imgEl;
-                    }
-                });
-            }
+            (images || []).forEach(image => {
+                const imgEl = createImage(image);
+                if (lastMainContentNode && lastMainContentNode.parentNode) {
+                    inner.insertBefore(imgEl, lastMainContentNode.nextSibling);
+                } else {
+                    inner.appendChild(imgEl);
+                }
+                lastMainContentNode = imgEl;
+            });
 
             // Unterordner HTML + Bilder
             if (subfoldersHtml) {
@@ -132,10 +176,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 
                 // EXHIBITS: Unterordner-Titel klickbar machen
                 if (wrapper.classList.contains("exhibits")) {
-                    const subfolderTitles = inner.querySelectorAll(".subfolder-title");
-                    subfolderTitles.forEach(subfolderTitle => {
-                        subfolderTitle.style.cursor = "pointer";
-                        subfolderTitle.addEventListener("click", (e) => {
+                    const subfolderButtons = inner.querySelectorAll(".subfolder-title button");
+                    subfolderButtons.forEach(subfolderButton => {
+                        subfolderButton.addEventListener("click", (e) => {
                             e.stopPropagation();
 
                             // When a subfolder opens, return the main EXHIBITS header to gray.
@@ -143,7 +186,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             title.style.color = "#000";
 
                             // Finde den nächsten Text-Block
-                            const block = subfolderTitle.closest(".subfolder-block");
+                            const block = subfolderButton.closest(".subfolder-block");
                             const textBlock = block.querySelector(".subfolder-text");
                             const isOpen = block.classList.contains("open");
 
@@ -155,10 +198,12 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                                 b.querySelectorAll(".nested-subfolder-title").forEach(el => el.style.display = "none");
                                 b.querySelectorAll(".nested-subfolder-content").forEach(el => el.style.display = "none");
                             });
+                            subfolderButtons.forEach(b => setExpanded(b, false));
 
                             // Toggle diesen Block
                             if (!isOpen && textBlock) {
                                 block.classList.add("open");
+                                setExpanded(subfolderButton, true);
                                 textBlock.style.display = "block";
                                 block.querySelectorAll("img:not(.nested-subfolder-img)").forEach(img => img.style.display = "block");
                                 // Nested subfolder imgs bleiben immer sichtbar
@@ -181,12 +226,8 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             // Finde den ersten nested-subfolder-block
                             const firstNestedBlock = block.querySelector(".nested-subfolder-block");
 
-                            imgs.forEach(url => {
-                                const imgEl = document.createElement("img");
-                                imgEl.src = url;
-                                imgEl.style.maxWidth = "600px";
-                                imgEl.style.height = "auto";
-
+                            imgs.forEach(image => {
+                                const imgEl = createImage(image);
                                 // Wenn es einen nested-subfolder-block gibt, füge das Bild davor ein
                                 if (firstNestedBlock) {
                                     block.querySelector(".subfolder-text").insertBefore(imgEl, firstNestedBlock);
@@ -247,7 +288,7 @@ async function loadContent() {
         for (const sub of subsections || []) {
             subHtml += `
                 <div class="subfolder-block">
-                    <h2 class="subfolder-title">${sub.title}</h2>
+                    <h2 class="subfolder-title"><button type="button" aria-expanded="false">${sub.title}</button></h2>
                     <div class="subfolder-text">
                         ${marked.parse(sub.content)}
                         ${sub.zipFile ? getDownloadHtml(sub.zipFile) : ""}
@@ -257,13 +298,13 @@ async function loadContent() {
             for (const subsub of sub.subsections || []) {
                 subHtml += `
                     <div class="nested-subfolder-block">
-                        <h2 class="nested-subfolder-title">${subsub.title}</h2>
+                        <h3 class="nested-subfolder-title">${subsub.title}</h3>
                         <div class="nested-subfolder-content">
                             ${marked.parse(subsub.content)}
                             ${subsub.zipFile ? getDownloadHtml(subsub.zipFile) : ""}
                 `;
-                for (const imgUrl of subsub.images || []) {
-                    subHtml += `<img src="${imgUrl}" style="max-width:600px;height:auto;" class="nested-subfolder-img">`;
+                for (const image of subsub.images || []) {
+                    subHtml += imageHtml(image, "nested-subfolder-img");
                 }
                 subHtml += `
                         </div>
@@ -280,7 +321,7 @@ async function loadContent() {
 
         const wrapper = createAccordion(title, content, zipFile, subHtml, images, subfolderImages);
         if (container.children.length === 1) {
-            wrapper.querySelector('.accordion').click();
+            wrapper.querySelector('.accordion button').click();
         }
     }
 }

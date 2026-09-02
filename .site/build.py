@@ -168,7 +168,7 @@ def copy_image(folder, name):
 
 def extract_images(folder, text):
     """Take ![alt](relative path) images out of the text, copy them to media/ and
-    return (text without them, [urls]). External http(s) images stay in the text."""
+    return (text without them, [{"src", "alt"}]). External http(s) images stay in the text."""
     urls = []
 
     def repl(m):
@@ -177,7 +177,7 @@ def extract_images(folder, text):
             return m.group(0)
         url = copy_image(folder, unquote(target))
         if url:
-            urls.append(url)
+            urls.append({"src": url, "alt": m.group(1).strip()})
         return ""
 
     text = re.sub(r"!\[([^\]]*)\]\(([^)\s]+)\)", repl, text)
