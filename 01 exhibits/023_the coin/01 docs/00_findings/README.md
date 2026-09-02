@@ -1,6 +1,3 @@
----
----
-
 # Findings
 
 - The game coin usually is taken before the week is over.

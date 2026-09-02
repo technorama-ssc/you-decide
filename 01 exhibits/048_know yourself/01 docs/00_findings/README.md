@@ -1,6 +1,3 @@
----
----
-
 # Findings
 
 - Many visitors see the mirror before noticing the coin. 

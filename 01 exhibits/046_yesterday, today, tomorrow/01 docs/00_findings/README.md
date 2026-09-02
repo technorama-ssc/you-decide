@@ -1,6 +1,3 @@
----
----
-
 # Findings
 
 - People tend to think about the future more in terms of desired outcomes than concrete decisions.

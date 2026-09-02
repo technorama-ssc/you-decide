@@ -1,6 +1,3 @@
----
----
-
 # Findings
 
 - What did visitors do with the exhibit?

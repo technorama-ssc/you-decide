@@ -1,6 +1,3 @@
----
----
-
 # Findings
 
 - Visitors enjoy playing and cooperate to build a tower.

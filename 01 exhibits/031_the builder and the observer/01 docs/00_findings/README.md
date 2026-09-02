@@ -1,6 +1,3 @@
----
----
-
 # Findings
 
 - Visitors often build a tower and then deliberately make it collapse by pulling the rope. 

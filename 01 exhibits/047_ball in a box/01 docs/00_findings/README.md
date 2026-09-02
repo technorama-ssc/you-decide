@@ -1,6 +1,3 @@
----
----
-
 # Findings
 
 - Visitors are willing to lie regardless of their age.
