@@ -34,13 +34,19 @@ id: "000"
 images:
   - You Decide_Do not press_Technorama.jpg
 download: Exhibit Build Kit
-sections:
-  - 01 docs/00_findings
 ---
 
 # Do not Press
 
 A red button with the words “Do not press.” Behind it is a mechanism that you cannot see, but you can reach it.
+
+## Findings
+
+- Visitors press the button although it says not to.
+
+## Background (draft)
+
+Text that stays in the repo but is not shown on the website yet.
 ```
 
 | Key | Meaning |
@@ -49,9 +55,9 @@ A red button with the words “Do not press.” Behind it is a mechanism that yo
 | `published` | `published: false` keeps a draft in the repo but off the website |
 | `images` | Images shown with the text, paths relative to the folder |
 | `download` | Zips the whole folder as a download; the value is the link text |
-| `sections` | Sub folders (or `.md` files) nested below this entry, or `"*"` for every sub folder whose README has a front matter block |
+| `sections` | Sub folders (or `.md` files) nested below this entry, or `"*"` for every sub folder whose README has a front matter block. Used for the top-level sections and the system; exhibits use `##` headings instead |
 
-The title is the first `#` heading. The numbering of the folders is for people browsing the repo; the website only follows `sections`. This root README lists the top-level sections.
+The title is the first `#` heading. Every `##` heading below becomes a nested entry (Findings, background texts). A heading ending in `(draft)` stays in the file but is left off the website. The numbering of the folders is for people browsing the repo; the website only follows `sections` and the headings. This root README lists the top-level sections.
 
 Every push to `main` runs `.site/build.py` in GitHub Actions and deploys the result to GitHub Pages. Zips, `content.json` and the media copies are build outputs and are not committed.
 
@@ -67,7 +73,7 @@ This builds the site into `.site/dist/` and serves it at http://localhost:8000/.
 
 1. Copy `01 exhibits/_Template/` to `01 exhibits/NNN_<exhibit name>/`.
 2. Put files into `01 docs/`, `02 code/`, `03 hardware/` and `04 media/`.
-3. Edit `README.md`: set the `id`, the heading, the text and the hero image. Remove `published: false` when the exhibit should go on the website.
+3. Edit `README.md`: set the `id`, the heading, the text, the hero image and the `##` sections. Remove `published: false` when the exhibit should go on the website.
 4. Run `python .site/build.py` to check that everything referenced exists.
 
 ## Licencing

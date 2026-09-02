@@ -8,13 +8,19 @@ images:
   - 04 media/hero.jpg
 # Link text of the download; the whole folder is zipped
 download: Exhibit Build Kit
-# Sub folders shown below the text; each needs its own README.md with a front matter block
-sections:
-  - 01 docs/00_findings
 ---
 
 # New Exhibit
 
 One or two sentences that describe the exhibit: what the visitor sees, what they do, and what it says about how we decide.
 
-Markdown works here: **bold**, [links](https://www.technorama.ch), lists.
+Markdown works here: **bold**, [links](https://www.technorama.ch), lists, and images such as `![photo](04 media/photo.jpg)`.
+
+## Findings
+
+- What did visitors do with the exhibit?
+- What worked, what did not?
+
+## Background (draft)
+
+Every `##` heading becomes a nested entry on the website. Add `(draft)` to the heading to keep a section in the repo but off the website.

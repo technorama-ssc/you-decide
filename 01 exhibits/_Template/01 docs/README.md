@@ -1,3 +1,3 @@
 # Docs
 
-Label texts and background material. Parts lists belong in `03 hardware/`. A sub folder such as `00_findings/` appears on the website when its `README.md` starts with a front matter block and the folder is listed in `sections` of the exhibit's `README.md`.
+Label texts and background material as files. Findings and background texts that should appear on the website go into the exhibit's `README.md` as `##` sections. Parts lists belong in `03 hardware/`.

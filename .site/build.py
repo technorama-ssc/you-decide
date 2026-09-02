@@ -11,30 +11,35 @@ renders the same file when browsing the repo:
       - hero.jpg
     download: Exhibit Build Kit    optional, zips the folder; the value is the link text
     sections:                      optional, sub folders or .md files nested below,
-      - 01 docs/00_findings        or "*" for every sub folder with a front matter README
+      - 00 grid system             or "*" for every sub folder with a front matter README
     ---
     # Do not Press
 
     A red button with the words "Do not press." ...
+
+    ## Findings                    every "## " heading becomes a nested entry
+    ...
+    ## Background (draft)          "(draft)" at the end keeps it off the site
 
 The root README.md lists the top-level sections. Output goes to `.site/dist/`
 (content.json, media/, downloads/ and the static site files).
 
     python .site/build.py
 """
+import json
 import os
 import re
 import shutil
 import sys
 import zipfile
-import json
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 SITE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(SITE_DIR)
 DIST = os.path.join(SITE_DIR, "dist")
 README = "README.md"
 STATIC_FILES = ("index.html", "script.js", "style.css")
+DRAFT_RE = re.compile(r"^(.*?)\s*\(draft\)\s*$", re.I)
 
 errors = []
 drafts = []
@@ -70,8 +75,7 @@ def parse_front_matter(lines, where):
         if not line.strip() or line.strip().startswith("#"):
             continue
         if re.match(r"^\s+-\s*", line) and key is not None:
-            meta.setdefault(key, [])
-            if not isinstance(meta[key], list):
+            if not isinstance(meta.get(key), list):
                 meta[key] = []
             meta[key].append(_scalar(re.sub(r"^\s+-\s*", "", line)))
             continue
@@ -114,6 +118,18 @@ def has_front_matter(path):
         return False
 
 
+def split_sections(body):
+    """Split the body at '## ' headings into (main text, [(title, text, is_draft)])."""
+    parts = re.split(r"^(?=## )", body, flags=re.M)
+    sections = []
+    for part in parts[1:]:
+        head, _, text = part.partition("\n")
+        title = head[3:].strip()
+        m = DRAFT_RE.match(title)
+        sections.append((m.group(1) if m else title, text.strip("\n"), bool(m)))
+    return parts[0].strip("\n"), sections
+
+
 # ---------------------------------------------------------------------------
 # Assets
 # ---------------------------------------------------------------------------
@@ -127,6 +143,17 @@ def copy_image(folder, name):
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     shutil.copy2(src, dst)
     return "media/" + quote(target_rel)
+
+
+def rewrite_inline_images(folder, text):
+    """Copy images referenced as ![alt](relative path) and point them at media/."""
+    def repl(m):
+        target = m.group(2).strip()
+        if re.match(r"^(https?:)?//", target):
+            return m.group(0)
+        url = copy_image(folder, unquote(target))
+        return f"![{m.group(1)}]({url})" if url else m.group(0)
+    return re.sub(r"!\[([^\]]*)\]\(([^)\s]+)\)", repl, text)
 
 
 def make_zip(folder, label):
@@ -175,13 +202,25 @@ def build_node(page_path):
     if meta.get("published", True) is False:
         drafts.append(f"{rel(folder)} ({title})")
         return None
+    content, inline = split_sections(body)
     images = [u for u in (copy_image(folder, str(n)) for n in meta.get("images", []) or []) if u]
     zip_file = make_zip(folder, meta["download"]) if meta.get("download") else None
+
+    subsections = []
+    for sub_title, text, is_draft in inline:
+        if is_draft:
+            drafts.append(f"{rel(page_path)} ## {sub_title}")
+            continue
+        subsections.append({"title": sub_title, "content": rewrite_inline_images(folder, text),
+                            "zipFile": None, "images": [], "subsections": []})
+
     children = resolve_sections(folder, meta.get("sections"))
     if meta.get("sections") == "*":
         children.sort(key=lambda p: (str((read_page(p)[0] or {}).get("id", "~")), p))
-    subsections = [n for n in (build_node(p) for p in children) if n is not None]
-    return {"title": title, "content": body, "zipFile": zip_file, "images": images, "subsections": subsections}
+    subsections += [n for n in (build_node(p) for p in children) if n is not None]
+
+    return {"title": title, "content": rewrite_inline_images(folder, content),
+            "zipFile": zip_file, "images": images, "subsections": subsections}
 
 
 def main():
@@ -211,7 +250,7 @@ def main():
     for node in data:
         describe(node)
     if drafts:
-        print("\nSkipped (draft, published: false):")
+        print("\nSkipped (drafts):")
         for d in drafts:
             print(f"- {d}")
     if errors:
