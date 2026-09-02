@@ -1,6 +1,12 @@
 /* =============================
    Grundlayout / Startseite
 ============================= */
+/* Kein Scroll-Anchoring: beim Umschalten der Sektionen klappen Panels zu und wir
+   scrollen selbst zur geoeffneten Sektion; das Anchoring wuerde das wieder verschieben. */
+html {
+    overflow-anchor: none;
+}
+
 html,
 body {
     margin: 0;

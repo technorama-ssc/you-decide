@@ -202,10 +202,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 
             // Geoeffnete Sektion an den Seitenanfang scrollen. Die anderen Panels sind gerade
             // zugeklappt, sonst bliebe die Sektion irgendwo mitten auf der Seite stehen.
-            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            requestAnimationFrame(() => {
-                wrapper.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
-            });
+            // Absolut positionieren (kein scrollIntoView/smooth: die Seitenhoehe aendert sich gerade).
+            const scrollToWrapper = () => window.scrollTo(0, wrapper.getBoundingClientRect().top + window.scrollY);
+            scrollToWrapper();
             // Bilder, die erst noch laden, machen die Seite laenger: danach Position korrigieren.
             const pending = [...inner.querySelectorAll("img")].filter(img => !img.complete);
             if (pending.length) {
@@ -214,7 +213,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                     img.addEventListener("error", resolve, { once: true });
                 }))).then(() => {
                     if (Math.abs(wrapper.getBoundingClientRect().top) > 2) {
-                        wrapper.scrollIntoView({ block: "start", behavior: "auto" });
+                        scrollToWrapper();
                     }
                 });
             }
