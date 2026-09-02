@@ -93,10 +93,6 @@ body {
     max-width: none;
 }
 
-.exhibits .panel-content > img {
-    margin-bottom: 60px;
-}
-
 /* EXHIBITS: Haupt-Lauftext wie andere Sektionen begrenzen */
 .exhibits-intro {
     max-width: 800px;
@@ -116,6 +112,10 @@ body {
     height: auto;
     display: block;
     margin: 40px 0 0 0;
+}
+
+.exhibits .panel-content > img {
+    margin-bottom: 60px;
 }
 
 .exhibits .panel-content > img {
