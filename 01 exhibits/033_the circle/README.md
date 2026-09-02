@@ -9,7 +9,7 @@ The visitors decide together who may enter the circle. Once someone is inside, t
 
 “No going back – convince another person to enter the circle, then you may leave.”
 
-![The Circle](You%20Decide_The%20Circle_Technorama.jpg)
+![The Circle](04%20media/You%20Decide_The%20Circle_Technorama.jpg)
 
 ## Findings (draft)
 

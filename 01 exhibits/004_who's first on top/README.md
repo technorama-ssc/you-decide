@@ -6,4 +6,4 @@ id: "004"
 
 Information to follow...
 
-![Who's First On Top](You%20Decide_Hwo%27s%20first%20on%20top_Technorama.jpg)
+![Who's First On Top](04%20media/You%20Decide_Hwo%27s%20first%20on%20top_Technorama.jpg)

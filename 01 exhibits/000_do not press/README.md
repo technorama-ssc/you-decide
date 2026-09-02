@@ -7,7 +7,7 @@ download: Exhibit Build Kit
 
 A red button with the words “Do not press.” Behind it is a mechanism that you cannot see, but you can reach it. After pressing, a stuffed toy is destroyed.
 
-![Do not Press](You%20Decide_Do%20not%20press_Technorama.jpg)
+![Do not Press](04%20media/You%20Decide_Do%20not%20press_Technorama.jpg)
 
 ## Findings (draft)
 

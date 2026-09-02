@@ -9,7 +9,7 @@ A bicycle pump stands in the room. Above it floats a red balloon. The balloon ca
 
 How long will you keep pumping?
 
-![Bim Bam Bum](You%20Decide_Bim%20Bam%20Bum_Technorama.jpg)
+![Bim Bam Bum](04%20media/You%20Decide_Bim%20Bam%20Bum_Technorama.jpg)
 
 ## Findings (draft)
 
