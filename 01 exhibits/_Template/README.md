@@ -3,9 +3,6 @@
 id: "999"
 # Remove this line (or set it to true) to put the exhibit on the website
 published: false
-# Images shown with the text, relative to this folder
-images:
-  - 04 media/hero.jpg
 # Link text of the download; the whole folder is zipped
 download: Exhibit Build Kit
 ---
@@ -14,7 +11,9 @@ download: Exhibit Build Kit
 
 One or two sentences that describe the exhibit: what the visitor sees, what they do, and what it says about how we decide.
 
-Markdown works here: **bold**, [links](https://www.technorama.ch), lists, and images such as `![photo](04 media/photo.jpg)`.
+Markdown works here: **bold**, [links](https://www.technorama.ch) and lists. Images are placed like the one below, with a path relative to this folder (spaces as `%20`); the website shows them after the text.
+
+![New Exhibit](04%20media/hero.jpg)
 
 ## Findings
 

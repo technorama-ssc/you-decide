@@ -1,9 +1,9 @@
 ---
 id: "004"
-images:
-  - You Decide_Hwo's first on top_Technorama.jpg
 ---
 
 # Who's First On Top
 
 Information to follow...
+
+![Who's First On Top](You%20Decide_Hwo%27s%20first%20on%20top_Technorama.jpg)

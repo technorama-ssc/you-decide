@@ -1,7 +1,5 @@
 ---
 id: "041"
-images:
-  - You Decide_Bim Bam Bum_Technorama.jpg
 download: Exhibit Build Kit
 ---
 
@@ -10,6 +8,8 @@ download: Exhibit Build Kit
 A bicycle pump stands in the room. Above it floats a red balloon. The balloon cannot burst. You pump towards a goal that is actually pointless – but you don’t know it.
 
 How long will you keep pumping?
+
+![Bim Bam Bum](You%20Decide_Bim%20Bam%20Bum_Technorama.jpg)
 
 ## Findings (draft)
 

@@ -7,8 +7,6 @@ renders the same file when browsing the repo:
     ---
     id: "000"                      optional, used for ordering
     published: true                optional, false = draft, left out of the site
-    images:                        optional, images shown with the text
-      - hero.jpg
     download: Exhibit Build Kit    optional, zips the folder; the value is the link text
     sections:                      optional, sub folders or .md files nested below,
       - 00 grid system             or "*" for every sub folder with a front matter README
@@ -16,6 +14,8 @@ renders the same file when browsing the repo:
     # Do not Press
 
     A red button with the words "Do not press." ...
+
+    ![Do not Press](hero.jpg)     images in the text are shown after it on the site
 
     ## Findings                    every "## " heading becomes a nested entry
     ...
@@ -145,15 +145,22 @@ def copy_image(folder, name):
     return "media/" + quote(target_rel)
 
 
-def rewrite_inline_images(folder, text):
-    """Copy images referenced as ![alt](relative path) and point them at media/."""
+def extract_images(folder, text):
+    """Take ![alt](relative path) images out of the text, copy them to media/ and
+    return (text without them, [urls]). External http(s) images stay in the text."""
+    urls = []
+
     def repl(m):
         target = m.group(2).strip()
         if re.match(r"^(https?:)?//", target):
             return m.group(0)
         url = copy_image(folder, unquote(target))
-        return f"![{m.group(1)}]({url})" if url else m.group(0)
-    return re.sub(r"!\[([^\]]*)\]\(([^)\s]+)\)", repl, text)
+        if url:
+            urls.append(url)
+        return ""
+
+    text = re.sub(r"!\[([^\]]*)\]\(([^)\s]+)\)", repl, text)
+    return re.sub(r"\n{3,}", "\n\n", text).strip("\n"), urls
 
 
 def make_zip(folder, label):
@@ -203,7 +210,7 @@ def build_node(page_path):
         drafts.append(f"{rel(folder)} ({title})")
         return None
     content, inline = split_sections(body)
-    images = [u for u in (copy_image(folder, str(n)) for n in meta.get("images", []) or []) if u]
+    content, images = extract_images(folder, content)
     zip_file = make_zip(folder, meta["download"]) if meta.get("download") else None
 
     subsections = []
@@ -211,16 +218,17 @@ def build_node(page_path):
         if is_draft:
             drafts.append(f"{rel(page_path)} ## {sub_title}")
             continue
-        subsections.append({"title": sub_title, "content": rewrite_inline_images(folder, text),
-                            "zipFile": None, "images": [], "subsections": []})
+        text, sub_images = extract_images(folder, text)
+        subsections.append({"title": sub_title, "content": text, "zipFile": None,
+                            "images": sub_images, "subsections": []})
 
     children = resolve_sections(folder, meta.get("sections"))
     if meta.get("sections") == "*":
         children.sort(key=lambda p: (str((read_page(p)[0] or {}).get("id", "~")), p))
     subsections += [n for n in (build_node(p) for p in children) if n is not None]
 
-    return {"title": title, "content": rewrite_inline_images(folder, content),
-            "zipFile": zip_file, "images": images, "subsections": subsections}
+    return {"title": title, "content": content, "zipFile": zip_file,
+            "images": images, "subsections": subsections}
 
 
 def main():
