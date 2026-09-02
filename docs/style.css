@@ -76,6 +76,10 @@ body {
     margin-bottom: 0;
 }
 
+#dynamic-content > .accordion-wrapper:first-child .panel {
+    padding-bottom: 0;
+}
+
 /* Panel-Content bündig zum Titel */
 .panel .panel-content {
     max-width: 800px;
