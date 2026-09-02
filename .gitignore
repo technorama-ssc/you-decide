@@ -1,2 +1,7 @@
-docs/config.js
-config.js
+# generated website (python .site/build.py)
+.site/dist/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+__pycache__/

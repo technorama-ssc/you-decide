@@ -1,0 +1,11 @@
+{
+  "sections": [
+    "you decide",
+    "exhibits",
+    "system",
+    {
+      "title": "Licencing",
+      "text": "LICENSE.md"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "023",
+  "title": "The Coin",
+  "published": true,
+  "images": [
+    "You Decide_The Coin_Technorama.jpg"
+  ],
+  "download": {
+    "label": "Exhibit Build Kit"
+  },
+  "sections": [
+    "docs/findings"
+  ]
+}

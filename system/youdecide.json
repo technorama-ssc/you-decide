@@ -1,0 +1,13 @@
+{
+  "title": "SYSTEM",
+  "images": [
+    "youdecide_system_connectors.jpg"
+  ],
+  "download": {
+    "label": "System Build Kit"
+  },
+  "sections": [
+    "grid",
+    "connectors"
+  ]
+}

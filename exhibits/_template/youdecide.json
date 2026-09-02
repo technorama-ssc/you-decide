@@ -1,0 +1,12 @@
+{
+  "id": "999",
+  "title": "New Exhibit",
+  "published": false,
+  "images": [],
+  "download": {
+    "label": "Exhibit Build Kit"
+  },
+  "sections": [
+    "docs/findings"
+  ]
+}

@@ -1,205 +1,187 @@
-import os
+"""Build the You Decide website from the content folders.
+
+Every folder that should appear on the website contains a `youdecide.json`:
+
+    {
+      "id": "000",                      optional, used for ordering
+      "title": "Do not Press",          optional, falls back to the README heading
+      "published": true,                optional, false = draft, left out of the site
+      "text": "README.md",              optional, markdown file to render
+      "images": ["hero.jpg"],           optional, paths relative to the folder
+      "download": true,                 optional, true / {"label": "..."} zips the folder
+      "sections": ["docs/findings"]     optional, list of sub folders, or "*" for all
+    }
+
+The root `youdecide.json` lists the top-level sections. Output goes to
+`.site/dist/` (content.json, media/, downloads/ and the static site files).
+
+    python .site/build.py
+"""
 import json
-import re
+import os
+import shutil
+import sys
+import zipfile
 from urllib.parse import quote
 
-# Konfiguration
-ROOT_DIR = os.getcwd()
-DOCS_DIR = os.path.join(ROOT_DIR, "docs")
-OUTPUT_FILE = os.path.join(DOCS_DIR, "content.json")
+SITE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(SITE_DIR)
+DIST = os.path.join(SITE_DIR, "dist")
+META = "youdecide.json"
+STATIC_FILES = ("index.html", "script.js", "style.css")
 
-# Raw GitHub base URL for assets hosted outside docs
-RAW_BASE_URL = "https://raw.githubusercontent.com/technorama-ssc/you-decide/main/"
-
-# Bild-Endungen
-IMAGE_EXTENSIONS = ('.jpg', '.jpeg', '.png')
-EXCLUDED_DIRS = {'00 prototype workshop'}
-
-def is_numbered_visible_dir(name):
-    return re.match(r'^\d', name) and name.lower() not in EXCLUDED_DIRS
+errors = []
+drafts = []
 
 
-def is_three_digit_dir(name):
-    """Returns True if the folder name starts with three digits."""
-    return re.match(r'^\d{3}', name) is not None
+def rel(path):
+    return os.path.relpath(path, ROOT).replace("\\", "/")
 
-def parse_readme(path):
-    """Liest eine README.md und gibt Titel und Inhalt zurück."""
-    if not os.path.exists(path):
-        return None, None
-    
-    with open(path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    
-    if not lines:
-        return None, None
 
-    # Remove UTF-8 BOM if present on first line so headings are detected correctly
-    if lines and lines[0].startswith('\ufeff'):
-        lines[0] = lines[0].lstrip('\ufeff')
+def load_meta(folder):
+    path = os.path.join(folder, META)
+    try:
+        with open(path, encoding="utf-8-sig") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        errors.append(f"{rel(folder)}: no {META}")
+    except json.JSONDecodeError as e:
+        errors.append(f"{rel(path)}: invalid JSON ({e})")
+    return None
 
-    title = "KEIN TITEL"
-    if lines[0].startswith('#'):
-        title = lines[0].strip('#').strip()
-        content = "".join(lines[1:])
-    else:
-        content = "".join(lines)
-        
-    return title, content
 
-def find_images(directory):
-    """Findet Bilder im Verzeichnis (nicht rekursiv). Filtert Bilder, deren Namen mit Ziffern beginnen."""
-    images = []
-    if not os.path.exists(directory):
-        return []
-        
-    for f in os.listdir(directory):
-        if f.lower().endswith(IMAGE_EXTENSIONS):
-            # Skip images that start with numbers
-            if f[0].isdigit():
+def read_text(folder, meta):
+    """Return (heading, markdown body) of the text file named in meta."""
+    name = meta.get("text", "README.md")
+    path = os.path.join(folder, name)
+    if not os.path.isfile(path):
+        if "text" in meta:
+            errors.append(f"{rel(folder)}: text file '{name}' not found")
+        return None, ""
+    with open(path, encoding="utf-8-sig") as f:
+        lines = f.read().replace("\r\n", "\n").split("\n")
+    if lines and lines[0].startswith("#"):
+        return lines[0].lstrip("#").strip(), "\n".join(lines[1:])
+    return None, "\n".join(lines)
+
+
+def copy_image(folder, name):
+    src = os.path.join(folder, name)
+    if not os.path.isfile(src):
+        errors.append(f"{rel(folder)}: image '{name}' not found")
+        return None
+    target_rel = rel(src)
+    dst = os.path.join(DIST, "media", target_rel)
+    os.makedirs(os.path.dirname(dst), exist_ok=True)
+    shutil.copy2(src, dst)
+    return "media/" + quote(target_rel)
+
+
+def make_zip(folder, spec):
+    slug = os.path.basename(folder).replace(" ", "-")
+    file_name = f"youdecide_{slug}.zip"
+    os.makedirs(os.path.join(DIST, "downloads"), exist_ok=True)
+    zip_path = os.path.join(DIST, "downloads", file_name)
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        for dirpath, dirnames, filenames in os.walk(folder):
+            dirnames[:] = sorted(d for d in dirnames if not d.startswith("."))
+            for fn in sorted(filenames):
+                if fn == META or fn.startswith("."):
+                    continue
+                full = os.path.join(dirpath, fn)
+                zf.write(full, os.path.relpath(full, os.path.dirname(folder)))
+    label = spec.get("label", "Build Kit") if isinstance(spec, dict) else "Build Kit"
+    return {"name": file_name, "download_url": "downloads/" + quote(file_name), "label": label}
+
+
+def child_folders(folder, spec):
+    """Resolve the `sections` entry of a folder into (child_folder, meta) pairs."""
+    if spec == "*":
+        found = []
+        for name in sorted(os.listdir(folder)):
+            child = os.path.join(folder, name)
+            if os.path.isdir(child) and os.path.isfile(os.path.join(child, META)):
+                meta = load_meta(child)
+                if meta is not None:
+                    found.append((child, meta))
+        found.sort(key=lambda cm: (str(cm[1].get("id", "~")), cm[1].get("title", ""), cm[0]))
+        return found
+    result = []
+    for entry in spec or []:
+        if isinstance(entry, str):
+            child = os.path.join(folder, entry)
+            if not os.path.isdir(child):
+                errors.append(f"{rel(folder)}: section folder '{entry}' not found")
                 continue
-                
-            source_path = os.path.join(directory, f)
-            rel_path_from_root = os.path.relpath(source_path, ROOT_DIR)
-            rel_path_normalized = rel_path_from_root.replace("\\", "/")
+            meta = load_meta(child)
+            if meta is not None:
+                result.append((child, meta))
+        elif isinstance(entry, dict):
+            result.append((folder, entry))
+        else:
+            errors.append(f"{rel(folder)}: unsupported section entry {entry!r}")
+    return result
 
-            # Web path: raw GitHub URL (URL-encoded for spaces)
-            web_path = RAW_BASE_URL + quote(rel_path_normalized, safe="/")
-            images.append(web_path)
-    return sorted(images)
 
-def scan_repository():
-    data = []
-    
-    # Sortierte Liste der Verzeichnisse im Root
-    dirs = sorted([d for d in os.listdir(ROOT_DIR) if os.path.isdir(os.path.join(ROOT_DIR, d))])
-    
-    for d in dirs:
-        # Nur Ordner die mit Ziffern starten (z.B. "00 you decide")
-        if not is_numbered_visible_dir(d):
-            continue
-            
-        full_path = os.path.join(ROOT_DIR, d)
-        readme_path = os.path.join(full_path, "README.md")
-        
-        title, content = parse_readme(readme_path)
-        if not title:
-            print(f"Skipping {d}: No README found")
-            continue
-            
-        print(f"Processing {d}...")
-        
-        # Zip finden
-        zip_file = None
-        for f in os.listdir(full_path):
-            if f.lower().endswith('.zip'):
-                rel_path_from_root = os.path.relpath(os.path.join(full_path, f), ROOT_DIR)
-                web_path = RAW_BASE_URL + quote(rel_path_from_root.replace("\\", "/"), safe="/")
-                
-                zip_file = {
-                    "download_url": web_path,
-                    "name": f
-                }
-                break
-        
-        # Bilder im Hauptordner
-        images = find_images(full_path)
-        
-        # Unterordner scannen
-        sub_items = []
-        sub_dirs = sorted([sd for sd in os.listdir(full_path) if os.path.isdir(os.path.join(full_path, sd))])
-        
-        subfolder_images_list = []
-        subfolders_html = ""
-        
-        for sd in sub_dirs:
-            # Unterordner-Regel: In "01 exhibits" nur dreistellige Ordner veröffentlichen
-            if d.lower() == "01 exhibits":
-                if not is_three_digit_dir(sd):
-                    continue
-            else:
-                # Für andere Kategorien weiterhin die alte Regel verwenden
-                if not is_numbered_visible_dir(sd):
-                    continue
+def build_node(folder, meta):
+    if meta.get("published", True) is False:
+        drafts.append(f"{rel(folder)} ({meta.get('title', os.path.basename(folder))})")
+        return None
+    heading, content = read_text(folder, meta)
+    title = meta.get("title") or heading or os.path.basename(folder)
+    images = [u for u in (copy_image(folder, n) for n in meta.get("images", [])) if u]
+    zip_file = make_zip(folder, meta["download"]) if meta.get("download") else None
+    subsections = [n for n in (build_node(c, m) for c, m in child_folders(folder, meta.get("sections")))
+                   if n is not None]
+    return {
+        "title": title,
+        "content": content,
+        "zipFile": zip_file,
+        "images": images,
+        "subsections": subsections,
+    }
 
-            sub_full_path = os.path.join(full_path, sd)
-            sub_readme = os.path.join(sub_full_path, "README.md")
-            
-            sub_title, sub_content = parse_readme(sub_readme)
-            if not sub_title:
-                continue
-                
-            sub_images = find_images(sub_full_path)
-            
-            # ZIP für Unterordner finden
-            sub_zip_file = None
-            for f in os.listdir(sub_full_path):
-                if f.lower().endswith('.zip'):
-                    rel_path_from_root = os.path.relpath(os.path.join(sub_full_path, f), ROOT_DIR)
-                    web_path = RAW_BASE_URL + quote(rel_path_from_root.replace("\\", "/"), safe="/")
-                    
-                    sub_zip_file = {
-                        "download_url": web_path,
-                        "name": f
-                    }
-                    break
-            sub_subsections = []
-            sub_sub_dirs = sorted([ssd for ssd in os.listdir(sub_full_path) if os.path.isdir(os.path.join(sub_full_path, ssd))])
-            
-            excluded_subfolders = set()
-            parent_relative = os.path.relpath(sub_full_path, ROOT_DIR).replace("\\", "/")
-            if parent_relative == "01 exhibits/000_do not press":
-                excluded_subfolders = {"00_findings", "01_libet experiment"}
-            
-            for ssd in sub_sub_dirs:
-                if ssd in excluded_subfolders:
-                    continue
-                if not is_numbered_visible_dir(ssd):
-                    continue
-                
-                sub_sub_full_path = os.path.join(sub_full_path, ssd)
-                sub_sub_readme = os.path.join(sub_sub_full_path, "README.md")
-                
-                sub_sub_title, sub_sub_content = parse_readme(sub_sub_readme)
-                if not sub_sub_title:
-                    continue
-                
-                sub_sub_images = find_images(sub_sub_full_path)
-                
-                sub_sub_item = {
-                    "title": sub_sub_title,
-                    "content": sub_sub_content,
-                    "images": sub_sub_images
-                }
-                sub_subsections.append(sub_sub_item)
-            
-            # Wir speichern die Rohdaten, das JS baut das HTML
-            sub_item = {
-                "title": sub_title,
-                "content": sub_content,
-                "zipFile": sub_zip_file,
-                "images": sub_images,
-                "subsections": sub_subsections
-            }
-            sub_items.append(sub_item)
 
-        item = {
-            "title": title,
-            "content": content,
-            "zipFile": zip_file,
-            "images": images,
-            "subsections": sub_items
-        }
-        data.append(item)
-        
-    return data
+def main():
+    if os.path.isdir(DIST):
+        shutil.rmtree(DIST)
+    os.makedirs(DIST)
+    for name in STATIC_FILES:
+        shutil.copy2(os.path.join(SITE_DIR, name), DIST)
+
+    root_meta = load_meta(ROOT)
+    if root_meta is None:
+        sys.exit("\n".join(errors))
+    data = [n for n in (build_node(c, m) for c, m in child_folders(ROOT, root_meta.get("sections")))
+            if n is not None]
+
+    with open(os.path.join(DIST, "content.json"), "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+    def describe(node, depth=0):
+        extras = []
+        if node["images"]:
+            extras.append(f"{len(node['images'])} image(s)")
+        if node["zipFile"]:
+            extras.append(node["zipFile"]["name"])
+        print("  " * depth + f"- {node['title']}" + (f"  [{', '.join(extras)}]" if extras else ""))
+        for sub in node["subsections"]:
+            describe(sub, depth + 1)
+
+    print("Published:")
+    for node in data:
+        describe(node)
+    if drafts:
+        print("\nSkipped (draft, published = false):")
+        for d in drafts:
+            print(f"- {d}")
+    if errors:
+        print("\nERRORS:")
+        for e in errors:
+            print(f"- {e}")
+        sys.exit(1)
+    print(f"\nDone: {rel(DIST)}")
+
 
 if __name__ == "__main__":
-    print("Starte Scan...")
-    content_data = scan_repository()
-    
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        json.dump(content_data, f, indent=2, ensure_ascii=False)
-        
-    print(f"Fertig! Datei erstellt: {OUTPUT_FILE}")
-    print(f"Gefundene Hauptkategorien: {len(content_data)}")
+    main()

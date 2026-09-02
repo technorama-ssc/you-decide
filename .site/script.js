@@ -1,96 +1,15 @@
-const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-const repoBase = isLocal
-    ? "http://localhost:8000/repos/technorama-ssc/you-decide/contents/"
-    : "https://api.github.com/repos/technorama-ssc/you-decide/contents/";
+// The website is fully static: build.py renders every folder that has a
+// youdecide.json into content.json, copies the images into media/ and the
+// download zips into downloads/. This script only turns content.json into
+// the accordion layout.
 
 const container = document.getElementById("dynamic-content");
-const excludedDirs = new Set(["00 prototype workshop"]);
-
-function isVisibleNumberedDir(name) {
-    return /^\d/.test(name) && !excludedDirs.has(name.toLowerCase());
-}
-
-// -------------------------
-// Helper: Bildpfade korrigieren
-// -------------------------
-function normalizeImageUrl(url) {
-    if (isLocal) {
-        // Lokal: Konvertiere GitHub URLs zu relativen Pfaden
-        if (url.includes("raw.githubusercontent.com")) {
-            // Extrahiere den Pfad aus der GitHub URL
-            // https://raw.githubusercontent.com/technorama-ssc/you-decide/main/01%20exhibits/...
-            // Wenn die Seite aus dem `docs`-Ordner serviert wird, liegt das Repo-Root eine Ebene darüber,
-            // daher prefixed mit "../" damit der relative Pfad korrekt aufgelöst wird.
-            const match = url.match(/main\/(.*)/);
-            if (match) {
-                // decode then re-encode to ensure spaces and special chars are percent-encoded
-                const decoded = decodeURIComponent(match[1]);
-                return "../" + encodeURI(decoded);
-            }
-        }
-        // Schon ein relativer Pfad - behalte ihn bei
-        return url;
-    } else {
-        // Production: Konvertiere relative Pfade zu GitHub URLs
-        if (!url.startsWith("http")) {
-            return `https://raw.githubusercontent.com/technorama-ssc/you-decide/main/${url}`;
-        }
-        return url;
-    }
-}
-
-// -------------------------
-// Helper: Base64 dekodieren
-// -------------------------
-function decodeBase64(encoded) {
-    try {
-        return decodeURIComponent(atob(encoded).split('').map((c) => {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    } catch (e) {
-        console.error('Fehler beim Dekodieren:', e);
-        return null;
-    }
-}
-
-// -------------------------
-// GitHub API Header mit Token
-// -------------------------
-const getGithubHeaders = () => {
-    if (isLocal) return {};
-
-    if (typeof GITHUB_TOKEN === 'undefined') {
-        console.warn('GITHUB_TOKEN ist nicht definiert - verwende unauthentifizierte Requests');
-        return {
-            'Accept': 'application/vnd.github.v3+json'
-        };
-    }
-    return {
-        'Authorization': `token ${GITHUB_TOKEN}`,
-        'Accept': 'application/vnd.github.v3+json'
-    };
-};
-
-function getDownloadDisplayName(zipFileName) {
-    const lowerName = zipFileName.toLowerCase();
-    if (lowerName === "content_youdecide_exhibition.zip") {
-        return "Exhibition Graphics Kit";
-    }
-    if (lowerName.startsWith("content_")) {
-        return "Exhibit Build Kit";
-    }
-    const parts = zipFileName.replace(/\.zip$/i, "").split("_");
-    return parts.length >= 2
-        ? `${parts[0].charAt(0).toUpperCase() + parts[0].slice(1)} ${parts[parts.length - 1].charAt(0).toUpperCase() + parts[parts.length - 1].slice(1)}`
-        : zipFileName.replace(/\.zip$/i, "");
-}
 
 function getDownloadHtml(zipFile) {
-    const displayName = getDownloadDisplayName(zipFile.name);
     return `
         <div class="download-link">
             <span>Download:</span>
-            <a href="${zipFile.download_url}" target="_blank">${displayName}</a>
+            <a href="${zipFile.download_url}" target="_blank">${zipFile.label || zipFile.name}</a>
         </div>
     `;
 }
@@ -149,8 +68,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             title.style.removeProperty("color");
         } else {
             panel.style.display = "block";
-            // EXHIBITS: gelber Hintergrund wie gewuenscht
-            wrapper.style.backgroundColor = isExhibits ? "#eaff00" : "#eaff00";
+            wrapper.style.backgroundColor = "#eaff00";
             wrapper.classList.add("open");
             title.style.color = "#000";
             panel.style.color = "#000";
@@ -178,9 +96,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                 const link = document.createElement("a");
                 link.href = zipFile.download_url;
                 link.target = "_blank";
-
-                const displayName = getDownloadDisplayName(zipFile.name);
-                link.textContent = displayName;
+                link.textContent = zipFile.label || zipFile.name;
                 dl.style.marginTop = "1em";
 
                 dl.appendChild(textSpan);
@@ -196,7 +112,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             if (images && images.length > 0) {
                 images.forEach(imgUrl => {
                     const imgEl = document.createElement("img");
-                    imgEl.src = normalizeImageUrl(imgUrl);
+                    imgEl.src = imgUrl;
                     imgEl.style.maxWidth = "600px";
                     imgEl.style.height = "auto";
 
@@ -255,9 +171,6 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                             }
                         });
                     });
-                    
-                    // Verschachtelte Subfolder-Titel klickbar machen
-                    // (Entfernt - werden jetzt wie normale Subfolder behandelt)
                 }
 
                 if (subfolderImages) {
@@ -267,13 +180,13 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                         if (imgs && imgs.length > 0) {
                             // Finde den ersten nested-subfolder-block
                             const firstNestedBlock = block.querySelector(".nested-subfolder-block");
-                            
+
                             imgs.forEach(url => {
                                 const imgEl = document.createElement("img");
-                                imgEl.src = normalizeImageUrl(url);
+                                imgEl.src = url;
                                 imgEl.style.maxWidth = "600px";
                                 imgEl.style.height = "auto";
-                                
+
                                 // Wenn es einen nested-subfolder-block gibt, füge das Bild davor ein
                                 if (firstNestedBlock) {
                                     block.querySelector(".subfolder-text").insertBefore(imgEl, firstNestedBlock);
@@ -294,262 +207,69 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 }
 
 // -------------------------
-// README aus Ordner laden
+// content.json laden und rendern
 // -------------------------
-async function loadReadmeFromFolder(url) {
-    try {
-        console.log('📥 Laden README von:', url);
-        const folderResponse = await fetch(url, { headers: getGithubHeaders() });
-        if (!folderResponse.ok) {
-            console.warn(`⚠️ Fehler beim Laden: ${folderResponse.status} ${folderResponse.statusText}`);
-            return null;
-        }
-
-        const folderContent = await folderResponse.json();
-        if (!Array.isArray(folderContent)) return null;
-
-        const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
-        if (!readme) return null;
-
-        // Nutze GitHub API um Inhalt zu fetchen (base64 kodiert)
-        const readmeResponse = await fetch(readme.url, { headers: getGithubHeaders() });
-        if (!readmeResponse.ok) return null;
-
-        const readmeData = await readmeResponse.json();
-        const md = decodeBase64(readmeData.content);
-        if (!md) return null;
-
-        const lines = md.split("\n");
-
-        if (!lines[0].startsWith("#")) return null;
-
-        return {
-            title: lines[0].replace(/^#\s*/, ""),
-            content: lines.slice(1).join("\n")
-        };
-    } catch (err) {
-        console.error('❌ Fehler in loadReadmeFromFolder:', err);
-        return null;
+async function loadContent() {
+    const response = await fetch(`content.json?cb=${Date.now()}`);
+    if (!response.ok) {
+        throw new Error(`content.json: HTTP ${response.status}`);
     }
-}
+    const data = await response.json();
+    if (!Array.isArray(data) || data.length === 0) {
+        throw new Error("content.json ist leer");
+    }
 
-// -------------------------
-// Bilder aus Ordner laden (nur JPG)
-async function loadImagesFromFolder(url) {
-    const folderResponse = await fetch(url, { headers: getGithubHeaders() });
-    if (!folderResponse.ok) return [];
+    for (const item of data) {
+        const { title, content, zipFile, images, subsections } = item;
 
-    const folderContent = await folderResponse.json();
-    if (!Array.isArray(folderContent)) return [];
+        // Subsections HTML bauen
+        let subHtml = "";
+        const subfolderImages = [];
 
-    return folderContent
-        .filter(f => f.type === "file" && /\.(jpe?g|png)$/i.test(f.name))
-        .map(f => f.download_url);
-}
+        for (const sub of subsections || []) {
+            subHtml += `
+                <div class="subfolder-block">
+                    <h2 class="subfolder-title">${sub.title}</h2>
+                    <div class="subfolder-text">
+                        ${marked.parse(sub.content)}
+                        ${sub.zipFile ? getDownloadHtml(sub.zipFile) : ""}
+            `;
 
-// -------------------------
-// Hauptordner + Unterordner laden
-// -------------------------
-async function loadFolders() {
-    try {
-        console.log('🚀 Starte loadFolders()');
-        console.log('📍 repoBase:', repoBase);
-        console.log('🔑 Token definiert:', typeof GITHUB_TOKEN !== 'undefined');
-
-        const response = await fetch(repoBase, { headers: getGithubHeaders() });
-
-        console.log('✅ Fetch erfolgreich, Status:', response.status);
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-
-        const items = await response.json();
-        console.log('📦 Items gefunden:', items.length);
-
-        for (const item of items) {
-            if (item.type !== "dir") continue;
-            if (!isVisibleNumberedDir(item.name)) continue;
-
-            const folderResp = await fetch(item.url, { headers: getGithubHeaders() });
-            if (!folderResp.ok) continue;
-
-            const folderContent = await folderResp.json();
-            if (!Array.isArray(folderContent)) continue;
-
-            const readme = folderContent.find(f => f.name.toLowerCase() === "readme.md");
-            if (!readme) continue;
-
-            // Nutze GitHub API um Inhalt zu fetchen (base64 kodiert)
-            const readmeResponse = await fetch(readme.url, { headers: getGithubHeaders() });
-            if (!readmeResponse.ok) continue;
-
-            const readmeData = await readmeResponse.json();
-            const md = decodeBase64(readmeData.content);
-            if (!md) continue;
-
-            const lines = md.split("\n");
-
-            const titleLine = lines[0].startsWith("#")
-                ? lines[0].replace(/^#\s*/, "")
-                : "KEIN TITEL";
-
-            const content = lines.slice(1).join("\n");
-            const zipFile = folderContent.find(f => f.name.toLowerCase().endsWith(".zip"));
-
-            // Bilder Hauptordner
-            const images = await loadImagesFromFolder(item.url);
-
-            // Unterordner sammeln
-            let subHtml = "";
-            const subfolderImages = [];
-
-            for (const sub of folderContent) {
-                if (sub.type !== "dir") continue;
-                // In the EXHIBITS folder only publish three-digit numbered subfolders
-                if (item.name.toLowerCase() === "01 exhibits") {
-                    if (!/^\d{3}/.test(sub.name)) continue;
-                } else {
-                    if (!isVisibleNumberedDir(sub.name)) continue;
-                }
-                if (item.name.toLowerCase() === "000_do not press" && ["00_findings", "01_libet experiment"].includes(sub.name)) continue;
-
-                const subData = await loadReadmeFromFolder(sub.url);
-                if (!subData) continue;
-
-                const subFolderResp = await fetch(sub.url, { headers: getGithubHeaders() });
-                const subFolderContent = subFolderResp.ok ? await subFolderResp.json() : [];
-                const subZipFile = Array.isArray(subFolderContent)
-                    ? subFolderContent.find(f => f.name.toLowerCase().endsWith(".zip"))
-                    : null;
-
+            // Verschachtelte Subsections (z.B. Findings unter einem Exponat)
+            for (const subsub of sub.subsections || []) {
                 subHtml += `
-                    <div class="subfolder-block">
-                        <h2 class="subfolder-title">${subData.title}</h2>
-                        <div class="subfolder-text">
-                            ${marked.parse(subData.content)}
-                            ${subZipFile ? getDownloadHtml(subZipFile) : ""}
+                    <div class="nested-subfolder-block">
+                        <h2 class="nested-subfolder-title">${subsub.title}</h2>
+                        <div class="nested-subfolder-content">
+                            ${marked.parse(subsub.content)}
+                            ${subsub.zipFile ? getDownloadHtml(subsub.zipFile) : ""}
+                `;
+                for (const imgUrl of subsub.images || []) {
+                    subHtml += `<img src="${imgUrl}" style="max-width:600px;height:auto;" class="nested-subfolder-img">`;
+                }
+                subHtml += `
                         </div>
                     </div>
                 `;
-
-                // Bilder Unterordner
-                const imgs = await loadImagesFromFolder(sub.url);
-                subfolderImages.push(imgs);
             }
 
-            const wrapper = createAccordion(titleLine, content, zipFile, subHtml, images, subfolderImages);
-            if (container.children.length === 1) {
-                wrapper.querySelector('.accordion').click();
-            }
+            subHtml += `
+                    </div>
+                </div>
+            `;
+            subfolderImages.push(sub.images || []);
         }
 
-    } catch (err) {
-        console.error('❌ Fehler beim Laden der Inhalte:');
-        console.error('Message:', err.message);
-        console.error('Stack:', err.stack);
-        console.error('Full Error:', err);
-        container.innerHTML = `<p style='color:red'>❌ Fehler beim Laden: ${err.message}</p>`;
+        const wrapper = createAccordion(title, content, zipFile, subHtml, images, subfolderImages);
+        if (container.children.length === 1) {
+            wrapper.querySelector('.accordion').click();
+        }
     }
 }
 
-// -------------------------
-// Statischen Content laden (Fallback für GitHub 403)
-// -------------------------
-async function loadStaticContent() {
-    try {
-        console.log('📄 Versuche content.json zu laden...');
-        const response = await fetch(`content.json?cb=${Date.now()}`);
-
-        if (!response.ok) {
-            console.warn('⚠️ content.json nicht gefunden oder Fehler:', response.status);
-            return false;
-        }
-
-        const data = await response.json();
-        if (!Array.isArray(data) || data.length === 0) {
-            console.warn('⚠️ content.json ist leer oder ungültig');
-            return false;
-        }
-
-        console.log('✅ Statischen Content geladen:', data.length, 'Einträge');
-
-        for (const item of data) {
-            const { title, content, zipFile, images, subsections } = item;
-
-            // Subsections HTML bauen
-            let subHtml = "";
-            let subfolderImages = [];
-
-            if (subsections && Array.isArray(subsections)) {
-                for (const sub of subsections) {
-                    subHtml += `
-                        <div class="subfolder-block">
-                            <h2 class="subfolder-title">${sub.title}</h2>
-                            <div class="subfolder-text">
-                                ${marked.parse(sub.content)}
-                                ${sub.zipFile ? getDownloadHtml(sub.zipFile) : ""}
-                    `;
-                    
-                    // Wenn es verschachtelte Subsections gibt (z.B. Libet Experiment unter Do not Press)
-                    if (sub.subsections && Array.isArray(sub.subsections) && sub.subsections.length > 0) {
-                        for (const subsub of sub.subsections) {
-                            subHtml += `
-                                <div class="nested-subfolder-block">
-                                    <h2 class="nested-subfolder-title">${subsub.title}</h2>
-                                    <div class="nested-subfolder-content">
-                                        ${marked.parse(subsub.content)}
-                                        ${subsub.zipFile ? getDownloadHtml(subsub.zipFile) : ""}
-                            `;
-                            // Bilder von nested subsections
-                            if (subsub.images && subsub.images.length > 0) {
-                                subsub.images.forEach(imgUrl => {
-                                    subHtml += `<img src="${normalizeImageUrl(imgUrl)}" style="max-width:600px;height:auto;" class="nested-subfolder-img">`;
-                                });
-                            }
-                            subHtml += `
-                                    </div>
-                                </div>
-                            `;
-                        }
-                    }
-                    
-                    subHtml += `
-                            </div>
-                        </div>
-                    `;
-                    subfolderImages.push(sub.images || []);
-                }
-            }
-
-            const wrapper = createAccordion(title, content, zipFile, subHtml, images, subfolderImages);
-            if (container.children.length === 1) {
-                wrapper.querySelector('.accordion').click();
-            }
-        }
-        return true;
-
-    } catch (err) {
-        console.error('❌ Fehler in loadStaticContent:', err);
-        return false;
-    }
-}
-
-// Starte Ladevorgang
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(async () => {
-        console.log('🚀 Starting App...');
-
-        // 1. Versuch: Statisch laden
-        const success = await loadStaticContent();
-
-        // 2. Versuch: GitHub API (Fallback)
-        if (!success) {
-            console.log('🔄 Fallback auf GitHub API...');
-            console.log('GITHUB_TOKEN defined?', typeof GITHUB_TOKEN !== 'undefined');
-            loadFolders();
-        } else {
-            console.log('✨ App gestartet mit statischem Content.');
-        }
-    }, 100);
+    loadContent().catch(err => {
+        console.error('Fehler beim Laden der Inhalte:', err);
+        container.innerHTML = `<p style='color:red'>Fehler beim Laden: ${err.message}</p>`;
+    });
 });
