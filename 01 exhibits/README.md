@@ -8,4 +8,4 @@ We continuously develop new ideas. In our exhibition, we test prototypes and kee
 
 Here we present a selection of our most advanced exhibits. You can download the parts lists and information for each exhibit here, rebuild them, or improve them.
 
-![EXHIBITS](youdecide_system_text%20stand.jpg)
+![EXHIBITS](_media/youdecide_system_text%20stand.jpg)

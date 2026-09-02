@@ -10,4 +10,4 @@ With over 20,000 decisions a day, we shape our future. Left or right, bike or bu
 
 This is the open-source platform for the “You Decide” exhibition. The exhibition—and this website—will never be finished—they keep changing with you.
 
-![YOU DECIDE](youdecide_yes%20or%20no.jpg)
+![YOU DECIDE](04%20media/youdecide_yes%20or%20no.jpg)

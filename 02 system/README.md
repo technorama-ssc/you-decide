@@ -11,4 +11,4 @@ All exhibits are based on a modular system. We have developed a range of connect
 
 Here you can find information and materials about the construction system used throughout the exhibition.
 
-![SYSTEM](youdecide_system_connectors.jpg)
+![SYSTEM](04%20media/youdecide_system_connectors.jpg)
