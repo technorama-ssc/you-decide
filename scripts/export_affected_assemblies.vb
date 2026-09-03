@@ -65,5 +65,5 @@ Next
 
 If impacted.Count > 0 Then
     Dim postProcess = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File ""C:\Users\clehmann\OneDrive - Swiss Science Center Technorama\01_Projekte\Du entscheidest\GitHub\you-decide\scripts\publish_stp_exports.ps1"""
-    Shell(postProcess, AppWinStyle.Hide, False)
+    Microsoft.VisualBasic.Interaction.Shell(postProcess, Microsoft.VisualBasic.AppWinStyle.Hide, False)
 End If
