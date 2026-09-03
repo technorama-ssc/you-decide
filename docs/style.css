@@ -114,6 +114,10 @@ body {
     margin: 40px 0 0 0;
 }
 
+.system .panel-content > img {
+    margin-bottom: 60px;
+}
+
 .exhibits .panel-content > img {
     margin-bottom: 60px;
 }

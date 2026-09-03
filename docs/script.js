@@ -107,6 +107,10 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     if (isExhibits) {
         wrapper.classList.add("exhibits");
     }
+    const isSystem = titleText.toUpperCase() === "SYSTEM";
+    if (isSystem) {
+        wrapper.classList.add("system");
+    }
 
     const title = document.createElement("h1");
     title.className = "accordion";
