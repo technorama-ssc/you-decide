@@ -56,6 +56,9 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
     if (isExhibits) {
         wrapper.classList.add("exhibits");
     }
+    if (titleText.toUpperCase() === "SYSTEM") {
+        wrapper.classList.add("system");
+    }
 
     const id = slugify(titleText);
 
