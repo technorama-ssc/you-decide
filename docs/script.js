@@ -152,10 +152,8 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             wrapper.classList.remove("open");
             title.style.removeProperty("color");
         } else {
+            const openPanel = () => {
             panel.style.display = "block";
-            requestAnimationFrame(() => {
-                wrapper.scrollIntoView({ behavior: "smooth", block: "start" });
-            });
             // EXHIBITS: gelber Hintergrund wie gewuenscht
             wrapper.style.backgroundColor = isExhibits ? "#eaff00" : "#eaff00";
             wrapper.classList.add("open");
@@ -292,6 +290,16 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
                         }
                     });
                 }
+            }
+            };
+
+            if (Math.abs(wrapper.getBoundingClientRect().top) < 1) {
+                openPanel();
+            } else {
+                requestAnimationFrame(() => {
+                    wrapper.scrollIntoView({ behavior: "auto", block: "start" });
+                    requestAnimationFrame(openPanel);
+                });
             }
         }
     });
