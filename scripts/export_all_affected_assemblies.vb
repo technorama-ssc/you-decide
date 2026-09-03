@@ -12,18 +12,18 @@ If Not Directory.Exists(assemblyRoot) Then
 End If
 If Not Directory.Exists(outputRoot) Then Directory.CreateDirectory(outputRoot)
 
-Dim inventor = ThisApplication
-Dim impacted = New List(Of String)
+Dim inventor As Inventor.Application = ThisApplication
+Dim impacted As New List(Of String)
 
 For Each filePath In System.IO.Directory.GetFiles(assemblyRoot, "*.iam", System.IO.SearchOption.AllDirectories)
     If filePath.ToLowerInvariant().Contains("\oldversions\") Then Continue For
 
-    Dim assemblyDocument = Nothing
+    Dim assemblyDocument As Inventor.Document = Nothing
     Try
         assemblyDocument = inventor.Documents.Open(filePath, False)
         Dim isImpacted = filePath.ToLowerInvariant() = changedFullPath
         If Not isImpacted Then
-            For Each reference In assemblyDocument.ReferencedDocuments
+            For Each reference As Inventor.Document In assemblyDocument.ReferencedDocuments
                 If reference.FullFileName.ToLowerInvariant() = changedFullPath Then
                     isImpacted = True
                     Exit For
@@ -38,21 +38,21 @@ For Each filePath In System.IO.Directory.GetFiles(assemblyRoot, "*.iam", System.
     End Try
 Next
 
-Dim stepTranslator = inventor.ApplicationAddIns.ItemById("{90AF7F40-0C01-11D5-8E83-0010B541CD80}")
+Dim stepTranslator As Inventor.TranslatorAddIn = inventor.ApplicationAddIns.ItemById("{90AF7F40-0C01-11D5-8E83-0010B541CD80}")
 If Not stepTranslator.Activated Then stepTranslator.Activate()
 
 For Each assemblyPath In impacted
-    Dim assemblyDocument = Nothing
+    Dim assemblyDocument As Inventor.Document = Nothing
     Try
         assemblyDocument = inventor.Documents.Open(assemblyPath, False)
         assemblyDocument.Update2(True)
 
         Dim number = System.IO.Path.GetFileNameWithoutExtension(assemblyPath).Substring(0, 3)
         Dim outputPath = System.IO.Path.Combine(outputRoot, number & ".stp")
-        Dim context = inventor.TransientObjects.CreateTranslationContext()
+        Dim context As Inventor.TranslationContext = inventor.TransientObjects.CreateTranslationContext()
         context.Type = 1
-        Dim options = inventor.TransientObjects.CreateNameValueMap()
-        Dim data = inventor.TransientObjects.CreateDataMedium()
+        Dim options As Inventor.NameValueMap = inventor.TransientObjects.CreateNameValueMap()
+        Dim data As Inventor.DataMedium = inventor.TransientObjects.CreateDataMedium()
         data.FileName = outputPath
         If stepTranslator.HasSaveCopyAsOptions(assemblyDocument, context, options) Then
             options.Value("ApplicationProtocolType") = 3
