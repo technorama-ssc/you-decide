@@ -9,8 +9,8 @@ FILE_DESCRIPTION(
 /* implementation_level */ '2;1');
 
 FILE_NAME(
-/* name */ '033_Der Kreis.stp',
-/* time_stamp */ '2026-04-13T13:08:59+02:00',
+/* name */ '033.stp',
+/* time_stamp */ '2026-09-03T15:06:27+02:00',
 /* author */ ('clehmann'),
 /* organization */ (''),
 /* preprocessor_version */ 'ST-DEVELOPER v20',
