@@ -118,6 +118,17 @@ body {
     margin-bottom: 60px;
 }
 
+.system .panel .panel-content {
+    max-width: 800px;
+}
+
+.system .subfolder-block {
+    margin-left: 0;
+    margin-right: 0;
+    width: 800px;
+    max-width: calc(100vw - 62px);
+}
+
 .system .panel-content > .subfolder-block:first-of-type {
     border-top: 1px solid #000000 !important;
 }
