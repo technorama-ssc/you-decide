@@ -9,8 +9,8 @@ FILE_DESCRIPTION(
 /* implementation_level */ '2;1');
 
 FILE_NAME(
-/* name */ '000_Nicht Drcken_001.stp',
-/* time_stamp */ '2026-09-03T10:58:38+02:00',
+/* name */ '000.stp',
+/* time_stamp */ '2026-09-03T15:05:21+02:00',
 /* author */ ('clehmann'),
 /* organization */ (''),
 /* preprocessor_version */ 'ST-DEVELOPER v20',
