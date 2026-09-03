@@ -64,6 +64,11 @@ For Each assemblyPath In impacted
 Next
 
 If impacted.Count > 0 Then
-    Dim postProcess = "powershell.exe -NoProfile -ExecutionPolicy Bypass -File ""C:\Users\clehmann\OneDrive - Swiss Science Center Technorama\01_Projekte\Du entscheidest\GitHub\you-decide\scripts\publish_stp_exports.ps1"""
-    Microsoft.VisualBasic.Interaction.Shell(postProcess, Microsoft.VisualBasic.AppWinStyle.Hide, False)
+    Dim postProcessPath = "C:\Users\clehmann\OneDrive - Swiss Science Center Technorama\01_Projekte\Du entscheidest\GitHub\you-decide\scripts\publish_stp_exports.ps1"
+    Dim startInfo As New System.Diagnostics.ProcessStartInfo()
+    startInfo.FileName = "powershell.exe"
+    startInfo.Arguments = "-NoProfile -ExecutionPolicy Bypass -File """ & postProcessPath & """"
+    startInfo.CreateNoWindow = True
+    startInfo.UseShellExecute = False
+    System.Diagnostics.Process.Start(startInfo)
 End If
