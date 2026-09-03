@@ -149,6 +149,7 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
             title.style.removeProperty("color");
         } else {
             panel.style.display = "block";
+            wrapper.scrollIntoView({ behavior: "smooth", block: "start" });
             // EXHIBITS: gelber Hintergrund wie gewuenscht
             wrapper.style.backgroundColor = isExhibits ? "#eaff00" : "#eaff00";
             wrapper.classList.add("open");
