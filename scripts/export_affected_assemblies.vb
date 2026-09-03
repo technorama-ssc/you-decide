@@ -4,7 +4,7 @@ Imports System.Collections.Generic
 Dim cadRoot = "C:\Users\clehmann\Swiss Science Center Technorama\Projekte - Dokumente\General\SA_2023_DuEntscheidest\30_Entwicklung\03_Baukasten\20_System\CAD"
 Dim assemblyRoot = System.IO.Path.Combine(cadRoot, "200_Exponate")
 Dim outputRoot = System.IO.Path.Combine(cadRoot, "_stp_exports")
-Dim changedPath = ThisDoc.Document.FullFileName
+Dim changedPath = ThisApplication.ActiveDocument.FullFileName
 Dim changedFullPath = System.IO.Path.GetFullPath(changedPath).ToLowerInvariant()
 
 If Not Directory.Exists(assemblyRoot) Then
