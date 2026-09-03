@@ -118,6 +118,10 @@ body {
     margin-bottom: 60px;
 }
 
+.exhibits .panel-content > img {
+    margin-bottom: 60px;
+}
+
 .system .panel .panel-content {
     max-width: 800px;
 }
