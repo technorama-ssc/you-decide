@@ -3,7 +3,7 @@ param(
     [ValidateSet('Once', 'Watch')]
     [string]$Mode = 'Watch',
     [string]$CadRoot = 'C:\Users\clehmann\Swiss Science Center Technorama\Projekte - Dokumente\General\SA_2023_DuEntscheidest\30_Entwicklung\03_Baukasten\20_System\CAD',
-    [string]$RepoRoot = (Split-Path -Parent $PSScriptRoot),
+    [string]$RepoRoot = '',
     [string[]]$ChangedPath
 )
 
@@ -11,6 +11,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
+$RepoRoot = if ($RepoRoot) { $RepoRoot } else { Split-Path -Parent $PSScriptRoot }
 $exportRule = Join-Path $PSScriptRoot 'export_active_assembly.vb'
 $exhibitsRoot = Join-Path $RepoRoot '01 exhibits'
 $stagingRoot = Join-Path $RepoRoot '.stp-staging'
@@ -113,18 +114,24 @@ function Export-Assembly([string]$AssemblyPath, $Inventor) {
 }
 
 function Invoke-Update([string[]]$Paths) {
-    $inventor = New-Object -ComObject Inventor.Application
-    $inventor.Visible = $false
+    $inventor = $null
+    $ownsInventor = $false
+    try { $inventor = [System.Runtime.InteropServices.Marshal]::GetActiveObject('Inventor.Application') } catch { }
+    if (-not $inventor) {
+        $inventor = New-Object -ComObject Inventor.Application
+        $inventor.Visible = $false
+        $ownsInventor = $true
+    }
     try {
         $assemblies = Get-ImpactedAssemblies $Paths $inventor
         foreach ($assembly in $assemblies) { [void](Export-Assembly $assembly $inventor) }
     } finally {
-        $inventor.Quit()
+        if ($ownsInventor) { $inventor.Quit() }
     }
 
-    $changed = git -C $RepoRoot status --short
-    if ($changed) {
-        git -C $RepoRoot add -- '01 exhibits'
+    git -C $RepoRoot add -- '01 exhibits'
+    git -C $RepoRoot diff --cached --quiet
+    if ($LASTEXITCODE -ne 0) {
         git -C $RepoRoot commit -m 'Update generated exhibit STEP files'
         git -C $RepoRoot push origin main
     }
