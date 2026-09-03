@@ -16,7 +16,7 @@ Each week, we place a game coin in a jewelry case. Guests can choose whether to 
 - We collect the real coins for a charitable donation.
 - We have discovered that whenever there is an empty box, visitors will again donate a real coin, some even hiding the coins under the velvet pad of the box.
 
-## Konsequenzen
+## Konsequenzen (draft)
 
 Das Exponat verbindet Fragen zur Entscheidungsfindung mit globaler Gesundheitspolitik. Tuberkulose zählt weltweit zu den häufigsten tödlichen Infektionskrankheiten. Jährlich sterben etwa 1,3 Millionen Menschen an der Erkrankung, hauptsächlich in Low-Income-Ländern (WHO-Daten 2024). Die Krankheit ist in vielen Fällen behandelbar, dennoch scheitert eine wirksame Bekämpfung oft an fehlendem Zugang zu Diagnostik, Medikamenten und stabilen Gesundheitssystemen.
 50 Franken decken bereits die Kosten für Medikamente für mehrere Patientinnen und Patienten. Damit wird deutlich, wie konkrete finanzielle Beiträge unmittelbar in medizinische Versorgung übersetzt werden können. Aktuelle Daten und Berichte zu Tuberkulose bietet die World Health Organization (WHO) im jährlich erscheinenden „Global Tuberculosis Report“. 
