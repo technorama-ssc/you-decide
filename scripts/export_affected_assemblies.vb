@@ -63,12 +63,3 @@ For Each assemblyPath In impacted
     End Try
 Next
 
-If impacted.Count > 0 Then
-    Dim postProcessPath = "C:\Users\clehmann\OneDrive - Swiss Science Center Technorama\01_Projekte\Du entscheidest\GitHub\you-decide\scripts\publish_stp_exports.ps1"
-    Dim startInfo As New System.Diagnostics.ProcessStartInfo()
-    startInfo.FileName = "powershell.exe"
-    startInfo.Arguments = "-NoProfile -ExecutionPolicy Bypass -File """ & postProcessPath & """"
-    startInfo.CreateNoWindow = True
-    startInfo.UseShellExecute = False
-    System.Diagnostics.Process.Start(startInfo)
-End If
