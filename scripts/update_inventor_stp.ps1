@@ -54,6 +54,8 @@ function Get-ImpactedAssemblies([string[]]$Paths, $Inventor) {
             if ($changed | Where-Object { $references -contains $_ -or $_ -eq $assembly.FullName.ToLowerInvariant() }) {
                 $impacted += $assembly.FullName
             }
+        } catch {
+            Write-Warning "Could not inspect assembly $($assembly.Name): $($_.Exception.Message)"
         } finally {
             if ($document) { $document.Close($false) }
         }
