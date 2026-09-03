@@ -95,6 +95,15 @@ function getDownloadHtml(zipFile) {
     `;
 }
 
+function getCadDownloadHtml(cadFile) {
+    return `
+        <div class="download-link">
+            <span>CAD (STEP):</span>
+            <a href="${cadFile.download_url}" target="_blank">${cadFile.name}</a>
+        </div>
+    `;
+}
+
 // -------------------------
 // Akkordeon erstellen
 // -------------------------
@@ -490,7 +499,7 @@ async function loadStaticContent() {
         console.log('✅ Statischen Content geladen:', data.length, 'Einträge');
 
         for (const item of data) {
-            const { title, content, zipFile, images, subsections } = item;
+                    const { title, content, zipFile, cadFile, images, subsections } = item;
 
             // Subsections HTML bauen
             let subHtml = "";
@@ -504,6 +513,7 @@ async function loadStaticContent() {
                             <div class="subfolder-text">
                                 ${marked.parse(sub.content)}
                                 ${sub.zipFile ? getDownloadHtml(sub.zipFile) : ""}
+                                ${sub.cadFile ? getCadDownloadHtml(sub.cadFile) : ""}
                     `;
                     
                     // Wenn es verschachtelte Subsections gibt (z.B. Libet Experiment unter Do not Press)
