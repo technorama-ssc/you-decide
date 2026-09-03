@@ -2,10 +2,10 @@ Imports System.IO
 Imports System.Collections.Generic
 
 Dim cadRoot = "C:\Users\clehmann\Swiss Science Center Technorama\Projekte - Dokumente\General\SA_2023_DuEntscheidest\30_Entwicklung\03_Baukasten\20_System\CAD"
-Dim assemblyRoot = Path.Combine(cadRoot, "200_Exponate")
-Dim outputRoot = Path.Combine(cadRoot, "_stp_exports")
+Dim assemblyRoot = System.IO.Path.Combine(cadRoot, "200_Exponate")
+Dim outputRoot = System.IO.Path.Combine(cadRoot, "_stp_exports")
 Dim changedPath = ThisDoc.Document.FullFileName
-Dim changedFullPath = Path.GetFullPath(changedPath).ToLowerInvariant()
+Dim changedFullPath = System.IO.Path.GetFullPath(changedPath).ToLowerInvariant()
 
 If Not Directory.Exists(assemblyRoot) Then
     Throw New Exception("Exhibit assembly folder not found: " & assemblyRoot)
@@ -15,7 +15,7 @@ If Not Directory.Exists(outputRoot) Then Directory.CreateDirectory(outputRoot)
 Dim inventor = ThisApplication
 Dim impacted = New List(Of String)
 
-For Each filePath In Directory.GetFiles(assemblyRoot, "*.iam", SearchOption.AllDirectories)
+For Each filePath In System.IO.Directory.GetFiles(assemblyRoot, "*.iam", System.IO.SearchOption.AllDirectories)
     If filePath.ToLowerInvariant().Contains("\oldversions\") Then Continue For
 
     Dim assemblyDocument = Nothing
@@ -47,8 +47,8 @@ For Each assemblyPath In impacted
         assemblyDocument = inventor.Documents.Open(assemblyPath, False)
         assemblyDocument.Update2(True)
 
-        Dim number = Path.GetFileNameWithoutExtension(assemblyPath).Substring(0, 3)
-        Dim outputPath = Path.Combine(outputRoot, number & ".stp")
+        Dim number = System.IO.Path.GetFileNameWithoutExtension(assemblyPath).Substring(0, 3)
+        Dim outputPath = System.IO.Path.Combine(outputRoot, number & ".stp")
         Dim context = inventor.TransientObjects.CreateTranslationContext()
         context.Type = 1
         Dim options = inventor.TransientObjects.CreateNameValueMap()
