@@ -118,6 +118,10 @@ body {
     margin-bottom: 60px;
 }
 
+.system .panel-content > .subfolder-block:first-of-type {
+    border-top: 1px solid #000000 !important;
+}
+
 .exhibits .panel-content > img {
     margin-bottom: 60px;
 }
