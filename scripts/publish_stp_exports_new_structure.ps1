@@ -42,5 +42,5 @@ git -C $RepoRoot add -- '01 exhibits'
 git -C $RepoRoot diff --cached --quiet
 if ($LASTEXITCODE -ne 0) {
     git -C $RepoRoot commit -m 'Update generated exhibit STEP files'
-    git -C $RepoRoot push origin main
+    git -C $RepoRoot push origin HEAD:main
 }
