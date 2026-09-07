@@ -422,6 +422,11 @@ body {
         padding-right: 24px;
     }
 
+    .panel ul,
+    .panel ol {
+        padding-left: 24px;
+    }
+
     .exhibits .subfolder-block {
         margin-left: -24px;
         margin-right: -24px;
