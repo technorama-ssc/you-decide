@@ -9,8 +9,8 @@ FILE_DESCRIPTION(
 /* implementation_level */ '2;1');
 
 FILE_NAME(
-/* name */ '023_the coin.stp',
-/* time_stamp */ '2026-09-07T10:50:10+02:00',
+/* name */ '023.stp',
+/* time_stamp */ '2026-09-07T11:01:42+02:00',
 /* author */ ('clehmann'),
 /* organization */ (''),
 /* preprocessor_version */ 'ST-DEVELOPER v20',
