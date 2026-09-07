@@ -11,7 +11,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $RepoRoot = if ($RepoRoot) { $RepoRoot } else { Split-Path -Parent $PSScriptRoot }
-$exportRule = Join-Path $PSScriptRoot 'export_active_assembly_new_structure_v2.vb'
+$exportRule = Join-Path $PSScriptRoot 'export_active_assembly_new_structure_v3.vb'
 $exhibitsRoot = Join-Path $RepoRoot '01 exhibits'
 $stagingRoot = Join-Path $RepoRoot '.stp-staging'
 
@@ -72,12 +72,14 @@ function Export-Assembly([string]$AssemblyPath, $Inventor) {
     try {
         $document = $Inventor.Documents.Open($AssemblyPath, $false)
         $env:YOUDECIDE_STP_OUTPUT = $stpPath
+        [Environment]::SetEnvironmentVariable('YOUDECIDE_STP_OUTPUT', $stpPath, 'User')
         $ilogic = $Inventor.ApplicationAddIns | Where-Object { $_.DisplayName -eq 'iLogic' } | Select-Object -First 1
         if (-not $ilogic) { throw 'Inventor iLogic add-in not found.' }
         $ilogic.Automation.RunExternalRule($document, $exportRule)
     } finally {
         if ($document) { $document.Close($false) }
         Remove-Item Env:YOUDECIDE_STP_OUTPUT -ErrorAction SilentlyContinue
+        [Environment]::SetEnvironmentVariable('YOUDECIDE_STP_OUTPUT', $null, 'User')
     }
 
     if (-not (Test-Path -LiteralPath $stpPath)) { throw "Inventor did not create $stpPath" }
