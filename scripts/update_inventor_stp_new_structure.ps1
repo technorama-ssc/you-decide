@@ -11,7 +11,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 $RepoRoot = if ($RepoRoot) { $RepoRoot } else { Split-Path -Parent $PSScriptRoot }
-$exportRule = Join-Path $PSScriptRoot 'export_active_assembly_new_structure_v6.vb'
+$exportRule = Join-Path $PSScriptRoot 'export_active_assembly_new_structure_v7.vb'
 $exhibitsRoot = Join-Path $RepoRoot '01 exhibits'
 $stagingRoot = Join-Path $RepoRoot '.stp-staging'
 
