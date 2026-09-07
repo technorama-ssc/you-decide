@@ -183,7 +183,7 @@ body {
 }
 
 .download-link span {
-    font-weight: normal !important;
+    font-weight: 500 !important;
     margin-right: 5px;
 }
 
