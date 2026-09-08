@@ -1,6 +1,7 @@
 ---
 id: "048"
 ---
+published: false
 
 # know yourself
 
