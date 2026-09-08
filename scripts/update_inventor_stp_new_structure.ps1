@@ -2,7 +2,7 @@
 param(
     [ValidateSet('Once', 'Watch')]
     [string]$Mode = 'Watch',
-    [string]$CadRoot = 'C:\Users\clehmann\OneDrive - Swiss Science Center Technorama\Projekte - Dokumente\General\SA_2023_DuEntscheidest\30_Entwicklung\03_Baukasten\20_System\CAD',
+    [string]$CadRoot = 'C:\Users\clehmann\Swiss Science Center Technorama\Projekte - Dokumente\General\SA_2023_DuEntscheidest\30_Entwicklung\03_Baukasten\20_System\CAD',
     [string]$RepoRoot = '',
     [string[]]$ChangedPath
 )
@@ -38,12 +38,27 @@ function Get-ExhibitTarget([string]$Number) {
 }
 
 function Get-ImpactedAssemblies([string[]]$Paths, $Inventor) {
-    $changed = @($Paths | ForEach-Object { [System.IO.Path]::GetFullPath($_).ToLowerInvariant() })
+    $changed = @($Paths | ForEach-Object {
+        $resolved = Resolve-Path -LiteralPath $_ -ErrorAction SilentlyContinue
+        $resolvedPath = if ($resolved) { $resolved.Path }
+        if (-not $resolvedPath) {
+            $fileName = [System.IO.Path]::GetFileName($_)
+            $resolvedPath = Get-ChildItem -LiteralPath $CadRoot -Recurse -File -Filter $fileName -ErrorAction SilentlyContinue |
+                Select-Object -First 1 |
+                ForEach-Object { $_.FullName }
+        }
+        if ($resolvedPath) { [System.IO.Path]::GetFullPath($resolvedPath).ToLowerInvariant() }
+    })
     $assemblies = Get-ChildItem -LiteralPath (Join-Path $CadRoot '200_Exponate') -Recurse -File -Filter '*.iam' |
         Where-Object { $_.FullName -notmatch '\\OldVersions\\' }
     $impacted = @()
 
     foreach ($assembly in $assemblies) {
+        $assemblyPath = $assembly.FullName.ToLowerInvariant()
+        if ($changed -contains $assemblyPath) {
+            $impacted += $assembly.FullName
+            continue
+        }
         $document = $null
         try {
             $document = $Inventor.Documents.Open($assembly.FullName, $false)
@@ -69,15 +84,23 @@ function Export-Assembly([string]$AssemblyPath, $Inventor) {
     if (-not (Test-Path -LiteralPath $stagingRoot)) { New-Item -ItemType Directory -Path $stagingRoot | Out-Null }
     $stpPath = Join-Path $stagingRoot $target.StepName
     $document = $null
+    $closeDocument = $false
     try {
-        $document = $Inventor.Documents.Open($AssemblyPath, $false)
+        $activeDocument = $Inventor.ActiveDocument
+        if ($activeDocument -and $activeDocument.FullFileName -and
+            $activeDocument.FullFileName.ToLowerInvariant() -eq $AssemblyPath.ToLowerInvariant()) {
+            $document = $activeDocument
+        } else {
+            $document = $Inventor.Documents.Open($AssemblyPath, $false)
+            $closeDocument = $true
+        }
         $env:YOUDECIDE_STP_OUTPUT = $stpPath
         [Environment]::SetEnvironmentVariable('YOUDECIDE_STP_OUTPUT', $stpPath, 'User')
         $ilogic = $Inventor.ApplicationAddIns | Where-Object { $_.DisplayName -eq 'iLogic' } | Select-Object -First 1
         if (-not $ilogic) { throw 'Inventor iLogic add-in not found.' }
         $ilogic.Automation.RunExternalRule($document, $exportRule)
     } finally {
-        if ($document) { $document.Close($false) }
+        if ($document -and $closeDocument) { $document.Close($false) }
         Remove-Item Env:YOUDECIDE_STP_OUTPUT -ErrorAction SilentlyContinue
         [Environment]::SetEnvironmentVariable('YOUDECIDE_STP_OUTPUT', $null, 'User')
     }
