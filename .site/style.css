@@ -148,6 +148,16 @@ body {
     margin: 40px 0 0 0;
 }
 
+.panel iframe {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    display: block;
+    margin: 40px 0 60px 0;
+    border: 0;
+}
+
 .exhibits .panel-content > img {
     margin-bottom: 60px;
 }

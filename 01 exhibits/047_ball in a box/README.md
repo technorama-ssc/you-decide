@@ -8,6 +8,8 @@ This is a game about deception for two players. Two boxes are placed on a table.
 The objective is to identify the box containing the ball. However, only one player is allowed to look inside a box, while the other player can decide whether to keep their box or exchange it with the other player's box.
 The winner earns the right to assign a punishment to the loser.
 
+<iframe width="600" height="338" src="https://www.youtube.com/embed/IlEeHrTF9YE" title="Carrot In A Box III: Jon Richardson vs Lee Mack! | 8 Out Of 10 Cats Does Countdown | Channel 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ## Findings
 
 - Visitors are willing to lie regardless of their age.
