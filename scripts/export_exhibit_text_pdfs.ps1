@@ -52,28 +52,68 @@ function Get-DeepLTranslation {
 
 function Translate-PresentationText {
     param(
-        $Presentation,
+        [string]$PresentationPath,
         [string]$AuthKey
     )
 
-    $textRanges = [System.Collections.Generic.List[object]]::new()
-    foreach ($slide in $Presentation.Slides) {
-        foreach ($shape in $slide.Shapes) {
-            if ($shape.HasTextFrame -and $shape.TextFrame.HasText) {
-                $textRanges.Add($shape.TextFrame.TextRange)
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $archive = [System.IO.Compression.ZipFile]::Open(
+        $PresentationPath,
+        [System.IO.Compression.ZipArchiveMode]::Update
+    )
+
+    try {
+        $documents = [System.Collections.Generic.List[object]]::new()
+        $paragraphs = [System.Collections.Generic.List[object]]::new()
+        foreach ($entry in $archive.Entries | Where-Object { $_.FullName -match '^ppt/slides/slide\d+\.xml$' }) {
+            $reader = New-Object IO.StreamReader($entry.Open())
+            try {
+                [xml]$xml = $reader.ReadToEnd()
+            }
+            finally {
+                $reader.Close()
+            }
+
+            $namespace = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+            $namespace.AddNamespace('a', 'http://schemas.openxmlformats.org/drawingml/2006/main')
+            foreach ($paragraph in $xml.SelectNodes('//a:p', $namespace)) {
+                $nodes = @($paragraph.SelectNodes('.//a:t', $namespace))
+                $text = ($nodes | ForEach-Object { $_.InnerText }) -join ''
+                if ($text.Trim()) {
+                    $paragraphs.Add([PSCustomObject]@{ Nodes = $nodes; Text = $text })
+                }
+            }
+            $documents.Add([PSCustomObject]@{ EntryName = $entry.FullName; Xml = $xml })
+        }
+
+        foreach ($batch in @($paragraphs | ForEach-Object -Begin { $items = @() } -Process {
+            $items += $_
+            if ($items.Count -eq 50) { ,$items; $items = @() }
+        } -End { if ($items.Count) { ,$items } })) {
+            $sourceTexts = @($batch | ForEach-Object { $_.Text.Trim() })
+            $translations = Get-DeepLTranslation -Text $sourceTexts -AuthKey $AuthKey
+            for ($index = 0; $index -lt $batch.Count; $index++) {
+                $batch[$index].Nodes[0].InnerText = $translations[$index]
+                for ($nodeIndex = 1; $nodeIndex -lt $batch[$index].Nodes.Count; $nodeIndex++) {
+                    $batch[$index].Nodes[$nodeIndex].InnerText = ''
+                }
+            }
+        }
+
+        foreach ($document in $documents) {
+            $archive.GetEntry($document.EntryName).Delete()
+            $entry = $archive.CreateEntry($document.EntryName)
+            $writer = New-Object IO.StreamWriter($entry.Open(), [Text.UTF8Encoding]::new($false))
+            try {
+                $document.Xml.Save($writer)
+            }
+            finally {
+                $writer.Close()
             }
         }
     }
-
-    foreach ($batch in @($textRanges | ForEach-Object -Begin { $items = @() } -Process {
-        $items += $_
-        if ($items.Count -eq 50) { ,$items; $items = @() }
-    } -End { if ($items.Count) { ,$items } })) {
-        $sourceTexts = @($batch | ForEach-Object { $_.Text })
-        $translations = Get-DeepLTranslation -Text $sourceTexts -AuthKey $AuthKey
-        for ($index = 0; $index -lt $batch.Count; $index++) {
-            $batch[$index].Text = $translations[$index]
-        }
+    finally {
+        $archive.Dispose()
     }
 }
 
@@ -124,6 +164,7 @@ try {
         $temporaryPresentation = Join-Path $env:TEMP ("$number-$(New-Guid).pptx")
         $temporaryFiles.Add($temporaryPresentation)
         Copy-Item -LiteralPath $SourcePresentation -Destination $temporaryPresentation
+        Translate-PresentationText -PresentationPath $temporaryPresentation -AuthKey $DeepLAuthKey
         $export = $powerPoint.Presentations.Open($temporaryPresentation, $false, $false, $false)
         try {
             foreach ($slideIndex in @($export.Slides.Count..1)) {
@@ -131,7 +172,6 @@ try {
                     $export.Slides.Item($slideIndex).Delete()
                 }
             }
-            Translate-PresentationText -Presentation $export -AuthKey $DeepLAuthKey
             $export.Save()
             $export.SaveAs($outputPath, 32)
             $outputs.Add($outputPath)
