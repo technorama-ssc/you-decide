@@ -109,7 +109,7 @@ try {
         }
 
         $mediaDirectory = Join-Path $exhibit.FullName '04 media'
-        $outputPath = Join-Path $mediaDirectory "exhibit graphics_$($exhibit.Name).pdf"
+        $outputPath = Join-Path $mediaDirectory "Exhibit graphics_$($exhibit.Name).pdf"
         $slideNumbers = @($slidesByExhibit[$number] | Sort-Object)
         Write-Output "$number : Folien $($slideNumbers -join ', ') -> $outputPath"
 
