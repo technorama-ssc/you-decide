@@ -112,6 +112,55 @@ function Translate-PresentationText {
     }
 }
 
+function Convert-SvgGraphicsToHighResolutionPng {
+    param(
+        $Presentation,
+        [string]$RasterDirectory
+    )
+
+    New-Item -ItemType Directory -Force -Path $RasterDirectory | Out-Null
+    $graphics = [System.Collections.Generic.List[object]]::new()
+    $imageIndex = 0
+    foreach ($slide in $Presentation.Slides) {
+        foreach ($shape in $slide.Shapes) {
+            if ($shape.Type -ne 28) { continue }
+
+            $imagePath = Join-Path $RasterDirectory "graphic-$imageIndex.png"
+            $shape.Export($imagePath, 2, 1600, 1600)
+            $graphics.Add([PSCustomObject]@{
+                Slide = $slide
+                Shape = $shape
+                ZOrder = $shape.ZOrderPosition
+                ImagePath = $imagePath
+                Left = $shape.Left
+                Top = $shape.Top
+                Width = $shape.Width
+                Height = $shape.Height
+            })
+            $imageIndex++
+        }
+    }
+
+    foreach ($graphic in $graphics | Sort-Object ZOrder -Descending) {
+        $graphic.Shape.Delete()
+    }
+    foreach ($graphic in $graphics | Sort-Object { $_.Slide.SlideIndex }, ZOrder) {
+        $replacement = $graphic.Slide.Shapes.AddPicture(
+            $graphic.ImagePath,
+            0,
+            -1,
+            $graphic.Left,
+            $graphic.Top,
+            $graphic.Width,
+            $graphic.Height
+        )
+        $replacement.ZOrder(1)
+        for ($position = 1; $position -lt $graphic.ZOrder; $position++) {
+            $replacement.ZOrder(2)
+        }
+    }
+}
+
 if (-not (Test-Path -LiteralPath $SourcePresentation -PathType Leaf)) {
     throw "Die Quelldatei wurde nicht gefunden: $SourcePresentation"
 }
@@ -167,6 +216,9 @@ try {
                     $export.Slides.Item($slideIndex).Delete()
                 }
             }
+            $rasterDirectory = Join-Path $env:TEMP ("$number-$(New-Guid)")
+            $temporaryFiles.Add($rasterDirectory)
+            Convert-SvgGraphicsToHighResolutionPng -Presentation $export -RasterDirectory $rasterDirectory
             $export.Save()
             $export.SaveAs($outputPath, 32)
             $outputs.Add($outputPath)
