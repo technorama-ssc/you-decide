@@ -21,6 +21,17 @@ function getDownloadHtml(zipFile) {
     `;
 }
 
+function contentWithDownload(contentMarkdown, zipFile) {
+    const contentHtml = marked.parse(contentMarkdown);
+    if (!zipFile) return contentHtml;
+
+    const downloadHtml = getDownloadHtml(zipFile);
+    const videoIndex = contentHtml.search(/<iframe\b/i);
+    return videoIndex === -1
+        ? contentHtml + downloadHtml
+        : contentHtml.slice(0, videoIndex) + downloadHtml + contentHtml.slice(videoIndex);
+}
+
 // content.json liefert Bilder als {src, alt}; aeltere Builds als reine URL
 function imageData(image) {
     return typeof image === "string" ? { src: image, alt: "" } : image;
@@ -298,8 +309,7 @@ async function loadContent() {
                 <div class="subfolder-block">
                     <h2 class="subfolder-title"><button type="button" aria-expanded="false">${sub.title}</button></h2>
                     <div class="subfolder-text">
-                        ${marked.parse(sub.content)}
-                        ${sub.zipFile ? getDownloadHtml(sub.zipFile) : ""}
+                        ${contentWithDownload(sub.content, sub.zipFile)}
             `;
 
             // Verschachtelte Subsections (z.B. Findings unter einem Exponat)
@@ -308,8 +318,7 @@ async function loadContent() {
                     <div class="nested-subfolder-block">
                         <h3 class="nested-subfolder-title">${subsub.title}</h3>
                         <div class="nested-subfolder-content">
-                            ${marked.parse(subsub.content)}
-                            ${subsub.zipFile ? getDownloadHtml(subsub.zipFile) : ""}
+                            ${contentWithDownload(subsub.content, subsub.zipFile)}
                 `;
                 for (const image of subsub.images || []) {
                     subHtml += imageHtml(image, "nested-subfolder-img");
