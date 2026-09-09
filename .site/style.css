@@ -158,6 +158,19 @@ body {
     border: 0;
 }
 
+.subfolder-text > iframe,
+.nested-subfolder-content > iframe {
+    margin-bottom: 60px;
+}
+
+.nested-subfolder-content:has(> iframe) {
+    padding-bottom: 20px;
+}
+
+.nested-subfolder-content > iframe {
+    margin-bottom: 0;
+}
+
 .exhibits .panel-content > img {
     margin-bottom: 60px;
 }
