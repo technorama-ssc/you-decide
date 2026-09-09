@@ -155,7 +155,12 @@ function createAccordion(titleText, contentMarkdown, zipFile, subfoldersHtml, im
 
                 dl.appendChild(textSpan);
                 dl.appendChild(link);
-                inner.appendChild(dl);
+                const firstVideo = inner.querySelector("iframe");
+                if (firstVideo) {
+                    inner.insertBefore(dl, firstVideo);
+                } else {
+                    inner.appendChild(dl);
+                }
 
                 lastMainContentNode = dl;
             } else {
