@@ -76,11 +76,9 @@ function Translate-PresentationText {
 
             $namespace = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
             $namespace.AddNamespace('a', 'http://schemas.openxmlformats.org/drawingml/2006/main')
-            foreach ($paragraph in $xml.SelectNodes('//a:p', $namespace)) {
-                $nodes = @($paragraph.SelectNodes('.//a:t', $namespace))
-                $text = ($nodes | ForEach-Object { $_.InnerText }) -join ''
-                if ($text.Trim()) {
-                    $paragraphs.Add([PSCustomObject]@{ Nodes = $nodes; Text = $text })
+            foreach ($node in $xml.SelectNodes('//a:t', $namespace)) {
+                if ($node.InnerText.Trim()) {
+                    $paragraphs.Add([PSCustomObject]@{ Node = $node; Text = $node.InnerText })
                 }
             }
             $documents.Add([PSCustomObject]@{ EntryName = $entry.FullName; Xml = $xml })
@@ -93,10 +91,7 @@ function Translate-PresentationText {
             $sourceTexts = @($batch | ForEach-Object { $_.Text.Trim() })
             $translations = Get-DeepLTranslation -Text $sourceTexts -AuthKey $AuthKey
             for ($index = 0; $index -lt $batch.Count; $index++) {
-                $batch[$index].Nodes[0].InnerText = $translations[$index]
-                for ($nodeIndex = 1; $nodeIndex -lt $batch[$index].Nodes.Count; $nodeIndex++) {
-                    $batch[$index].Nodes[$nodeIndex].InnerText = ''
-                }
+                $batch[$index].Node.InnerText = $translations[$index]
             }
         }
 
