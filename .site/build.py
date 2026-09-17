@@ -40,7 +40,8 @@ ROOT = os.path.dirname(SITE_DIR)
 DIST = os.path.join(SITE_DIR, "dist")
 README = "README.md"
 STATIC_FILES = ("index.html", "script.js", "style.css", "marked.min.js", "favicon.svg")
-FONTS_DIR = os.path.join(ROOT, "00 you decide", "02 fonts")
+EXHIBITION_DIR = os.path.join(ROOT, "00 you decide", "998_exhibition") if os.path.isdir(os.path.join(ROOT, "00 you decide", "998_exhibition")) else os.path.join(ROOT, "00 you decide")
+FONTS_DIR = os.path.join(EXHIBITION_DIR, "01 docs", "02 fonts")
 MAX_IMAGE_WIDTH = 1200          # images are shown at 600 px; 1200 px keeps them sharp on retina screens
 JPEG_QUALITY = 85
 
@@ -186,16 +187,23 @@ def extract_images(folder, text):
 
 def make_zip(folder, label, slug=None):
     slug = (slug or os.path.basename(folder)).replace(" ", "-")
-    file_name = f"youdecide_{slug}.zip"
+    zip_root = f"youdecide_{slug}"
+    file_name = f"{zip_root}.zip"
+    source_dir = folder
+    candidate = os.path.join(folder, slug)
+    if os.path.isdir(candidate):
+        source_dir = candidate
     os.makedirs(os.path.join(DIST, "downloads"), exist_ok=True)
-    with zipfile.ZipFile(os.path.join(DIST, "downloads", file_name), "w", zipfile.ZIP_DEFLATED) as zf:
-        for dirpath, dirnames, filenames in os.walk(folder):
+    zip_path = os.path.join(DIST, "downloads", file_name)
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:
+        for dirpath, dirnames, filenames in os.walk(source_dir):
             dirnames[:] = sorted(d for d in dirnames if not d.startswith("."))
             for fn in sorted(filenames):
                 if fn.startswith("."):
                     continue
                 full = os.path.join(dirpath, fn)
-                zf.write(full, os.path.relpath(full, os.path.dirname(folder)))
+                rel_path = os.path.relpath(full, source_dir)
+                zf.write(full, rel_path)
     if label is True:
         label = "Build Kit"
     return {"name": file_name, "download_url": "downloads/" + quote(file_name), "label": str(label)}

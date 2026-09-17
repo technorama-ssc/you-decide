@@ -18,7 +18,7 @@ Website: https://technorama-ssc.github.io/you-decide/
 
 | Folder | Content |
 |---|---|
-| `00 you decide/` | The exhibition as a whole: graphic template, fonts, label materials |
+| `00 you decide/` | The exhibition as a whole: graphic templates, fonts, media and documentation |
 | `01 exhibits/` | One folder per exhibit (`NNN_name`) with `01 docs/`, `02 code/`, `03 hardware/`, `04 media/` |
 | `02 system/` | The modular construction system: grid plates, connectors, documentation |
 | `LICENSE.md` | Licences for media, software and hardware |
@@ -68,7 +68,7 @@ python .site/serve.py
 
 This builds the site into `.site/dist/` and serves it at http://localhost:8000/. Use `python .site/build.py` to only build; it lists what was published, what was skipped as a draft, and fails on missing files.
 
-The build needs Pillow (`pip install pillow`) to resize the images for the website to 1200 px; without it the originals are copied and a warning is printed. The fonts in `00 you decide/02 fonts` are served by the site itself, so no external font service is used.
+The build needs Pillow (`pip install pillow`) to resize the images for the website to 1200 px; without it the originals are copied and a warning is printed. The fonts in `00 you decide/01 docs/02 fonts` are served by the site itself, so no external font service is used.
 
 ## Adding an exhibit
 

@@ -1,5 +1,6 @@
----
+﻿---
 download: Exhibition Graphics Kit
+slug: 998_exhibition
 ---
 
 # YOU DECIDE
@@ -10,4 +11,4 @@ With over 20,000 decisions a day, we shape our future. Left or right, bike or bu
 
 This is the open-source platform for the “You Decide” exhibition. The exhibition—and this website—will never be finished—they keep changing with you.
 
-![YOU DECIDE](04%20media/You%20Decide_Yes%20or%20No.jpg)
+![YOU DECIDE](998_exhibition/04%20media/You%20Decide_Yes%20or%20No.jpg)
