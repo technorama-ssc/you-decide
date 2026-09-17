@@ -184,8 +184,8 @@ def extract_images(folder, text):
     return re.sub(r"\n{3,}", "\n\n", text).strip("\n"), urls
 
 
-def make_zip(folder, label):
-    slug = os.path.basename(folder).replace(" ", "-")
+def make_zip(folder, label, slug=None):
+    slug = (slug or os.path.basename(folder)).replace(" ", "-")
     file_name = f"youdecide_{slug}.zip"
     os.makedirs(os.path.join(DIST, "downloads"), exist_ok=True)
     with zipfile.ZipFile(os.path.join(DIST, "downloads", file_name), "w", zipfile.ZIP_DEFLATED) as zf:
@@ -232,7 +232,7 @@ def build_node(page_path):
         return None
     content, inline = split_sections(body)
     content, images = extract_images(folder, content)
-    zip_file = make_zip(folder, meta["download"]) if meta.get("download") else None
+    zip_file = make_zip(folder, meta["download"], meta.get("slug")) if meta.get("download") else None
 
     subsections = []
     for sub_title, text, is_draft in inline:

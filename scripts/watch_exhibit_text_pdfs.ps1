@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [string]$SourcePresentation = 'C:\Users\clehmann\Swiss Science Center Technorama\Projekte - Dokumente\General\SA_2023_DuEntscheidest\80_Dateiablage\Grafikvorlage & Schriften Lui\Du_entscheidest_Vorlage_A4_Update.pptx',
+    [string]$SourcePresentation = 'C:\Users\clehmann\Swiss Science Center Technorama\Projekte - Dokumente\General\SA_2023_DuEntscheidest\80_Dateiablage\Grafikvorlage & Schriften Lui\Du_entscheidest_Vorlage_A4.pptx',
     [string]$RepoRoot = '',
     [int]$QuietSeconds = 10
 )
