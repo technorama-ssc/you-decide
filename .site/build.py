@@ -205,9 +205,6 @@ def make_zip(folder, label, slug=None, download_slug=None):
                 full = os.path.join(dirpath, fn)
                 rel_path = os.path.relpath(full, source_dir)
                 zf.write(full, rel_path)
-        font_path = os.path.join(FONTS_DIR, "RobotoMono-Medium.ttf")
-        if os.path.isfile(font_path):
-            zf.write(font_path, "fonts/RobotoMono-Medium.ttf")
     if label is True:
         label = "Build Kit"
     return {"name": file_name, "download_url": "downloads/" + quote(file_name), "label": str(label)}
