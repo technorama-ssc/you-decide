@@ -41,7 +41,7 @@ DIST = os.path.join(SITE_DIR, "dist")
 README = "README.md"
 STATIC_FILES = ("index.html", "script.js", "style.css", "marked.min.js", "favicon.svg")
 EXHIBITION_DIR = os.path.join(ROOT, "00 you decide", "998_exhibition") if os.path.isdir(os.path.join(ROOT, "00 you decide", "998_exhibition")) else os.path.join(ROOT, "00 you decide")
-FONTS_DIR = os.path.join(EXHIBITION_DIR, "01 docs", "02 fonts")
+FONTS_DIR = os.path.join(EXHIBITION_DIR, "01 docs")
 MAX_IMAGE_WIDTH = 1200          # images are shown at 600 px; 1200 px keeps them sharp on retina screens
 JPEG_QUALITY = 85
 
@@ -185,9 +185,10 @@ def extract_images(folder, text):
     return re.sub(r"\n{3,}", "\n\n", text).strip("\n"), urls
 
 
-def make_zip(folder, label, slug=None):
+def make_zip(folder, label, slug=None, download_slug=None):
     slug = (slug or os.path.basename(folder)).replace(" ", "-")
-    zip_root = f"youdecide_{slug}"
+    download_slug = (download_slug or slug).replace(" ", "-")
+    zip_root = f"youdecide_{download_slug}"
     file_name = f"{zip_root}.zip"
     source_dir = folder
     candidate = os.path.join(folder, slug)
@@ -204,6 +205,9 @@ def make_zip(folder, label, slug=None):
                 full = os.path.join(dirpath, fn)
                 rel_path = os.path.relpath(full, source_dir)
                 zf.write(full, rel_path)
+        font_path = os.path.join(FONTS_DIR, "RobotoMono-Medium.ttf")
+        if os.path.isfile(font_path):
+            zf.write(font_path, "fonts/RobotoMono-Medium.ttf")
     if label is True:
         label = "Build Kit"
     return {"name": file_name, "download_url": "downloads/" + quote(file_name), "label": str(label)}
@@ -240,7 +244,7 @@ def build_node(page_path):
         return None
     content, inline = split_sections(body)
     content, images = extract_images(folder, content)
-    zip_file = make_zip(folder, meta["download"], meta.get("slug")) if meta.get("download") else None
+    zip_file = make_zip(folder, meta["download"], meta.get("slug"), meta.get("download_slug")) if meta.get("download") else None
 
     subsections = []
     for sub_title, text, is_draft in inline:

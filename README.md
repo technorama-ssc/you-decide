@@ -54,6 +54,8 @@ Text that stays in the repo but is not shown on the website yet.
 | `id` | Exhibit number, used for ordering (optional) |
 | `published` | `published: false` keeps a draft in the repo but off the website |
 | `download` | Zips the whole folder as a download; the value is the link text |
+| `slug` | Selects the source subfolder for a download and provides its default archive name |
+| `download_slug` | Overrides only the downloaded ZIP filename, without changing its source folder |
 | `sections` | Sub folders (or `.md` files) nested below this entry, or `"*"` for every sub folder whose README has a front matter block. Used for the top-level sections and the system; exhibits use `##` headings instead |
 
 The title is the first `#` heading. Images are placed in the text as Markdown images with a path relative to the folder (spaces as `%20`); the website shows them after the text. Every `##` heading below becomes a nested entry (Findings, background texts). A heading ending in `(draft)` stays in the file but is left off the website. The numbering of the folders is for people browsing the repo; the website only follows `sections` and the headings. This root README lists the top-level sections.
@@ -68,7 +70,7 @@ python .site/serve.py
 
 This builds the site into `.site/dist/` and serves it at http://localhost:8000/. Use `python .site/build.py` to only build; it lists what was published, what was skipped as a draft, and fails on missing files.
 
-The build needs Pillow (`pip install pillow`) to resize the images for the website to 1200 px; without it the originals are copied and a warning is printed. The fonts in `00 you decide/01 docs/02 fonts` are served by the site itself, so no external font service is used.
+The build needs Pillow (`pip install pillow`) to resize the images for the website to 1200 px; without it the originals are copied and a warning is printed. The fonts in `00 you decide/998_exhibition/01 docs` are served by the site itself, so no external font service is used.
 
 ## Adding an exhibit
 

@@ -1,6 +1,7 @@
 ---
 download: System Build Kit
 slug: 999_system
+download_slug: 999_sample_wall_connectors
 ---
 
 # SYSTEM
